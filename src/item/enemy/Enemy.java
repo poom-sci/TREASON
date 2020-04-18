@@ -134,4 +134,14 @@ public class Enemy extends Character {
 		fireLeft.setAction(true);
 		System.out.println("fireLeft");
 	}
+
+	public Weapon getWeapon() {
+		return weapon;
+	}
+
+	public void setWeapon(Weapon weapon) {
+		this.weapon = weapon;
+	}
+	
+	
 }

@@ -170,6 +170,10 @@ public class Character {
 		return(dieRight.isAction()||dieLeft.isAction());
 	}
 
+	public Animation getSprite() {
+		return sprite;
+	}
+
 	
 	
 }

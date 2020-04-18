@@ -3,6 +3,7 @@ package item.weapon;
 import java.util.ArrayList;
 
 import item.bullet.Bullet;
+import item.bullet.GunBullet;
 import item.character.MainCharacter;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -50,9 +51,10 @@ public abstract class Weapon {
 		return name;
 	}
 
-	public Bullet fireBullet(MainCharacter character,boolean isRight) {
+	public Bullet fireBullet(item.character.Character character,boolean isRight) {
 		bulletLeft-=1;
 		bullets.get(0).setRight(isRight);
+
 		bullets.get(0).setInitX(character.getX());
 		bullets.get(0).setInitY(character.getY());
 		if (isRight) {
@@ -67,6 +69,24 @@ public abstract class Weapon {
 		}
 		
 		return bullets.remove(0);
+	}
+	
+	public Bullet fireBulletInfinite(item.character.Character character,boolean isRight) {
+		Bullet bullet=new GunBullet(isRight, character.getX(), character.getY());
+		bullet.setRight(isRight);
+		bullet.setInitX(character.getX());
+		bullet.setInitY(character.getY());
+		if (isRight) {
+			bullet.setX(character.getX() + 40);
+			bullet.setY(character.getY() + 20);
+		} else {
+			bullet.setX(character.getX() -20);
+			bullet.setY(character.getY() + 20);
+		}
+		if(!isRight) {
+			bullet.getImageView().setRotate(bullet.getImageView().getRotate()+180);
+		}
+		return bullet;
 	}
 	
 	public boolean isEmpty() {

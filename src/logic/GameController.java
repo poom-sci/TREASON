@@ -61,6 +61,8 @@ public class GameController {
 	private boolean alreadyPressedW = false;
 	private boolean alreadyPressedSPACE = false;
 
+	private boolean isEnemyFire = false;
+
 	private int width;
 	private int height;
 	private int offsetX;
@@ -70,7 +72,7 @@ public class GameController {
 
 	public GameController(Pane gameRoot) {
 		this.gameRoot = gameRoot;
-		
+
 		initContentLevel1();
 		createPlayer();
 
@@ -120,9 +122,19 @@ public class GameController {
 			}
 		} else {
 			try {
-				
+				System.out.println(Math.round(time) % 5);
+
+				if ((Math.round(time) % 3) == 0) {
+					if (!isEnemyFire) {
+						enemyFireBullet();
+						isEnemyFire = true;
+					}
+				} else {
+					isEnemyFire = false;
+				}
+
 				checkDelay();
-				
+
 				if (isPressed(KeyCode.ENTER)) {
 					checkPortal();
 				}
@@ -130,7 +142,7 @@ public class GameController {
 				offsetX = player.getX();
 				offsetY = player.getY();
 
-				moveplayerBullets();
+				moveBullets();
 				checkPlayerCollision();
 
 				if (isPressed(KeyCode.P)) {
@@ -332,6 +344,28 @@ public class GameController {
 		}
 	}
 
+	private void enemyFireBullet() {
+		for (int i = 0; i < enemies.size(); i++) {
+			Enemy enemy = enemies.get(i);
+			boolean isRight = enemy.getIsTurnRight() || enemy.getIsFireRight() || enemy.getIsWalkRight();
+			if (isRight) {
+				enemy.doFireRight();
+			} else {
+				enemy.doFireLeft();
+			}
+			Bullet bullet = enemy.getWeapon().fireBulletInfinite(enemy, isRight);
+			enemyBullets.add(bullet);
+			gameRoot.getChildren().addAll(bullet.getBox(), bullet.getImageView());
+			enemy.getSprite().pause();
+			if (isRight) {
+				enemy.doWalkRight();
+			} else {
+				enemy.doWalkLeft();
+			}
+
+		}
+	}
+
 	private void checkPortal() {
 		int index = 0;
 		int size = portals.size();
@@ -357,7 +391,7 @@ public class GameController {
 		player.setY(0);
 	}
 
-	private void moveplayerBullets() {
+	private void moveBullets() {
 		if (!playerBullets.isEmpty()) {
 			for (int i = 0; i < playerBullets.size(); i++) {
 
@@ -365,6 +399,17 @@ public class GameController {
 					moveItemX(playerBullets.get(i), 2);
 				} else {
 					moveItemX(playerBullets.get(i), -2);
+				}
+			}
+		}
+
+		if (!enemyBullets.isEmpty()) {
+			for (int i = 0; i < enemyBullets.size(); i++) {
+
+				if (enemyBullets.get(i).isRight()) {
+					moveItemX(enemyBullets.get(i), 2);
+				} else {
+					moveItemX(enemyBullets.get(i), -2);
 				}
 			}
 		}
@@ -437,10 +482,10 @@ public class GameController {
 			player.setY(player.getY() + (movingDown ? 1 : -1));
 		}
 	}
-	
-	private void delayImage(Bullet item,int duration) {
-		double finalTime=time+duration;
-		DelayBullet bullet=new DelayBullet(finalTime, duration,item);
+
+	private void delayImage(Bullet item, int duration) {
+		double finalTime = time + duration;
+		DelayBullet bullet = new DelayBullet(finalTime, duration, item);
 		System.out.println(finalTime);
 		delaylist.add(bullet);
 	}
@@ -450,9 +495,9 @@ public class GameController {
 			return;
 		}
 		int size = delaylist.size();
-		for (int i = 0; i < size;i++) {
-			if (delaylist.get(i).getFinalTime()>=time) {
-				Bullet item=delaylist.get(i).getBullet();
+		for (int i = 0; i < size; i++) {
+			if (delaylist.get(i).getFinalTime() >= time) {
+				Bullet item = delaylist.get(i).getBullet();
 				gameRoot.getChildren().remove(item.getImageView());
 				gameRoot.getChildren().remove(item.getBox());
 				playerBullets.remove(item);
@@ -460,10 +505,9 @@ public class GameController {
 				System.out.println("remove");
 			}
 
-
 		}
 	}
-	
+
 	private void moveItemX(Bullet item, int value) {
 		boolean movingRight = value > 0;
 
@@ -478,7 +522,7 @@ public class GameController {
 					if (item instanceof RocketBullet) {
 						((RocketBullet) item).explode();
 						checkEnemyCollision(item);
-						delayImage(item,2);
+						delayImage(item, 2);
 						return;
 					}
 					checkEnemyCollision(item);
@@ -586,41 +630,41 @@ public class GameController {
 			return;
 		}
 		int sizeEnemy = enemies.size();
-		System.out.println(sizeEnemy + "size");
-		int index1 = 0;
-		for (int i = 0; index1 < sizeEnemy; i++) {
-			System.out.println(index1);
-			if (player.getBox().getBoundsInParent().intersects(enemies.get(index1).getBox().getBoundsInParent())) {
-				System.out.println(index1 + "die");
-				gameRoot.getChildren().remove(enemies.get(index1).getImageView());
-				enemies.remove(enemies.get(index1));
+
+		for (int i = 0; i < sizeEnemy; ) {
+			Enemy enemy=enemies.get(i);
+			if (player.getBox().getBoundsInParent().intersects(enemy.getBox().getBoundsInParent())) {
+				gameRoot.getChildren().remove(enemy.getImageView());
+				gameRoot.getChildren().remove(enemy.getBox());
+				enemies.remove(enemy);
+				
 				sizeEnemy -= 1;
 				this.player.decreasedHealth(40);
 				continue;
 			}
 			System.out.println("next");
-			index1 += 1;
+			i++;
 
 		}
 		try {
 			if (enemyBullets.size() < 1)
 				return;
+
 			int size = enemyBullets.size();
-			System.out.println(size + "size");
-			int index2 = 0;
-			for (int i = 0; index2 < size; i++) {
-				System.out.println(index2);
-				if (player.getBox().getBoundsInParent()
-						.intersects(enemyBullets.get(index2).getBox().getBoundsInParent())) {
-					System.out.println("----");
-					gameRoot.getChildren().remove(enemyBullets.get(index2).getImageView());
-					enemyBullets.remove(enemyBullets.get(index2));
+
+			for (int i = 0; i < size;) {
+
+				Bullet bullet = enemyBullets.get(i);
+				if (player.getBox().getBoundsInParent().intersects(bullet.getBox().getBoundsInParent())) {
+					gameRoot.getChildren().remove(bullet.getImageView());
+					gameRoot.getChildren().remove(bullet.getBox());
+					enemyBullets.remove(bullet);
 					size -= 1;
-					this.player.decreasedHealth(40);
+					this.player.decreasedHealth(20);
 					continue;
 				}
 				System.out.println("next");
-				index2 += 1;
+				i++;
 
 			}
 
