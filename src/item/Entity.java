@@ -25,19 +25,27 @@ public abstract class Entity {
 	protected Animation sprite;
 	protected String image_Path; 
 	
+	protected int initX;
+	protected int initY;
+	protected int disX;
+	protected int disY;
+	
 	protected int boundX;
 	protected int boundY;
 
 	
-    public Entity(int width,int height) {
+    public Entity(int initX,int initY,int width,int height) {
     	box=new Rectangle(width,height);
 		this.width = width;
 		this.height = height;
-		this.boundX=0;
-		this.boundY=0;
-		this.x=0;
-		this.y=0;
-		this.box.setFill(Color.ALICEBLUE);
+		this.box.setFill(Color.ROSYBROWN);
+		
+		this.initX=initX;
+		this.initY=initY;
+
+		
+//		setX(initX);
+//		setY(initY);
     	
 	}
 
@@ -67,23 +75,8 @@ public abstract class Entity {
 	}
 
 
-	public void setBox(Rectangle box) {
-		this.box = box;
-	}
-
-
 	public Animation getSprite() {
 		return sprite;
-	}
-
-
-	public void setSprite(Animation sprite) {
-		this.sprite = sprite;
-	}
-
-
-	public String getPic_path() {
-		return image_Path;
 	}
 
 
@@ -120,7 +113,7 @@ public abstract class Entity {
 	public void setX(int x) {
 		this.x = x;
 		this.box.setTranslateX(x);
-		this.imageView.setTranslateX(x-boundX);
+		this.imageView.setTranslateX(this.x-boundX);
 	}
 
 
@@ -132,12 +125,52 @@ public abstract class Entity {
 	public void setY(int y) {
 		this.y = y;
 		this.box.setTranslateY(y);
-		this.imageView.setTranslateY(y-boundY);
+		this.imageView.setTranslateY(this.y-boundY);
 	}
 
 
 	public ImageView getImageView() {
 		return imageView;
+	}
+
+
+	public int getInitX() {
+		return initX;
+	}
+
+
+	public void setInitX(int initX) {
+		this.initX = initX;
+	}
+
+
+	public int getInitY() {
+		return initY;
+	}
+
+
+	public void setInitY(int initY) {
+		this.initY = initY;
+	}
+
+
+	public int getDisX() {
+		return disX;
+	}
+
+
+	public void setDisX(int disX) {
+		this.disX = disX;
+	}
+
+
+	public int getDisY() {
+		return disY;
+	}
+
+
+	public void setDisY(int disY) {
+		this.disY = disY;
 	}
     
     

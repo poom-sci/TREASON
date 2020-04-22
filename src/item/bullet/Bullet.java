@@ -14,13 +14,10 @@ public class Bullet extends Entity {
 	protected int disY;
 	
 	
-	public Bullet(boolean isRight,int width,int height,int initX,int initY) {
-		
-		super(width,height);
+	public Bullet(boolean isRight,int initX,int initY,int width,int height) {
+		super( initX, initY,width,height);
 		this.width=width;
 		this.height=height;
-		this.initX=initX;
-		this.initY=initY;
 		this.x=initX;
 		this.y=initY;
 		this.isRight=isRight;

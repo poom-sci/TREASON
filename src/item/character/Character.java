@@ -2,6 +2,9 @@ package item.character;
 
 import java.util.ArrayList;
 
+import item.Entity;
+import item.bullet.RocketBullet;
+import item.bullet.SwordSlice;
 import item.weapon.Weapon;
 import javafx.animation.Animation;
 import javafx.scene.image.ImageView;
@@ -9,15 +12,18 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import logic.Action;
 
-public class Character {
-	protected ImageView imageView;
-	protected Rectangle box;
-	protected Animation sprite;
+public class Character extends Entity {
+//	protected ImageView imageView;
+//	protected Rectangle box;
 
-	protected int width;
-	protected int height;
-	protected int x;
-	protected int y;
+	protected Rectangle lowBox;
+	protected Rectangle highBox;
+//	protected Animation sprite;
+//
+//	protected int width;
+//	protected int height;
+//	protected int x;
+//	protected int y;
 
 	protected ArrayList<Action> actions;
 
@@ -30,75 +36,41 @@ public class Character {
 	protected Action dieRight;
 	protected Action dieLeft;
 
-	protected int boundX;
-	protected int boundY;
-
-	protected String image_Path;
-	
+//	protected int boundX;
+//	protected int boundY;
+//
+//	protected String image_Path;
+//	
 	protected int health;
 	protected Rectangle healthBox;
-	
-	protected ArrayList<Weapon> inventory;
-	 
 
-	public Character(int width,int height,int health) {
-		box = new Rectangle(width, height);
-		this.width = width;
-		this.height = height;
-		box.setFill(Color.TRANSPARENT);
-		
-		this.health=health;
-		healthBox=new Rectangle(health,20);
+	protected ArrayList<Weapon> inventory;
+
+	public Character(int initX, int initY, int width, int height, int health) {
+		super(initX, initY, width, height);
+
+		box.setFill(Color.YELLOW);
+
+		this.lowBox = new Rectangle(10, 10);
+		this.lowBox.setFill(Color.ALICEBLUE);
+
+		this.highBox = new Rectangle(10, 10);
+		this.highBox.setFill(Color.RED);
+
+		this.health = health;
+		healthBox = new Rectangle(health, 20);
 		setHealthColor();
-		
+
 	}
-	
+
 	protected void setHealthColor() {
-		if(this.health>150) {
+		if (this.health > 150) {
 			healthBox.setFill(Color.GREEN);
-		}
-		else if(this.health<150) {
+		} else if (this.health < 150) {
 			this.healthBox.setFill(Color.ORANGERED);
-		}
-		else if(this.health<50){
+		} else if (this.health < 50) {
 			this.healthBox.setFill(Color.RED);
 		}
-	}
-	
-	public ImageView getImageView() {
-		return imageView;
-	}
-
-	public int getX() {
-		return (int) box.getTranslateX();
-	}
-
-	public void setX(int x) {
-		box.setTranslateX(x);
-		this.x = x;
-		imageView.setLayoutX(this.x - boundX);
-	}
-
-	public int getY() {
-		return (int) box.getTranslateY();
-	}
-
-	public void setY(int y) {
-		box.setTranslateY(y);
-		this.y = y;
-		imageView.setLayoutY(this.y - boundY);
-	}
-
-	public Rectangle getBox() {
-		return box;
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public int getHeight() {
-		return height;
 	}
 
 	public boolean getIsTurnLeft() {
@@ -125,20 +97,33 @@ public class Character {
 		return fireLeft.isAction();
 	}
 
+	public boolean isRight() {
+		return turnRight.isAction() || walkRight.isAction() || fireRight.isAction();
+	}
+
+	public Action getAction() {
+		for (Action e : actions) {
+			if (e.isAction()) {
+				return e;
+			}
+		}
+		return null;
+	}
+
 	public ArrayList<Action> getActions() {
 		return actions;
 	}
-	
+
 	public void decreasedHealth(int damage) {
-		setHealth(this.health-damage);
+		setHealth(this.health - damage);
 		setHealthColor();
-		
+
 	}
 
 	public int getHealth() {
 		return health;
 	}
-	
+
 	public void setHealth(int health) {
 		this.health = health;
 		this.healthBox.setWidth(health);
@@ -167,13 +152,51 @@ public class Character {
 	}
 
 	public boolean isDie() {
-		return(dieRight.isAction()||dieLeft.isAction());
+		return (dieRight.isAction() || dieLeft.isAction());
 	}
 
-	public Animation getSprite() {
-		return sprite;
+	public boolean checkTurn(ArrayList<Entity> platforms) {
+
+		if (isRight()) {
+			this.lowBox.setTranslateX(getX() + 30);
+			this.lowBox.setTranslateY(getY() + 60);
+
+			this.highBox.setTranslateX(getX() + 30);
+			this.highBox.setTranslateY(getY());
+		} else {
+			this.lowBox.setTranslateX(getX() - 30);
+			this.lowBox.setTranslateY(getY() + 60);
+
+			this.highBox.setTranslateX(getX() - 30);
+			this.highBox.setTranslateY(getY());
+		}
+
+		for (Entity platform : platforms) {
+
+			boolean isCollisionPlatformHighBoxlow = this.highBox.getBoundsInParent()
+					.intersects(platform.getBox().getBoundsInParent());
+
+			if (isCollisionPlatformHighBoxlow) {
+				return true;
+			}
+
+			boolean isCollisionPlatformLowBoxlow = this.lowBox.getBoundsInParent()
+					.intersects(platform.getBox().getBoundsInParent());
+
+			if (isCollisionPlatformLowBoxlow) {
+				return false;
+			}
+
+		}
+		return true;
 	}
 
-	
-	
+	public Rectangle getLowBox() {
+		return lowBox;
+	}
+
+	public Rectangle getHighBox() {
+		return highBox;
+	}
+
 }

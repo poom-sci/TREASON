@@ -22,8 +22,8 @@ public class Enemy extends Character {
 
 	protected Weapon weapon;
 
-	public Enemy() {
-		super(30,60,30);
+	public Enemy(int initX,int initY) {
+		super( initX, initY,30,60,40);
 		this.image_Path = "main_character.png";
 		this.weapon=new Gun(1);
 		
@@ -37,6 +37,7 @@ public class Enemy extends Character {
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
 
+		this.disX=60*5;
 //		turnRight();
 		boundX = 32;
 		boundY = 18;
@@ -44,8 +45,6 @@ public class Enemy extends Character {
 		this.x = (int) box.getTranslateX();
 		this.y = (int) box.getTranslateY();
 
-		imageView.setLayoutX(this.x - boundX);
-		imageView.setLayoutY(this.y - boundY);
 		createAction();
 		turnLeft.setAction(true);
 	}
@@ -72,12 +71,12 @@ public class Enemy extends Character {
 		for (Action e : actions) {
 			e.setAction(false);
 		}
-		sprite.pause();
+		sprite.stop();
 	}
 
 	public void doTurnLeft() {
 		resetAction();
-		boundX = 30;
+//		boundX = 30;
 		sprite = new SpriteAnimation(imageView, Duration.millis(1000), 5, 5, 30, 96 * 1, 96, 96);
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
@@ -87,7 +86,7 @@ public class Enemy extends Character {
 
 	public void doTurnRight() {
 		resetAction();
-		boundX = 30;
+//		boundX = 30;
 		sprite = new SpriteAnimation(imageView, Duration.millis(1000), 5, 5, 30, 96 * 0, 96, 96);
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
@@ -97,7 +96,7 @@ public class Enemy extends Character {
 
 	public void doWalkRight() {
 		resetAction();
-		boundX = 30;
+//		boundX = 30;
 		sprite = new SpriteAnimation(imageView, Duration.millis(1000), 8, 8, 30, 96 * 3, 96, 96);
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
@@ -107,7 +106,7 @@ public class Enemy extends Character {
 
 	public void doWalkLeft() {
 		resetAction();
-		boundX = 30;
+//		boundX = 30;
 		sprite = new SpriteAnimation(imageView, Duration.millis(1000), 8, 8, 30, 96 * 2, 96, 96);
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
@@ -117,7 +116,7 @@ public class Enemy extends Character {
 	
 	public void doFireRight() {
 		resetAction();
-		boundX = 30;
+//		boundX = 30;
 		sprite = new SpriteAnimation(imageView, Duration.millis(500), 5, 8, 30, 96 * 5, 96, 96);
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
@@ -127,7 +126,7 @@ public class Enemy extends Character {
 	
 	public void doFireLeft() {
 		resetAction();
-		boundX = 30;
+//		boundX = 30;
 		sprite = new SpriteAnimation(imageView, Duration.millis(500), 5, 8, 30, 96 *4, 96, 96);
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();

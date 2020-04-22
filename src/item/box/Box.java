@@ -13,8 +13,8 @@ public class Box extends Entity {
 	
 	
 	
-	public Box( int width, int height) {
-		super(width,height);
+	public Box(int initX,int initY, int width, int height) {
+		super( initX, initY,width,height);
 		this.image_Path="box.jpg";
 		this.box.setFill(Color.ALICEBLUE);
 		

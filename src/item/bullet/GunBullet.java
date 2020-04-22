@@ -9,7 +9,7 @@ public class GunBullet extends Bullet {
 	
 	public GunBullet(boolean isRight, int initX,int initY) {
 		
-		super(isRight,20,10,initX,initY);
+		super(isRight,initX,initY,20,10);
 		this.disX=300;
 		this.disY=300;
 		this.isRight=isRight;

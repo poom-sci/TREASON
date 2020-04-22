@@ -61,7 +61,7 @@ public abstract class Weapon {
 			bullets.get(0).setX(character.getX() + 40);
 			bullets.get(0).setY(character.getY() + 20);
 		} else {
-			bullets.get(0).setX(character.getX() -20);
+			bullets.get(0).setX(character.getX() -40);
 			bullets.get(0).setY(character.getY() + 20);
 		}
 		if(!isRight) {
@@ -80,7 +80,7 @@ public abstract class Weapon {
 			bullet.setX(character.getX() + 40);
 			bullet.setY(character.getY() + 20);
 		} else {
-			bullet.setX(character.getX() -20);
+			bullet.setX(character.getX() -30);
 			bullet.setY(character.getY() + 20);
 		}
 		if(!isRight) {

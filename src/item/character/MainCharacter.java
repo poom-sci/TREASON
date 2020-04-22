@@ -21,8 +21,8 @@ import logic.Action;
 
 public class MainCharacter extends Character {
 
-	public MainCharacter() {
-		super(30,60,200);
+	public MainCharacter(int initX,int initY) {
+		super( initX, initY,30,60,200);
 		this.image_Path = "main_character.png";
 		this.inventory= new ArrayList<Weapon>();
 		
@@ -39,16 +39,13 @@ public class MainCharacter extends Character {
 		sprite = new SpriteAnimation(imageView, Duration.millis(1000), 5, 5, 30, 0, 96, 96);
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
-
-//		turnRight();
+		
 		boundX = 32;
 		boundY = 18;
-
+		
 		this.x = (int) box.getTranslateX();
 		this.y = (int) box.getTranslateY();
 
-		imageView.setLayoutX(this.x - boundX);
-		imageView.setLayoutY(this.y - boundY);
 		createAction();
 		turnLeft.setAction(true);
 	}
@@ -84,7 +81,7 @@ public class MainCharacter extends Character {
 
 	public void doTurnLeft() {
 		resetAction();
-		boundX = 30;
+//		boundX = 30;
 		sprite = new SpriteAnimation(imageView, Duration.millis(1000), 5, 5, 30, 96 * 1, 96, 96);
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
@@ -95,7 +92,7 @@ public class MainCharacter extends Character {
 
 	public void doTurnRight() {
 		resetAction();
-		boundX = 30;
+//		boundX = 30;
 		sprite = new SpriteAnimation(imageView, Duration.millis(1000), 5, 5, 30, 96 * 0, 96, 96);
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
@@ -105,7 +102,7 @@ public class MainCharacter extends Character {
 
 	public void doWalkRight() {
 		resetAction();
-		boundX = 30;
+//		boundX = 30;
 		sprite = new SpriteAnimation(imageView, Duration.millis(500), 8, 8, 30, 96 * 3, 96, 96);
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
@@ -115,7 +112,7 @@ public class MainCharacter extends Character {
 
 	public void doWalkLeft() {
 		resetAction();
-		boundX = 30;
+//		boundX = 30;
 		sprite = new SpriteAnimation(imageView, Duration.millis(500), 8, 8, 30, 96 * 2, 96, 96);
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
@@ -125,7 +122,7 @@ public class MainCharacter extends Character {
 	
 	public void doFireRight() {
 		resetAction();
-		boundX = 30;
+//		boundX = 30;
 		sprite = new SpriteAnimation(imageView, Duration.millis(200), 5, 8, 30, 96 * 5, 96, 96);
 		sprite.setCycleCount(1);
 		sprite.play();
@@ -135,7 +132,7 @@ public class MainCharacter extends Character {
 	
 	public void doFireLeft() {
 		resetAction();
-		boundX = 30;
+//		boundX = 30;
 		sprite = new SpriteAnimation(imageView, Duration.millis(200), 5, 8, 30, 96 *4, 96, 96);
 		sprite.setCycleCount(1);
 		sprite.play();
@@ -145,7 +142,7 @@ public class MainCharacter extends Character {
 	
 	public void doDieLeft() {
 		resetAction();
-		boundX = 30;
+//		boundX = 30;
 		sprite = new SpriteAnimation(imageView, Duration.millis(2000), 8, 8, 30, 96 *6, 96, 96);
 		sprite.setCycleCount(1);
 		sprite.play();
@@ -155,7 +152,7 @@ public class MainCharacter extends Character {
 	
 	public void doDieRight() {
 		resetAction();
-		boundX = 30;
+//		boundX = 30;
 		sprite = new SpriteAnimation(imageView, Duration.millis(2000), 8, 8, 30, 96*7 , 96, 96);
 		sprite.setCycleCount(1);
 		sprite.play();

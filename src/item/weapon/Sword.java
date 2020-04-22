@@ -26,22 +26,22 @@ public class Sword extends Weapon implements Fireable  {
 
 	}
 
-	public Bullet fireBullet(MainCharacter character,boolean isRight) {
-
-		bullets.get(0).setRight(isRight);
-		bullets.get(0).setInitX(character.getX());
-		bullets.get(0).setInitY(character.getY());
+	public Bullet fireBullet(item.character.Character character,boolean isRight) {
+		Bullet bullet=bullets.get(0);
+		
+		bullet.setRight(isRight);
+		bullet.setInitX(character.getX());
+		bullet.setInitY(character.getY());
 		if (isRight) {
-			bullets.get(0).setX(character.getX() + 40);
-			bullets.get(0).setY(character.getY() + 0);
+			bullet.setX(character.getX() + 40);
+			bullet.setY(character.getY() + 0);
 		} else {
-			bullets.get(0).setX(character.getX() -50);
-			bullets.get(0).setY(character.getY() + 0);
-		}
-		if(!isRight) {
-			bullets.get(0).getImageView().setRotate(bullets.get(0).getImageView().getRotate()+180);
+			bullet.setX(character.getX() -60);
+			bullet.setY(character.getY() + 0);
+			bullet.getImageView().setRotate(imageView.getRotate() + 180);
 		}
 		createBullet(1);
-		return bullets.remove(0);
+		
+		return bullet;
 	}
 }
