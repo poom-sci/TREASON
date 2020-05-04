@@ -67,11 +67,11 @@ public class Enemy extends Character {
 		actions.add(fireLeft);
 	}
 
-	private void resetAction() {
+	public void resetAction() {
 		for (Action e : actions) {
 			e.setAction(false);
 		}
-		sprite.stop();
+		sprite.pause();
 	}
 
 	public void doTurnLeft() {
@@ -115,19 +115,20 @@ public class Enemy extends Character {
 	}
 	
 	public void doFireRight() {
+		System.out.println("******************************");
 		resetAction();
-//		boundX = 30;
-		sprite = new SpriteAnimation(imageView, Duration.millis(500), 5, 8, 30, 96 * 5, 96, 96);
+		sprite = new SpriteAnimation(imageView, Duration.millis(200), 5, 8, 30, 96 * 5, 96, 96);
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
 		fireRight.setAction(true);
 		System.out.println("fireRight");
+
 	}
 	
 	public void doFireLeft() {
+		System.out.println("******************************");
 		resetAction();
-//		boundX = 30;
-		sprite = new SpriteAnimation(imageView, Duration.millis(500), 5, 8, 30, 96 *4, 96, 96);
+		sprite = new SpriteAnimation(imageView, Duration.millis(200), 5, 8, 30, 96 *4, 96, 96);
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
 		fireLeft.setAction(true);
@@ -141,6 +142,8 @@ public class Enemy extends Character {
 	public void setWeapon(Weapon weapon) {
 		this.weapon = weapon;
 	}
+
+	
 	
 	
 }

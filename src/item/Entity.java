@@ -29,6 +29,8 @@ public abstract class Entity {
 	protected int initY;
 	protected int disX;
 	protected int disY;
+	protected int velocityX;
+	protected int velocityY;
 	
 	protected int boundX;
 	protected int boundY;
@@ -38,7 +40,7 @@ public abstract class Entity {
     	box=new Rectangle(width,height);
 		this.width = width;
 		this.height = height;
-		this.box.setFill(Color.ROSYBROWN);
+		this.box.setFill(Color.TRANSPARENT);
 		
 		this.initX=initX;
 		this.initY=initY;
@@ -126,6 +128,7 @@ public abstract class Entity {
 		this.y = y;
 		this.box.setTranslateY(y);
 		this.imageView.setTranslateY(this.y-boundY);
+		
 	}
 
 
@@ -172,7 +175,39 @@ public abstract class Entity {
 	public void setDisY(int disY) {
 		this.disY = disY;
 	}
+
+
+	public void setSprite(Animation sprite) {
+		this.sprite = sprite;
+	}
+
+
+	public int getVelocityX() {
+		return velocityX;
+	}
+
+
+	public void setVelocityX(int velocityX) {
+		this.velocityX = velocityX;
+	}
+
+
+	public int getVelocityY() {
+		return velocityY;
+	}
+
+
+	public void setVelocityY(int velocityY) {
+		this.velocityY = velocityY;
+	}
+	
+	public void addVelocityX(int velocityX) {
+		this.velocityX +=velocityX;
+	}
     
+	public void addVelocityY(int velocityY) {
+		this.velocityY +=velocityY;
+	}
     
     
 }

@@ -18,19 +18,20 @@ public class SwordSlice extends Bullet {
 		this.isRight = isRight;
 		this.name = "slice";
 
-		this.image_Path = "sword-slice.png";
+		this.image_Path = "sword_slice.png";
 		this.image = new Image(image_Path);
 		this.imageView = new ImageView(image);
-		this.imageView.setFitHeight(height);
+		this.imageView.setFitHeight(height+20);
+		this.boundY=10;
 		this.imageView.setFitWidth(width);
-		this.imageView.setViewport(new Rectangle2D(0, 194*2, 256, 194));
-//
-//		this.sprite = new SpriteAnimation(imageView, Duration.millis(200), 6, 6, 0, 194*2, 256, 194);
-//		this.sprite.setCycleCount(1);
-//		this.sprite.play();
+		this.imageView.setViewport(new Rectangle2D(0, 0, 110, 129));
 
-		if (!this.isRight) {
-			imageView.setRotate(imageView.getRotate() + 180);
-		}
+		this.sprite = new SpriteAnimation(imageView, Duration.millis(200),4, 4, 0, 0, 110, 129);
+		this.sprite.setCycleCount(1);
+		this.sprite.play();
+
+//		if (!this.isRight) {
+//			imageView.setRotate(imageView.getRotate() + 180);
+//		}
 	}
 }

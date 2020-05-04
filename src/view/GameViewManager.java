@@ -1,11 +1,14 @@
 package view;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.text.StyledEditorKit.BoldAction;
 
 import gui.GameButton;
+import gui.GameSubScene;
 import gui.SpriteAnimation;
 import item.box.Box;
 import item.bullet.GunBullet;
@@ -25,20 +28,28 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.SubScene;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -51,7 +62,7 @@ public class GameViewManager {
 
 	private long startTime;
 	DoubleProperty time = new SimpleDoubleProperty(0.0);
-	
+
 	private static final int HEIGHT = 720;
 	private static final int WIDTH = 1280;
 	private AnchorPane gamePane;
@@ -78,7 +89,7 @@ public class GameViewManager {
 	private Weapon weapon;
 	private ImageView weaponImage;
 	private Text bulletLeft;
-	
+
 	private boolean isPlayerDie;
 
 	public GameViewManager() {
@@ -91,10 +102,10 @@ public class GameViewManager {
 		this.gamePane = new AnchorPane();
 		gamePane.getChildren().addAll(player1Controller.getBg(), gameRoot);
 		gameScene = new Scene(gamePane, WIDTH, HEIGHT);
-		
+
 		gameScene.setOnKeyPressed(event -> keys.put(event.getCode(), true));
 		gameScene.setOnKeyReleased(event -> keys.put(event.getCode(), false));
-		
+
 		keyboardListener();
 
 		player1Controller.setKeys(keys);
@@ -104,7 +115,7 @@ public class GameViewManager {
 		gameStage = new Stage();
 		gameStage.setScene(gameScene);
 		gameStage.setTitle("Game Scene2");
-		gameStage.setResizable(false);
+//		gameStage.setResizable(false);
 
 		menuButtons = new ArrayList<GameButton>();
 		isGamePause = false;
@@ -131,7 +142,6 @@ public class GameViewManager {
 	public void createGameLoop() {
 		gameTimer = new AnimationTimer() {
 
-			
 			@Override
 			public void start() {
 				startTime = System.currentTimeMillis();
@@ -140,9 +150,9 @@ public class GameViewManager {
 
 			@Override
 			public void handle(long timestamp) {
-		        long now = System.currentTimeMillis();
-		        time.set((now - startTime) / 1000.0);
-		        System.out.println(time);
+				long now = System.currentTimeMillis();
+				time.set((now - startTime) / 1000.0);
+				System.out.println(time);
 				player1Controller.getControl();
 				update();
 
@@ -157,10 +167,11 @@ public class GameViewManager {
 		this.gameRoot = player1Controller.getGameRoot();
 		heathBox = player1Controller.getPlayerHealthBox();
 		weapon = player1Controller.getPlayerWeapon();
-		isPlayerDie=player1Controller.getPlayer().isDie();
-//		if(isPlayerDie) {
-//			gameTimer.stop();
-//		}
+		isPlayerDie = player1Controller.getPlayer().isDie();
+		if (isPlayerDie) {
+			gameTimer.stop();
+			createGameoverSubScene();
+		}
 
 		if (weaponImage != player1Controller.getPlayerWeapon().getImageView()) {
 			createWeaponImage();
@@ -184,22 +195,21 @@ public class GameViewManager {
 	private void keyboardListener() {
 		gamePane.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent key) {
-				
+
 				if (key.getCode() == KeyCode.ESCAPE) {
 					if (isPause) {
 						menuPane.setVisible(false);
 						System.out.println("hide");
 						gameTimer.start();
 						isPause = false;
-					}
-					else {
+					} else {
 						menuPane.setVisible(true);
 						System.out.println("show");
 						gameTimer.stop();
 						alreadyPressedESCAPE = true;
 						isPause = true;
 					}
-				} 
+				}
 
 			}
 		});
@@ -219,7 +229,7 @@ public class GameViewManager {
 
 		createBulletLeft();
 	}
-	
+
 	private void createBulletLeft() {
 		if (bulletLeft != null) {
 			gamePane.getChildren().remove(bulletLeft);
@@ -230,7 +240,7 @@ public class GameViewManager {
 		bulletLeft.setY(100);
 		gamePane.getChildren().add(bulletLeft);
 	}
-	
+
 	private void createPlayerInfoBox() {
 		if (playerInfoBox != null) {
 			gamePane.getChildren().remove(playerInfoBox);
@@ -351,6 +361,78 @@ public class GameViewManager {
 
 		gameTimer.start();
 
+	}
+
+	private void createGameoverSubScene() {
+		createBlackDrop();
+
+		createLogoGameover();
+
+		Label label1 = new Label("Name:");
+		TextField textField = new TextField();
+		HBox hb = new HBox();
+		try {
+			label1.setTextFill(Color.YELLOW);
+			label1.setFont(Font.loadFont(new FileInputStream("res/PixelTakhisis-ZajJ.ttf"), 23));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		label1.setLayoutX(500);
+		label1.setLayoutY(400);
+		textField.setLayoutX(600);
+		textField.setLayoutY(400);
+		hb.setSpacing(10);
+		
+		GameButton submitButton=new GameButton("submit");
+		gamePane.getChildren().add(submitButton);
+		submitButton.setLayoutX(500);
+		submitButton.setLayoutY(600);
+		
+		
+		gamePane.getChildren().addAll(label1, textField);
+
+	}
+	
+	private void createBlackDrop() {
+		Rectangle GameoverSubScene = new Rectangle(1280, 720);
+		GameoverSubScene.setFill(Color.BLACK);
+		GameoverSubScene.setOpacity(0.8);
+		gamePane.getChildren().add(GameoverSubScene);
+	}
+
+	private void createLogoGameover() {
+		ImageView logo = new ImageView("gameover.png");
+
+		logo.setLayoutX(1280 / 2 - 300 * 1.5);
+		logo.setLayoutY(50);
+		logo.setFitHeight(300 * 1.5);
+		logo.setFitWidth(600 * 1.5);
+		logo.setOnMouseEntered(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent event) {
+				logo.setEffect(new DropShadow());
+				AudioClip mouse_enter_sound = new AudioClip(
+						ClassLoader.getSystemResource("mouse_enter_sound.wav").toString());
+				mouse_enter_sound.setVolume(0.1);
+				mouse_enter_sound.play();
+
+			}
+		});
+
+		logo.setOnMouseExited(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent event) {
+				// TODO Auto-generated method stub
+				logo.setEffect(null);
+			}
+
+		});
+
+		gamePane.getChildren().add(logo);
 	}
 
 	public Stage getGameStage() {

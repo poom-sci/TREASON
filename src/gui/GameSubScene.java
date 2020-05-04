@@ -29,7 +29,7 @@ public class GameSubScene extends SubScene {
 		
 		root2.setBackground(new Background(image));
 		setLayoutX(1024);
-		setLayoutY(150);
+		setLayoutY(250);
 		isHidden=true;
 	}
 	

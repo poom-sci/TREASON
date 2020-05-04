@@ -31,7 +31,7 @@ public class Portal extends Entity {
 //		sprite.play();
 	}
 	
-//	public Teleport(pla) {
-//		
-//	}
+	public void Teleport(int level) {
+		
+	}
 }

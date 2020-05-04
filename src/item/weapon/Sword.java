@@ -27,15 +27,17 @@ public class Sword extends Weapon implements Fireable  {
 	}
 
 	public Bullet fireBullet(item.character.Character character,boolean isRight) {
-		Bullet bullet=bullets.get(0);
+		Bullet bullet= new SwordSlice(isRight, character.getX(), character.getY());
 		
 		bullet.setRight(isRight);
 		bullet.setInitX(character.getX());
 		bullet.setInitY(character.getY());
 		if (isRight) {
+			bullet.setBoundX(-10);
 			bullet.setX(character.getX() + 40);
 			bullet.setY(character.getY() + 0);
 		} else {
+			bullet.setBoundX(10);
 			bullet.setX(character.getX() -60);
 			bullet.setY(character.getY() + 0);
 			bullet.getImageView().setRotate(imageView.getRotate() + 180);

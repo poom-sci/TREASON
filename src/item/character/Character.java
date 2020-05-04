@@ -35,6 +35,10 @@ public class Character extends Entity {
 	protected Action fireLeft;
 	protected Action dieRight;
 	protected Action dieLeft;
+	protected Action jumpLeft;
+	protected Action jumpRight;
+	
+	
 
 //	protected int boundX;
 //	protected int boundY;
@@ -45,11 +49,12 @@ public class Character extends Entity {
 	protected Rectangle healthBox;
 
 	protected ArrayList<Weapon> inventory;
+	protected int weaponKey;
 
 	public Character(int initX, int initY, int width, int height, int health) {
 		super(initX, initY, width, height);
 
-		box.setFill(Color.YELLOW);
+		box.setFill(Color.TRANSPARENT);
 
 		this.lowBox = new Rectangle(10, 10);
 		this.lowBox.setFill(Color.ALICEBLUE);
@@ -199,4 +204,24 @@ public class Character extends Entity {
 		return highBox;
 	}
 
+	public int getWeaponKey() {
+		return weaponKey;
+	}
+
+	public void changeWeaponLeft() {
+		weaponKey -= 1;
+		if (weaponKey < 0) {
+			weaponKey += inventory.size();
+		}
+		weaponKey = weaponKey % inventory.size();
+	}
+	
+	public void changeWeaponRight() {
+		weaponKey += 1;
+		weaponKey = weaponKey %inventory.size();
+	}
+	
+	public Weapon getWeapon() {
+		return inventory.get(weaponKey);
+	}
 }

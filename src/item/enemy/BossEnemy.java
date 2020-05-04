@@ -1,50 +1,43 @@
-package item.character;
+package item.enemy;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
-import javax.swing.text.StyledEditorKit.BoldAction;
-
-import gui.GameButton;
 import gui.SpriteAnimation;
+import item.character.Character;
+import item.weapon.Gun;
 import item.weapon.Weapon;
 import javafx.animation.Animation;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import logic.Action;
 
-public class MainCharacter extends Character {
-	
-	private int point;
+public class BossEnemy extends Character {
+	protected Weapon weapon;
 
-	public MainCharacter(int initX,int initY) {
-		super( initX, initY,30,60,200);
-		this.image_Path = "main_character.png";
-		this.inventory= new ArrayList<Weapon>();
+	public BossEnemy(int initX,int initY) {
+		super( initX, initY,200,200,1000);
+		this.image_Path = "boss.png";
+		this.weapon=new Gun(1);
 		
 		createAnimation();
-		point=0;
-
 	}
-
+	
 	private void createAnimation() {
-		
 		imageView = new ImageView(new Image(image_Path));
-		imageView.setViewport(new Rectangle2D(30, 0, 96, 96));
-		
-		sprite = new SpriteAnimation(imageView, Duration.millis(1000), 5, 5, 30, 0, 96, 96);
+//		imageView.setViewport(new Rectangle2D(0, 0, 71, 80));
+		imageView.setFitHeight(250);
+		imageView.setFitWidth(200);
+		sprite = new SpriteAnimation(imageView, Duration.millis(2000), 4, 4, 0, 0, 80, 80);
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
-		
+
+		this.disX=60*5;
+//		turnRight();
 		boundX = 32;
 		boundY = 18;
-		
+
 		this.x = (int) box.getTranslateX();
 		this.y = (int) box.getTranslateY();
 
@@ -61,8 +54,8 @@ public class MainCharacter extends Character {
 		walkLeft = new Action("isWalkLeft", false);
 		fireRight = new Action("fireRight", false);
 		fireLeft = new Action("fireLeft", false);
-		dieLeft=new Action("dieLeft", false);
-		dieRight=new Action("dieRight", false);
+		jumpLeft = new Action("jumpLeft", false);
+		jumpRight = new Action("jumpRight", false);
 
 		actions.add(turnLeft);
 		actions.add(turnRight);
@@ -70,15 +63,16 @@ public class MainCharacter extends Character {
 		actions.add(walkLeft);
 		actions.add(fireRight);
 		actions.add(fireLeft);
-		actions.add(dieLeft);
-		actions.add(dieRight);
+		actions.add(jumpLeft);
+		actions.add(jumpRight);
+		
 	}
 
-	private void resetAction() {
+	public void resetAction() {
 		for (Action e : actions) {
 			e.setAction(false);
 		}
-		sprite.stop();
+		sprite.pause();
 	}
 
 	public void doTurnLeft() {
@@ -104,7 +98,7 @@ public class MainCharacter extends Character {
 	public void doWalkRight() {
 		resetAction();
 //		boundX = 30;
-		sprite = new SpriteAnimation(imageView, Duration.millis(500), 8, 8, 30, 96 * 3, 96, 96);
+		sprite = new SpriteAnimation(imageView, Duration.millis(1000), 8, 8, 30, 96 * 3, 96, 96);
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
 		walkRight.setAction(true);
@@ -114,7 +108,7 @@ public class MainCharacter extends Character {
 	public void doWalkLeft() {
 		resetAction();
 //		boundX = 30;
-		sprite = new SpriteAnimation(imageView, Duration.millis(500), 8, 8, 30, 96 * 2, 96, 96);
+		sprite = new SpriteAnimation(imageView, Duration.millis(1000), 8, 8, 30, 96 * 2, 96, 96);
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
 		walkLeft.setAction(true);
@@ -122,9 +116,11 @@ public class MainCharacter extends Character {
 	}
 	
 	public void doFireRight() {
+		System.out.println("******************************");
 		resetAction();
+		sprite.stop();
 //		boundX = 30;
-		sprite = new SpriteAnimation(imageView, Duration.millis(200), 5, 8, 30, 96 * 5, 96, 96);
+		sprite = new SpriteAnimation(imageView, Duration.millis(100), 5, 8, 30, 96 * 5, 96, 96);
 		sprite.setCycleCount(1);
 		sprite.play();
 		fireRight.setAction(true);
@@ -132,41 +128,46 @@ public class MainCharacter extends Character {
 	}
 	
 	public void doFireLeft() {
+		System.out.println("******************************");
 		resetAction();
+		sprite.stop();
 //		boundX = 30;
-		sprite = new SpriteAnimation(imageView, Duration.millis(200), 5, 8, 30, 96 *4, 96, 96);
+		sprite = new SpriteAnimation(imageView, Duration.millis(100), 5, 8, 30, 96 *4, 96, 96);
 		sprite.setCycleCount(1);
 		sprite.play();
 		fireLeft.setAction(true);
 		System.out.println("fireLeft");
 	}
-	
-	public void doDieLeft() {
+
+	public void doJumpLeft() {
+		System.out.println("******************************");
 		resetAction();
+		sprite.stop();
 //		boundX = 30;
-		sprite = new SpriteAnimation(imageView, Duration.millis(2000), 8, 8, 30, 96 *6, 96, 96);
+		sprite = new SpriteAnimation(imageView, Duration.millis(100), 5, 8, 30, 96 *4, 96, 96);
 		sprite.setCycleCount(1);
 		sprite.play();
-		dieLeft.setAction(true);
-		System.out.println("DieLeft");
+		fireLeft.setAction(true);
+		System.out.println("JumpLeft");
 	}
 	
-	public void doDieRight() {
+	public void doJumpRight() {
+		System.out.println("******************************");
 		resetAction();
+		sprite.stop();
 //		boundX = 30;
-		sprite = new SpriteAnimation(imageView, Duration.millis(2000), 8, 8, 30, 96*7 , 96, 96);
+		sprite = new SpriteAnimation(imageView, Duration.millis(100), 5, 8, 30, 96 *4, 96, 96);
 		sprite.setCycleCount(1);
 		sprite.play();
-		dieRight.setAction(true);
-		System.out.println("DieRight");
+		fireLeft.setAction(true);
+		System.out.println("JumpRight");
 	}
 
-	public void addPoint(int i) {
-		this.point+=i;
+	public Weapon getWeapon() {
+		return weapon;
 	}
 
-	public int getPoint() {
-		return point;
+	public void setWeapon(Weapon weapon) {
+		this.weapon = weapon;
 	}
-	
 }

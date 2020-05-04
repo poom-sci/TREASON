@@ -7,6 +7,7 @@ import item.bullet.GunBullet;
 import item.character.MainCharacter;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import logic.FireBulletFailedException;
 import logic.Fireable;
 
 public abstract class Weapon {
@@ -51,7 +52,10 @@ public abstract class Weapon {
 		return name;
 	}
 
-	public Bullet fireBullet(item.character.Character character,boolean isRight) {
+	public Bullet fireBullet(item.character.Character character,boolean isRight) throws FireBulletFailedException {
+		if (bulletLeft == 0) {
+			throw new FireBulletFailedException("You can only fire your gun while there is bullet left.");
+		}
 		bulletLeft-=1;
 		bullets.get(0).setRight(isRight);
 

@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.AudioClip;
 import javafx.scene.text.Font;
 
 public class GameButton extends Button {
@@ -26,6 +27,7 @@ public class GameButton extends Button {
 	
 	private void setButtonFont() {
 		try {
+		
 			setFont(Font.loadFont(new FileInputStream(FONT_PATH), 23));
 		}
 		catch (FileNotFoundException e) {
@@ -37,6 +39,7 @@ public class GameButton extends Button {
 		setStyle(BUTTON_PRESSED_STYLE);
 		setPrefHeight(73);
 		setLayoutY(getLayoutY()+4);
+
 	}
 
 	private void setButtonFreeStyle() {
@@ -51,6 +54,9 @@ public class GameButton extends Button {
 			@Override
 			public void handle(MouseEvent event) {
 				setButtonPressedStyle();
+				AudioClip mouse_pressed_sound = new AudioClip(ClassLoader.getSystemResource("mouse_pressed_sound.wav").toString());
+				mouse_pressed_sound.setVolume(0.1);
+				mouse_pressed_sound.play();
 			}
 		});
 		
@@ -67,6 +73,10 @@ public class GameButton extends Button {
 			@Override
 			public void handle(MouseEvent event) {
 				setEffect(new DropShadow());
+				AudioClip mouse_enter_sound = new AudioClip(ClassLoader.getSystemResource("mouse_enter_sound.wav").toString());
+				mouse_enter_sound.setVolume(0.1);
+				mouse_enter_sound.play();
+				
 			}
 		});
 		

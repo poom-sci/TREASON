@@ -14,18 +14,22 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.media.AudioClip;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import logic.Leaderboards;
 
 public class ViewManager {
 
@@ -46,25 +50,27 @@ public class ViewManager {
 	private GameSubScene StartSubScene;
 
 	private GameSubScene NowShowing;
-	private boolean hasGameStage=false;
+	private boolean hasGameStage = false;
 	private GameViewManager gameManager;
 	private Stage gameStage;
 	
+
 	private HashMap<KeyCode, Boolean> keys = new HashMap<KeyCode, Boolean>();
 
 	public ViewManager() {
-		
-		
+
 		menuButtons = new ArrayList<GameButton>();
 		mainPane = new AnchorPane();
 		mainScene = new Scene(mainPane, WIDTH, HEIGHT);
 
+		CreateLogo();
 		createButtons();
 		createBackground();
 		CreateSubScenes();
 		
+
 		keyboardListener();
-		
+
 		mainStage = new Stage();
 		mainStage.setScene(mainScene);
 		mainStage.setTitle("Game Project");
@@ -74,22 +80,21 @@ public class ViewManager {
 	public Stage getMainStage() {
 		return mainStage;
 	}
-	
+
 	private void keyboardListener() {
 		mainPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
-	        public void handle(KeyEvent ke) {
-	            if (ke.getCode() == KeyCode.ESCAPE) {
-	                mainStage.close();
-	            }
-	        }
-	    });
+			public void handle(KeyEvent ke) {
+				if (ke.getCode() == KeyCode.ESCAPE) {
+					mainStage.close();
+				}
+			}
+		});
 	}
-	
 
 	private void CreateSubScenes() {
 		StartSubScene = new GameSubScene();
 		mainPane.getChildren().add(StartSubScene);
-		
+
 		ScoreSubScene = new GameSubScene();
 		mainPane.getChildren().add(ScoreSubScene);
 
@@ -99,6 +104,7 @@ public class ViewManager {
 		CreditSubScene = new GameSubScene();
 		mainPane.getChildren().add(CreditSubScene);
 	}
+	
 
 	private void ShowSubScene(GameSubScene scene) {
 		if (NowShowing != null) {
@@ -126,56 +132,53 @@ public class ViewManager {
 	private void createStartButton() {
 		GameButton start = new GameButton("Start");
 		addMenuButton(start);
-		
+
 		start.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent arg0) {
-				
+
 				ShowSubScene(StartSubScene);
-				
-				GameButton startNew=new GameButton("new");
+
+				GameButton startNew = new GameButton("new");
 				startNew.setLayoutX(50);
 				startNew.setLayoutY(200);
 				StartSubScene.getPane().getChildren().add(startNew);
-				
+
 				startNew.setOnAction(new EventHandler<ActionEvent>() {
 
 					@Override
 					public void handle(ActionEvent arg0) {
 
-							gameManager= new GameViewManager();
-							gameManager.createNewGame(mainStage);
-							hasGameStage=true;
-							gameStage=gameManager.getGameStage();
-						
-						
+						gameManager = new GameViewManager();
+						gameManager.createNewGame(mainStage);
+						hasGameStage = true;
+						gameStage = gameManager.getGameStage();
+
 					}
 				});
-				
-				GameButton startContinue=new GameButton("Continue");
+
+				GameButton startContinue = new GameButton("Continue");
 				startContinue.setLayoutX(300);
 				startContinue.setLayoutY(200);
 				StartSubScene.getPane().getChildren().add(startContinue);
-				
-				
+
 				startContinue.setOnAction(new EventHandler<ActionEvent>() {
 
 					@Override
 					public void handle(ActionEvent arg0) {
-						if(hasGameStage) {
+						if (hasGameStage) {
 							gameStage.show();
 							mainStage.hide();
 							gameManager.getGameTimer().start();
-							
-						}
-						else {
+
+						} else {
 							System.out.println("no save");
 						}
-						
+
 					}
 				});
-				
+
 			}
 		});
 	}
@@ -188,32 +191,53 @@ public class ViewManager {
 
 			@Override
 			public void handle(ActionEvent arg0) {
-				ShowSubScene(ScoreSubScene);	
+				ShowSubScene(ScoreSubScene);
+				ScoreSubScene.getPane().getChildren().clear();
+				
+				Leaderboards scoreBoard = Leaderboards.getInstance();
+				scoreBoard.loadScore();
+				
+				System.out.println(scoreBoard.getTopPlayer());
+				
+				for(int i=0;i<scoreBoard.getTopPlayer().size();i++) {
+					Text text = new Text();
+					// Setting the text to be added.
+					text.setText(scoreBoard.getTopPlayer(i));
+
+					// setting the position of the text
+					text.setX(50);
+					text.setY(50+i*20);
+					ScoreSubScene.getPane().getChildren().add(text);
+				}
 
 			}
 		});
 	}
 
 	private void createHelpButton() {
-		GameButton help=new GameButton("Help");
+		GameButton help = new GameButton("Help");
 		addMenuButton(help);
-		
+
 		help.setOnAction(new EventHandler<ActionEvent>() {
-			
+
 			@Override
 			public void handle(ActionEvent arg0) {
 				ShowSubScene(HelpSubScene);
 				
-				 Text text = new Text();      
-			      
-			      //Setting the text to be added. 
-			      text.setText("Hello how are you"); 
-			       
-			      //setting the position of the text 
-			      text.setX(50); 
-			      text.setY(50); 
-			      mainPane.getChildren().add(text);
-				
+				Leaderboards scoreBoard = Leaderboards.getInstance();
+				scoreBoard.loadScore();
+				scoreBoard.addPlayerScore("PPP", 9999, 0.1);
+				scoreBoard.saveScores();
+				Text text = new Text();
+
+				// Setting the text to be added.
+				text.setText("Hello how are you");
+
+				// setting the position of the text
+				text.setX(50);
+				text.setY(50);
+				mainPane.getChildren().add(text);
+
 			}
 		});
 
@@ -228,16 +252,15 @@ public class ViewManager {
 			@Override
 			public void handle(ActionEvent arg0) {
 				ShowSubScene(CreditSubScene);
-				
+
 				ImageView imageView = new ImageView(new Image("removebg.png"));
 				imageView.setViewport(new Rectangle2D(26, 0, 96, 96));
-				Animation poom=new SpriteAnimation(imageView, Duration.millis(8000), 24,8, 26,  0,96,96);
+				Animation poom = new SpriteAnimation(imageView, Duration.millis(8000), 24, 8, 26, 0, 96, 96);
 				poom.setCycleCount(Animation.INDEFINITE);
 				poom.play();
-				
+
 				mainPane.getChildren().add(new Group(imageView));
-				
-	
+
 			}
 		});
 	}
@@ -255,6 +278,38 @@ public class ViewManager {
 			}
 		});
 
+	}
+	
+	private void CreateLogo() {
+		ImageView logo=new ImageView("treason_logo.png");
+		logo.setLayoutX(420);
+		logo.setLayoutY(0);
+		logo.setFitHeight(200*1.5);
+		logo.setFitWidth(300*1.5);
+		
+		logo.setOnMouseEntered(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent event) {
+				logo.setEffect(new DropShadow());
+				AudioClip mouse_enter_sound = new AudioClip(ClassLoader.getSystemResource("mouse_enter_sound.wav").toString());
+				mouse_enter_sound.setVolume(0.1);
+				mouse_enter_sound.play();
+				
+			}
+		});
+		
+		logo.setOnMouseExited(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent event) {
+				// TODO Auto-generated method stub
+				logo.setEffect(null);
+			}
+			
+		});
+		
+		mainPane.getChildren().add(logo);
 	}
 
 	private void createBackground() {
