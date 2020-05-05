@@ -8,10 +8,7 @@ import javafx.scene.paint.Color;
 public class Bullet extends Entity {
 	
 	protected boolean isRight;
-	protected int initX;
-	protected int initY;
-	protected int disX;
-	protected int disY;
+	protected int damage;
 	
 	
 	public Bullet(boolean isRight,int initX,int initY,int width,int height) {
@@ -35,31 +32,11 @@ public class Bullet extends Entity {
 	}
 
 
-	public int getInitX() {
-		return initX;
-	}
 
 
-	public int getInitY() {
-		return initY;
+	public int getDamage() {
+		return damage;
 	}
 	
-	public void setInitX(int initX) {
-		this.initX = initX;
-	}
-
-
-	public void setInitY(int initY) {
-		this.initY = initY;
-	}
-
-
-	public int getDisX() {
-		return disX;
-	}
-
-
-	public int getDisY() {
-		return disY;
-	}
+	
 }

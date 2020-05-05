@@ -36,13 +36,30 @@ public class Leaderboards {
 		return lBoard;
 	}
 
-	public void addPlayerScore(String name, int score, Double time) {
+	public void addPlayerScore(String name, int score, Double time) throws AddLeaderboardScoresFailed  {
+		if(name.length()==0) {
+			throw new AddLeaderboardScoresFailed("Name cannot left blank.");
+		}
+		if(name.length()>10) {
+			throw new AddLeaderboardScoresFailed("Name cannot be more than 10 characters.");
+		}
+		if(topPlayer.contains(name)) {
+			throw new AddLeaderboardScoresFailed("Name cannot be same.");
+		}
+		for (char c : name.toCharArray()) {
+            if (!Character.isLetter(c) && !Character.isDigit(c)) {
+            	throw new AddLeaderboardScoresFailed("Name cannot be marks.");
+            }
+        }
+			
 		for (int i = 0; i < topScores.size(); i++) {
 			if (score > topScores.get(i)) {
 				topPlayer.add(i, name);
 				topPlayer.remove(topPlayer.size() - 1);
+				
 				topScores.add(i, score);
 				topScores.remove(topScores.size() - 1);
+				
 				topTimes.add(i, time);
 				topTimes.remove(topTimes.size() - 1);
 				return;
@@ -75,7 +92,7 @@ public class Leaderboards {
 			}
 
 			for (int i = 0; i < times.length; i++) {
-				topTimes.add(Double.parseDouble(scores[i]));
+				topTimes.add(Double.parseDouble(times[i]));
 			}
 
 			reader.close();
@@ -111,7 +128,6 @@ public class Leaderboards {
 			}
 			String topTimeLine = String.join("-", topTimeString);
 			writer.write(topTimeLine);
-			writer.newLine();
 
 			writer.close();
 
@@ -129,14 +145,13 @@ public class Leaderboards {
 			output = new FileWriter(f);
 			BufferedWriter writer = new BufferedWriter(output);
 
-			writer.write("No player-No player-No player-No player-No player");
+			writer.write("None-None-None-None-None-None-None-None");
 			writer.newLine();
 
-			writer.write("0-0-0-0-0");
+			writer.write("0-0-0-0-0-0-0-0");
 			writer.newLine();
 			
-			writer.write(Integer.MAX_VALUE+"-"+Integer.MAX_VALUE+"-"+Integer.MAX_VALUE+"-"+Integer.MAX_VALUE+"-"+Integer.MAX_VALUE+"-");
-			writer.newLine();
+			writer.write(0.0+"-"+0.0+"-"+0.0+"-"+0.0+"-"+0.0+"-"+0.0+"-"+0.0+"-"+0.0);
 
 			writer.close();
 
@@ -151,7 +166,16 @@ public class Leaderboards {
 	}
 	
 	public String getTopPlayer(int i) {
-		return topPlayer.get(i)+" : "+topScores.get(i)+" : "+topTimes.get(i);
+		String score=topPlayer.get(i);
+		for(int j=0;j<(10-topPlayer.get(i).length());j++) {
+			score+=" ";
+		}
+		score+=": "+topScores.get(i);
+		for(int j=0;j<(10-(""+topScores.get(i)).length());j++) {
+			score+=" ";
+		}
+		score+=": "+topTimes.get(i);
+		return score;
 	}
 
 }

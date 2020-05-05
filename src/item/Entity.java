@@ -80,9 +80,14 @@ public abstract class Entity {
 	public Animation getSprite() {
 		return sprite;
 	}
+	
+
+	public String getImage_Path() {
+		return image_Path;
+	}
 
 
-	public void setPic_path(String pic_path) {
+	public void setImage_Path(String image_Path) {
 		this.image_Path = image_Path;
 	}
 

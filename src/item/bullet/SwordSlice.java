@@ -14,7 +14,8 @@ public class SwordSlice extends Bullet {
 		// TODO Auto-generated constructor stub
 		this.disX = 20;
 		this.disY = 20;
-
+		
+		damage=50;
 		this.isRight = isRight;
 		this.name = "slice";
 

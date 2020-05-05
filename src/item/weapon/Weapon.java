@@ -52,7 +52,7 @@ public abstract class Weapon {
 		return name;
 	}
 
-	public Bullet fireBullet(item.character.Character character,boolean isRight) throws FireBulletFailedException {
+	public Bullet fireBullet(item.character.GameCharacter character,boolean isRight) throws FireBulletFailedException {
 		if (bulletLeft == 0) {
 			throw new FireBulletFailedException("You can only fire your gun while there is bullet left.");
 		}
@@ -75,7 +75,7 @@ public abstract class Weapon {
 		return bullets.remove(0);
 	}
 	
-	public Bullet fireBulletInfinite(item.character.Character character,boolean isRight) {
+	public Bullet fireBulletInfinite(item.character.GameCharacter character,boolean isRight) {
 		Bullet bullet=new GunBullet(isRight, character.getX(), character.getY());
 		bullet.setRight(isRight);
 		bullet.setInitX(character.getX());

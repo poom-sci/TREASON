@@ -26,7 +26,7 @@ public class Sword extends Weapon implements Fireable  {
 
 	}
 
-	public Bullet fireBullet(item.character.Character character,boolean isRight) {
+	public Bullet fireBullet(item.character.GameCharacter character,boolean isRight) {
 		Bullet bullet= new SwordSlice(isRight, character.getX(), character.getY());
 		
 		bullet.setRight(isRight);

@@ -3,6 +3,7 @@ package item.enemy;
 import java.util.ArrayList;
 
 import gui.SpriteAnimation;
+import item.Entity;
 import item.character.GameCharacter;
 import item.weapon.Gun;
 import item.weapon.Weapon;
@@ -10,15 +11,19 @@ import javafx.animation.Animation;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import logic.Action;
 
-public class BossEnemy extends GameCharacter {
-	protected Weapon weapon;
+public class GunEnemy extends GameCharacter {
 
-	public BossEnemy(int initX, int initY) {
-		super("boss.png", initX, initY, 200, 200, 1000);
-		this.weapon = new Gun(1);
+	public GunEnemy(int initX, int initY) {
+		super("main_character.png", initX, initY, 30, 60, 50);
+		Weapon gun = new Gun(1);
+		this.inventory.add(gun);
+		
+		this.disX = 60 * 5;
 		
 		pictureWidth=96;
 		pictureHeight=96;

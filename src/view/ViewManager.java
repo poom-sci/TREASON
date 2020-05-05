@@ -1,5 +1,7 @@
 package view;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -14,6 +16,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -26,6 +29,8 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.media.AudioClip;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -53,7 +58,6 @@ public class ViewManager {
 	private boolean hasGameStage = false;
 	private GameViewManager gameManager;
 	private Stage gameStage;
-	
 
 	private HashMap<KeyCode, Boolean> keys = new HashMap<KeyCode, Boolean>();
 
@@ -67,7 +71,6 @@ public class ViewManager {
 		createButtons();
 		createBackground();
 		CreateSubScenes();
-		
 
 		keyboardListener();
 
@@ -104,7 +107,6 @@ public class ViewManager {
 		CreditSubScene = new GameSubScene();
 		mainPane.getChildren().add(CreditSubScene);
 	}
-	
 
 	private void ShowSubScene(GameSubScene scene) {
 		if (NowShowing != null) {
@@ -167,15 +169,20 @@ public class ViewManager {
 
 					@Override
 					public void handle(ActionEvent arg0) {
-						if (hasGameStage) {
-							gameStage.show();
-							mainStage.hide();
-							gameManager.getGameTimer().start();
+						if (gameManager != null) {
+							if (gameManager.getIsGameover()) {
+								System.out.println("no save");
+							} else {
+								if (hasGameStage) {
+									gameStage.show();
+									mainStage.hide();
+									gameManager.getGameTimer().start();
+								} else {
+									System.out.println("no save");
+								}
+							}
 
-						} else {
-							System.out.println("no save");
 						}
-
 					}
 				});
 
@@ -193,21 +200,40 @@ public class ViewManager {
 			public void handle(ActionEvent arg0) {
 				ShowSubScene(ScoreSubScene);
 				ScoreSubScene.getPane().getChildren().clear();
-				
+
 				Leaderboards scoreBoard = Leaderboards.getInstance();
 				scoreBoard.loadScore();
-				
-				System.out.println(scoreBoard.getTopPlayer());
-				
-				for(int i=0;i<scoreBoard.getTopPlayer().size();i++) {
-					Text text = new Text();
-					// Setting the text to be added.
-					text.setText(scoreBoard.getTopPlayer(i));
 
-					// setting the position of the text
-					text.setX(50);
-					text.setY(50+i*20);
+				Label header = new Label("Player   : Score   : time");
+				header.setTextFill(Color.web("EA8F3C"));
+				try {
+					header.setFont(Font.loadFont(new FileInputStream("res/PixelTakhisis-ZajJ.ttf"), 23));
+				} catch (FileNotFoundException e) {
+//					 TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+//				 setting the position of the text
+				header.setLayoutX(100);
+				header.setLayoutY(50 );
+				
+				ScoreSubScene.getPane().getChildren().add(header);
+				
+				for (int i = 0; i < scoreBoard.getTopPlayer().size(); i++) {
+					Label text = new Label();
+					// Setting the text to be added.
+					text.setText((i+1)+". "+scoreBoard.getTopPlayer(i));
+					text.setTextFill(Color.web("EA8F3C"));
+					try {
+						text.setFont(Font.loadFont(new FileInputStream("res/PixelTakhisis-ZajJ.ttf"), 23));
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+//					 setting the position of the text
+					text.setLayoutX(70);
+					text.setLayoutY(100 + i * 20);
 					ScoreSubScene.getPane().getChildren().add(text);
+					scoreBoard.saveScores();
 				}
 
 			}
@@ -223,11 +249,8 @@ public class ViewManager {
 			@Override
 			public void handle(ActionEvent arg0) {
 				ShowSubScene(HelpSubScene);
-				
+
 				Leaderboards scoreBoard = Leaderboards.getInstance();
-				scoreBoard.loadScore();
-				scoreBoard.addPlayerScore("PPP", 9999, 0.1);
-				scoreBoard.saveScores();
 				Text text = new Text();
 
 				// Setting the text to be added.
@@ -273,32 +296,33 @@ public class ViewManager {
 
 			@Override
 			public void handle(ActionEvent arg0) {
-				// TODO Auto-generated method stub
+				// TODO Auto-dgenerated method stub
 				mainStage.close();
 			}
 		});
 
 	}
-	
+
 	private void CreateLogo() {
-		ImageView logo=new ImageView("treason_logo.png");
+		ImageView logo = new ImageView("treason_logo.png");
 		logo.setLayoutX(420);
 		logo.setLayoutY(0);
-		logo.setFitHeight(200*1.5);
-		logo.setFitWidth(300*1.5);
-		
+		logo.setFitHeight(200 * 1.5);
+		logo.setFitWidth(300 * 1.5);
+
 		logo.setOnMouseEntered(new EventHandler<MouseEvent>() {
 
 			@Override
 			public void handle(MouseEvent event) {
 				logo.setEffect(new DropShadow());
-				AudioClip mouse_enter_sound = new AudioClip(ClassLoader.getSystemResource("mouse_enter_sound.wav").toString());
+				AudioClip mouse_enter_sound = new AudioClip(
+						ClassLoader.getSystemResource("mouse_enter_sound.wav").toString());
 				mouse_enter_sound.setVolume(0.1);
 				mouse_enter_sound.play();
-				
+
 			}
 		});
-		
+
 		logo.setOnMouseExited(new EventHandler<MouseEvent>() {
 
 			@Override
@@ -306,9 +330,9 @@ public class ViewManager {
 				// TODO Auto-generated method stub
 				logo.setEffect(null);
 			}
-			
+
 		});
-		
+
 		mainPane.getChildren().add(logo);
 	}
 

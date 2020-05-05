@@ -18,6 +18,7 @@ import item.Entity;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.beans.binding.DoubleExpression;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
@@ -29,6 +30,8 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
@@ -53,7 +56,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import logic.AddLeaderboardScoresFailed;
 import logic.GameController;
+import logic.Leaderboards;
 import logic.LevelData;
 
 public class GameViewManager {
@@ -79,7 +84,7 @@ public class GameViewManager {
 
 	private HashMap<KeyCode, Boolean> keys = new HashMap<KeyCode, Boolean>();
 
-	private Boolean isGamePause;
+	private Boolean isGameover;
 
 	private Pane gameRoot;
 
@@ -118,7 +123,7 @@ public class GameViewManager {
 //		gameStage.setResizable(false);
 
 		menuButtons = new ArrayList<GameButton>();
-		isGamePause = false;
+		isGameover = false;
 
 		createMenu();
 		createGameLoop();
@@ -170,6 +175,8 @@ public class GameViewManager {
 		isPlayerDie = player1Controller.getPlayer().isDie();
 		if (isPlayerDie) {
 			gameTimer.stop();
+			AudioClip mouse_pressed_sound = new AudioClip(ClassLoader.getSystemResource("gameover_sound.wav").toString());
+			mouse_pressed_sound.play();
 			createGameoverSubScene();
 		}
 
@@ -324,7 +331,6 @@ public class GameViewManager {
 				gameStage.hide();
 				menuStage.show();
 				menuPane.setVisible(false);
-				isGamePause = true;
 			}
 
 		});
@@ -368,33 +374,103 @@ public class GameViewManager {
 
 		createLogoGameover();
 
-		Label label1 = new Label("Name:");
+		Label nameScores = new Label("Name :");
+		Label scoreScores = new Label("Score : " + player1Controller.getPlayerPoint());
+		Label timeScores = new Label("Time : " + time.doubleValue());
 		TextField textField = new TextField();
-		HBox hb = new HBox();
 		try {
-			label1.setTextFill(Color.YELLOW);
-			label1.setFont(Font.loadFont(new FileInputStream("res/PixelTakhisis-ZajJ.ttf"), 23));
+			nameScores.setTextFill(Color.web("EA8F3C"));
+			nameScores.setFont(Font.loadFont(new FileInputStream("res/PixelTakhisis-ZajJ.ttf"), 23));
+
+			scoreScores.setTextFill(Color.web("EA8F3C"));
+			scoreScores.setFont(Font.loadFont(new FileInputStream("res/PixelTakhisis-ZajJ.ttf"), 23));
+
+			timeScores.setTextFill(Color.web("EA8F3C"));
+			timeScores.setFont(Font.loadFont(new FileInputStream("res/PixelTakhisis-ZajJ.ttf"), 23));
+
+			textField.setFont(Font.loadFont(new FileInputStream("res/PixelTakhisis-ZajJ.ttf"), 23));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		label1.setLayoutX(500);
-		label1.setLayoutY(400);
+
+		nameScores.setLayoutX(500);
+		nameScores.setLayoutY(408);
 		textField.setLayoutX(600);
 		textField.setLayoutY(400);
-		hb.setSpacing(10);
-		
-		GameButton submitButton=new GameButton("submit");
+		scoreScores.setLayoutX(500);
+		scoreScores.setLayoutY(460);
+		timeScores.setLayoutX(500);
+		timeScores.setLayoutY(510);
+
+		GameButton submitButton = new GameButton("submit");
 		gamePane.getChildren().add(submitButton);
-		submitButton.setLayoutX(500);
-		submitButton.setLayoutY(600);
-		
-		
-		gamePane.getChildren().addAll(label1, textField);
+		submitButton.setLayoutX(400);
+		submitButton.setLayoutY(550);
+		submitButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				try {
+					isGameover = true;
+					Leaderboards scoreBoard = Leaderboards.getInstance();
+					scoreBoard.loadScore();
+					scoreBoard.addPlayerScore(textField.getText(), player1Controller.getPlayerPoint(),
+							time.doubleValue());
+					scoreBoard.saveScores();
+					gameStage.close();
+					menuStage.show();
+				} catch (AddLeaderboardScoresFailed e) {
+					Alert alert = new Alert(AlertType.WARNING, "Add leaderboard failed, " + e.message);
+					alert.setTitle("Error");
+					alert.show();
+				}
+
+			}
+
+		});
+
+		GameButton ExitButton = new GameButton("Exit");
+		gamePane.getChildren().add(ExitButton);
+		ExitButton.setLayoutX(650);
+		ExitButton.setLayoutY(550);
+		ExitButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				isGameover = true;
+				gameStage.close();
+				menuStage.show();
+
+			}
+
+		});
+
+		gamePane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			public void handle(KeyEvent key) {
+
+				if (key.getCode() == KeyCode.ENTER) {
+					try {
+						isGameover = true;
+						Leaderboards scoreBoard = Leaderboards.getInstance();
+						scoreBoard.loadScore();
+						scoreBoard.addPlayerScore(textField.getText(), player1Controller.getPlayerPoint(),
+								time.doubleValue());
+						scoreBoard.saveScores();
+						gameStage.close();
+						menuStage.show();
+					} catch (AddLeaderboardScoresFailed e) {
+						System.out.println("Add leaderboard failed, " + e.message);
+					}
+				}
+
+			}
+		});
+
+		gamePane.getChildren().addAll(nameScores, textField, scoreScores, timeScores);
 
 	}
-	
+
 	private void createBlackDrop() {
 		Rectangle GameoverSubScene = new Rectangle(1280, 720);
 		GameoverSubScene.setFill(Color.BLACK);
@@ -441,6 +517,10 @@ public class GameViewManager {
 
 	public AnimationTimer getGameTimer() {
 		return gameTimer;
+	}
+
+	public Boolean getIsGameover() {
+		return isGameover;
 	}
 
 }

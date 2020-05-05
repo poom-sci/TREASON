@@ -10,20 +10,25 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.text.StyledEditorKit.BoldAction;
 
+import com.sun.javafx.geom.Shape;
+
 import gui.SpriteAnimation;
 import item.bullet.Bomb;
 import item.bullet.Bullet;
 import item.bullet.GunBullet;
 import item.bullet.RocketBullet;
 import item.bullet.SwordSlice;
+import item.character.GameCharacter;
 import item.character.MainCharacter;
 import item.enemy.BossEnemy;
-import item.enemy.Enemy;
+import item.enemy.ColliderEnemy;
+import item.enemy.GunEnemy;
 import item.weapon.BombGun;
 import item.weapon.Gun;
 import item.weapon.RocketGun;
 import item.weapon.Sword;
 import item.weapon.Weapon;
+import item.Barrier;
 import item.DelayItem;
 import item.Entity;
 import item.box.Box;
@@ -56,10 +61,11 @@ public class GameController {
 	private ArrayList<DelayItem> delaylist = new ArrayList<DelayItem>();
 
 	private int weaponKey = 0;
+	private int counter=0;
 
 	private ArrayList<Bomb> bossBombList = new ArrayList<Bomb>();
 	private ArrayList<BossEnemy> bossList = new ArrayList<BossEnemy>();
-	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+	private ArrayList<GameCharacter> enemies = new ArrayList<GameCharacter>();
 	private ArrayList<Bullet> enemyBullets = new ArrayList<Bullet>();
 
 	private int levelWidth;
@@ -78,6 +84,8 @@ public class GameController {
 	private int offsetY;
 
 	private boolean isDie = false;
+	private boolean isBarrierOpen = false;
+	private Barrier barrier;
 
 	public GameController(Pane gameRoot) {
 		this.gameRoot = gameRoot;
@@ -105,8 +113,21 @@ public class GameController {
 		Weapon sword = new Sword(1);
 		player.getInventory().add(sword);
 	}
+	
+	private void gravity() {
+		for(int i=0;i<enemies.size();i++) {
+			GameCharacter enemy=enemies.get(i);
+			if (enemy.getVelocityY() < 10) {
+				enemy.addVelocityY(1);
+			}
+		}
+	}
 
 	public void getControl() {
+		counter+=1;
+		
+		gravity();
+		System.out.println(player.getHealth());
 
 		if (player.getVelocityY() < 10) {
 			player.addVelocityY(1);
@@ -116,6 +137,17 @@ public class GameController {
 		}
 
 		moveBossBomb();
+		if (isBarrierOpen) {
+			barrier.setX(offsetX);
+			barrier.setY(offsetY);
+			if(counter%5==0) {
+//				gameRoot.getChildren().remove(player.getImageView());
+				player.blink();
+//				gameRoot.getChildren().add(player.getImageView());
+				player.setX(offsetX);
+				player.setY(offsetY);
+			}
+		}
 
 		if (player.getHealth() <= 0 || player.getY() >= levelHeight) {
 			if (!isDie) {
@@ -131,11 +163,15 @@ public class GameController {
 		} else {
 			try {
 				System.out.println(Math.round(time) % 5);
-//
+
+				
 				if ((Math.round(time) % 3) == 0) {
 					if (!isEnemyFire) {
 						enemyFireBullet();
 						isEnemyFire = true;
+						
+						randomGunEnemyInRange(100,200,0,0);
+						
 					}
 				} else {
 					isEnemyFire = false;
@@ -162,13 +198,6 @@ public class GameController {
 						player.doTurnRight();
 					}
 				}
-
-//				if (player.getIsWalkLeft() && alreadyPressedSPACE) {
-//					player.doTurnLeft();
-//				}
-//				if((player.getIsWalkRight() && alreadyPressedSPACE)) {
-//					player.doTurnRight();
-//				}
 
 				if (isPressed(KeyCode.W) && player.getX() >= 5) {
 					if (!alreadyPressedW) {
@@ -258,6 +287,7 @@ public class GameController {
 
 		player = new MainCharacter(100, 0);
 		player.setX(100);
+		player.doTurnLeft();
 		gameRoot.getChildren().addAll(player.getBox(), player.getImageView());
 
 	}
@@ -281,32 +311,42 @@ public class GameController {
 					platforms.add(platform);
 					gameRoot.getChildren().add(platform.getImageView());
 					break;
-				case '2':
-					Enemy enemy = new Enemy(j * 60, i * 60);
-					enemy.setX(j * 60);
-					enemy.setY(i * 60);
-					enemies.add(enemy);
-					gameRoot.getChildren().addAll(enemy.getBox());
-					gameRoot.getChildren().add(enemy.getImageView());
+				case 'G':
+					GameCharacter gunEnemy = new GunEnemy(j * 60, i * 60);
+					gunEnemy.setX(j * 60);
+					gunEnemy.setY(i * 60);
+					gunEnemy.doTurnLeft();
+					enemies.add(gunEnemy);
+					gameRoot.getChildren().addAll(gunEnemy.getBox());
+					gameRoot.getChildren().add(gunEnemy.getImageView());
+
+					break;
+				case 'C':
+					GameCharacter colliderEnemy = new ColliderEnemy(j * 60, i * 60);
+					colliderEnemy.setX(j * 60);
+					colliderEnemy.setY(i * 60);
+					colliderEnemy.doTurnLeft();
+					enemies.add(colliderEnemy);
+					gameRoot.getChildren().addAll(colliderEnemy.getBox());
+					gameRoot.getChildren().add(colliderEnemy.getImageView());
 
 					break;
 				case '3':
-//					System.out.println("33333333333");
 					Portal door = new Portal(j * 60, i * 60, 60, 60);
 					door.setX(j * 60);
 					door.setY(i * 60);
 					portals.add(door);
 					gameRoot.getChildren().add(door.getImageView());
 					break;
-				case 'B':
-					BossEnemy boss = new BossEnemy(j * 60, i * 60);
-					boss.setX(j * 60);
-					boss.setY(i * 60);
-					bossList.add(boss);
-					gameRoot.getChildren().addAll(boss.getBox());
-					gameRoot.getChildren().add(boss.getImageView());
-
-					break;
+//				case 'B':
+//					BossEnemy boss = new BossEnemy(j * 60, i * 60);
+//					boss.setX(j * 60);
+//					boss.setY(i * 60);
+//					bossList.add(boss);
+//					gameRoot.getChildren().addAll(boss.getBox());
+//					gameRoot.getChildren().add(boss.getImageView());
+//
+//					break;
 
 				}
 			}
@@ -337,7 +377,7 @@ public class GameController {
 					gameRoot.getChildren().add(platform.getImageView());
 					break;
 				case '2':
-					Enemy enemy = new Enemy(j * 60, i * 60);
+					GunEnemy enemy = new GunEnemy(j * 60, i * 60);
 					enemy.setX(j * 60);
 					enemy.setY(i * 60);
 					enemies.add(enemy);
@@ -353,11 +393,9 @@ public class GameController {
 				}
 			}
 		}
-
 	}
 
 	private void fireBullet(boolean isRight) {
-
 		try {
 			Bullet bullet = player.getWeapon().fireBullet(player, isRight);
 			playerBullets.add(bullet);
@@ -378,35 +416,45 @@ public class GameController {
 				System.out.println(granade_sound.getVolume());
 				granade_sound.play();
 			}
-
 		} catch (FireBulletFailedException e) {
 			System.out.println("Fire bullet failed, " + e.message);
 		}
-
 	}
 
 	private void enemyFireBullet() {
 		for (int i = 0; i < enemies.size(); i++) {
-			Enemy enemy = enemies.get(i);
-			int distance = enemy.getX() - player.getX();
+
+			GameCharacter enemyCharacter = enemies.get(i);
+			int distance = enemyCharacter.getX() - player.getX();
 			if (Math.abs(distance) < 300) {
-				boolean isBeforeRight = enemy.isRight();
+				boolean isBeforeRight = enemyCharacter.isRight();
 				boolean isRight = distance < 0;
 
 				if (distance < 0) {
-					enemy.doFireRight();
+
+					enemyCharacter.doFireRight();
+
 				} else {
-					enemy.doFireLeft();
+					enemyCharacter.doFireLeft();
+
 				}
 
-				Bullet bullet = enemy.getWeapon().fireBulletInfinite(enemy, isRight);
-				enemyBullets.add(bullet);
-				gameRoot.getChildren().addAll(bullet.getBox(), bullet.getImageView());
+				try {
+					Bullet bullet = enemyCharacter.getWeapon().fireBulletInfinite(enemyCharacter, isRight);
+					enemyBullets.add(bullet);
+					gameRoot.getChildren().addAll(bullet.getBox(), bullet.getImageView());
+				} catch (Exception e) {
+					// TODO: handle exception
+					System.out.println(e);
+				}
 
 				if (isBeforeRight) {
-					enemy.doWalkRight();
+
+					enemyCharacter.doWalkRight();
+
 				} else {
-					enemy.doWalkLeft();
+
+					enemyCharacter.doWalkLeft();
 				}
 			}
 
@@ -414,7 +462,6 @@ public class GameController {
 	}
 
 	private void checkPortal() {
-
 		int size = portals.size();
 		for (int i = 0; i < size;) {
 			Portal portal = portals.get(i);
@@ -425,7 +472,6 @@ public class GameController {
 				continue;
 			}
 			i += 1;
-
 		}
 	}
 
@@ -471,7 +517,11 @@ public class GameController {
 	private void moveEnemies() {
 		if (!enemies.isEmpty()) {
 			for (int i = 0; i < enemies.size(); i++) {
-				Enemy enemy = enemies.get(i);
+				GameCharacter enemy = enemies.get(i);
+				if (enemy.getY() <= levelHeight) {
+					moveEnemyY(enemy, enemy.getVelocityY());
+				}
+				
 				if (enemy.isRight()) {
 					moveEnemyX(enemy, 2);
 				} else {
@@ -552,18 +602,18 @@ public class GameController {
 	}
 
 	private void checkDelay() {
-		if (delaylist.size() == 0) {
-			return;
-		}
 		int size = delaylist.size();
 		for (int i = 0; i < size;) {
+
 			if (delaylist.get(i).getFinalTime() <= time) {
 
 				Entity item = delaylist.get(i).getItem();
+				if (item instanceof Barrier) {
+					isBarrierOpen = false;
+				}
 
 				gameRoot.getChildren().remove(item.getImageView());
 				gameRoot.getChildren().remove(item.getBox());
-//				System.out.println("remove+++++++++++++++" + delaylist.get(i).getFinalTime());
 				size--;
 				delaylist.remove(i);
 				continue;
@@ -656,7 +706,7 @@ public class GameController {
 		item.setX(item.getX() + (movingRight ? 10 : -10));
 	}
 
-	private void moveEnemyX(Enemy enemy, int value) {
+	private void moveEnemyX(GameCharacter enemy, int value) {
 		boolean movingRight = value > 0;
 
 		for (int i = 0; i < Math.abs(value); i++) {
@@ -670,6 +720,30 @@ public class GameController {
 			}
 		}
 		enemy.setX(enemy.getX() + (movingRight ? 1 : -1));
+	}
+	
+	private void moveEnemyY(GameCharacter enemy, int value) {
+		boolean movingDown = value > 0;
+
+		for (int i = 0; i < Math.abs(value); i++) {
+			for (Entity platform : platforms) {
+				if (enemy.getBox().getBoundsInParent().intersects(platform.getBox().getBoundsInParent())) {
+					if (movingDown) {
+						if (enemy.getY() + player.getHeight() == platform.getY()) {
+							enemy.setY(enemy.getY() - 1);
+							enemy.setOnFloor(true);
+							return;
+						}
+					} else {
+						if (enemy.getY() == platform.getY() + 60) {
+							enemy.setY(enemy.getY() + 1);
+							return;
+						}
+					}
+				}
+			}
+			enemy.setY(enemy.getY() + (movingDown ? 1 : -1));
+		}
 	}
 
 	private void moveItemY(Entity item, int value) {
@@ -703,31 +777,51 @@ public class GameController {
 		int size = enemies.size();
 		boolean isHit = false;
 		for (int i = 0; i < size;) {
-			Enemy enemy = enemies.get(i);
+			GameCharacter enemy = enemies.get(i);
 			if (item.getBox().getBoundsInParent().intersects(enemies.get(i).getBox().getBoundsInParent())) {
-				gameRoot.getChildren().remove(enemy.getImageView());
-				gameRoot.getChildren().remove(enemy.getHighBox());
-				gameRoot.getChildren().remove(enemy.getLowBox());
-				enemies.remove(enemy);
-				player.addPoint(100);
-
+//				if (item instanceof MainCharacter) {
+//					enemy.decreasedHealth(50);
+//				}
+				if (item instanceof Bullet) {
+					enemy.decreasedHealth(((Bullet) item).getDamage());
+				}
+				isEnemyDie(enemy);
 				size -= 1;
 				isHit = true;
-				continue;
 			}
 			i += 1;
 		}
 		return isHit;
 	}
 
+	private void isEnemyDie(GameCharacter enemyCharacter) {
+		if (enemyCharacter.getHealth() <= 0) {
+
+			delayImage(enemyCharacter, 1.5);
+			gameRoot.getChildren().remove(enemyCharacter.getHighBox());
+			gameRoot.getChildren().remove(enemyCharacter.getLowBox());
+			enemies.remove(enemyCharacter);
+			player.addPoint(100);
+			if (enemyCharacter.isRight()) {
+				enemyCharacter.doDieRight();
+			} else {
+				enemyCharacter.doDieLeft();
+			}
+		}
+	}
+
+
 	private void checkPlayerCollision() {
+		if (isBarrierOpen) {
+			return;
+		}
 		if (checkEnemyCollision(player)) {
 			this.player.decreasedHealth(50);
+			createBarrier();
 		}
 
 		int size = enemyBullets.size();
 		for (int i = 0; i < size;) {
-
 			Bullet bullet = enemyBullets.get(i);
 			if (player.getBox().getBoundsInParent().intersects(bullet.getBox().getBoundsInParent())) {
 				gameRoot.getChildren().remove(bullet.getImageView());
@@ -741,6 +835,28 @@ public class GameController {
 
 		}
 
+	}
+	
+	private void randomGunEnemyInRange(int x1,int x2,int y1,int y2) {
+		int randomNumber = (int) Math.round(Math.random()*(x2-x1));
+		int positionX=x1+randomNumber;
+		System.out.println(positionX);
+		GunEnemy enemy=new GunEnemy(positionX, 480);
+		enemy.setX(positionX);
+		enemy.setY(480);
+		enemy.doWalkLeft();
+		enemies.add(enemy);
+		gameRoot.getChildren().addAll(enemy.getBox());
+		gameRoot.getChildren().add(enemy.getImageView());
+		
+	}
+
+	private void createBarrier() {
+		barrier = new Barrier(offsetX, offsetY);
+		delayImage(barrier, 1.5);
+		gameRoot.getChildren().addAll(barrier.getImageView(), barrier.getBox());
+		System.out.println("OPEN Barrier");
+		isBarrierOpen = true;
 	}
 
 	private void jumpPlayer() {
@@ -777,7 +893,7 @@ public class GameController {
 	public Weapon getPlayerWeapon() {
 		return player.getWeapon();
 	}
-	
+
 	public int getPlayerPoint() {
 		return player.getPoint();
 	}

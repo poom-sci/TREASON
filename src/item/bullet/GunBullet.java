@@ -16,6 +16,7 @@ public class GunBullet extends Bullet {
 		this.name="bullet";
 		this.height=10;
 		this.width=20;
+		damage=50;
 		
 		this.image_Path="bullet.png";
 		this.image=new Image(image_Path);

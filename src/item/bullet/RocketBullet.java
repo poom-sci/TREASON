@@ -19,6 +19,7 @@ public class RocketBullet extends Bullet implements Explodable {
 
 		this.isRight=isRight;
 		this.name="rocket";
+		damage=100;
 		
 		this.image_Path="rocket.png";
 		this.image=new Image(image_Path);

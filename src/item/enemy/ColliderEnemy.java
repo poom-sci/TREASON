@@ -13,23 +13,24 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import logic.Action;
 
-public class BossEnemy extends GameCharacter {
-	protected Weapon weapon;
+public class ColliderEnemy extends GameCharacter {
 
-	public BossEnemy(int initX, int initY) {
-		super("boss.png", initX, initY, 200, 200, 1000);
-		this.weapon = new Gun(1);
+	public ColliderEnemy(int initX, int initY) {
+		super("main_character.png",initX, initY, 30, 60, 100);
 		
-		pictureWidth=96;
-		pictureHeight=96;
-		pictureOffsetX=30;
-		pictureOffsetY=0;
+		this.disX = 60 * 5;
 
+		this.pictureWidth=96;
+		this.pictureHeight=96;
+		this.pictureOffsetX=30;
+		this.pictureOffsetY=0;
+		
 		turnTime = Duration.millis(1000);
 		walkTime = Duration.millis(1000);
 		fireTime = Duration.millis(200);
 		dieTime = Duration.millis(2000);
 		jumpTime = Duration.millis(1000);
+
 	}
 
 }
