@@ -12,7 +12,6 @@ public class RocketGun extends Weapon {
 
 	public RocketGun( int bullet) {
 		super("rocketGun.png",120,40);
-		this.name = "Rocket";
 		this.maxBullet = 10;
 		bulletType='R';
 		addBullet(bullet);

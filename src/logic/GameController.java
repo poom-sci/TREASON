@@ -12,6 +12,8 @@ import javax.swing.text.StyledEditorKit.BoldAction;
 
 import com.sun.javafx.geom.Shape;
 
+import exception.ConsumeItemFailedException;
+import exception.FireBulletFailedException;
 import gui.SpriteAnimation;
 import item.bullet.Bomb;
 import item.bullet.Bullet;
@@ -20,7 +22,8 @@ import item.bullet.RocketBullet;
 import item.bullet.SwordSlice;
 import item.character.GameCharacter;
 import item.character.MainCharacter;
-import item.consumable.ConPotion;
+import item.consumable.Potion;
+import item.consumable.ConsumableItem;
 import item.enemy.BossEnemy;
 import item.enemy.ColliderEnemy;
 import item.enemy.GunEnemy;
@@ -29,14 +32,14 @@ import item.weapon.Gun;
 import item.weapon.RocketGun;
 import item.weapon.Sword;
 import item.weapon.Weapon;
-import item.Barrier;
 import item.DelayItem;
 import item.Entity;
+import item.Effect.Barrier;
+import item.Effect.recoveryLight;
 import item.box.Ammo;
 import item.box.Box;
 import item.box.Oak;
 import item.box.Portal;
-import item.box.Potion;
 import javafx.animation.Animation;
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
@@ -85,6 +88,7 @@ public class GameController {
 	private boolean alreadyPressedE = false;
 	private boolean alreadyPressedW = false;
 	private boolean alreadyPressedSPACE = false;
+	private boolean alreadyPressedH = false;
 
 	private boolean isEnemyFire = false;
 
@@ -93,12 +97,14 @@ public class GameController {
 
 	private boolean isDie = false;
 	private boolean isBarrierOpen = false;
+	private boolean isRecoverylightOpen = false;
+	private recoveryLight recoverylight;
 	private Barrier barrier;
 
 	public GameController() {
 		createLevel(1);
+		gameRoot.setLayoutX(0);
 
-//		createPotion();
 	}
 
 	private void createLevel(int level) {
@@ -123,45 +129,44 @@ public class GameController {
 		bg = levelD.getBg();
 		this.levelHeight = levelD.getLevelHeight();
 		this.levelWidth = levelD.getLevelWidth();
-		if (player == null) {
-			createPlayer();
-		} else {
-			player.setX(200);
-			gameRoot.getChildren().addAll(player.getBox(), player.getImageView());
-		}
+
+		createPlayer();
 
 	}
 
 	private void createPlayer() {
-
-		player = new MainCharacter(200, 0);
+		if (player == null) {
+			player = new MainCharacter(200, 0);
+		}
+		player.setX(200);
 //		player.doTurnLeft();
 		gameRoot.getChildren().addAll(player.getBox(), player.getImageView());
 
 		createRocketGun();
 		createGun();
 		createSword();
+		createPotion();
 
 	}
 
-//	private void createPotion() {
-//		ConPotion potion = new ConPotion(1);
-//		player.getItems().add(potion);
-//	}
+	private void createPotion() {
+		Potion potion = new Potion(1);
+		player.getItemsInventory().add(potion);
+	}
 
 	private void createGun() {
 		Weapon gun = new Gun(20);
-		player.getInventory().add(gun);
+		player.getWeaponsInventory().add(gun);
 	}
 
 	private void createRocketGun() {
 		Weapon rocketGun = new RocketGun(10);
-		player.getInventory().add(rocketGun);
+		player.getWeaponsInventory().add(rocketGun);
 	}
 
 	private void createSword() {
 		Weapon sword = new Sword(1);
-		player.getInventory().add(sword);
+		player.getWeaponsInventory().add(sword);
 	}
 
 	private void gravity() {
@@ -176,7 +181,7 @@ public class GameController {
 	public void getControl() {
 		try {
 			counter += 1;
-
+			
 			gravity();
 
 			if (player.getVelocityY() < 10) {
@@ -204,6 +209,10 @@ public class GameController {
 						player.blink();
 
 					}
+				}
+				if(isRecoverylightOpen) {
+					recoverylight.setX(offsetX);
+					recoverylight.setY(offsetY);
 				}
 
 				if ((Math.round(time) % 3) == 0) {
@@ -297,19 +306,38 @@ public class GameController {
 					alreadyPressedSPACE = false;
 				}
 
+				if (isPressed(KeyCode.H)) {
+					if (!alreadyPressedH) {
+						if (player.getMaxHP() != player.getCurrentHP()) {
+							try {
+								ConsumableItem item = player.getItemsInventory().get(0);
+								item.consumed(player);
+								recoverylight = new recoveryLight(offsetX, offsetY);
+								delayImage(recoverylight, 1.5);
+								gameRoot.getChildren().addAll(recoverylight.getImageView());
+								isRecoverylightOpen=true;
+							} catch (ConsumeItemFailedException e) {
+								System.out.println("Fire bullet failed, " + e.message);
+							}
+							alreadyPressedH = true;
+						}
+					}
+				} else {
+					alreadyPressedH = false;
+				}
+
 				// follow player x
-				
+
 				if (offsetX > 640 && offsetX < levelWidth - 640) {
 					gameRoot.setLayoutX(-(offsetX - 640));
-				}
-				else if (offsetX > levelWidth - 1280) {
+				} else if (offsetX > levelWidth - 1280) {
 					gameRoot.setLayoutX(-(levelWidth - 1280));
 				}
-				
-				if (isPressed(KeyCode.P)) {
-					this.gameRoot.setLayoutX(0);
-					createLevel(2);
-				}
+
+//				if (isPressed(KeyCode.P)) {
+//					this.gameRoot.setLayoutX(0);
+//					createLevel(2);
+//				}
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -753,10 +781,16 @@ public class GameController {
 			if (delaylist.get(i).getFinalTime() <= time) {
 
 				Entity item = delaylist.get(i).getItem();
+				
 				if (item instanceof Barrier) {
 					isBarrierOpen = false;
 					player.setOpacityNormal();
 				}
+				if(item instanceof recoveryLight) {
+					isRecoverylightOpen=false;
+				}
+				
+				
 				size--;
 				delaylist.remove(delaylist.get(i));
 				removeEntity(item);
@@ -774,7 +808,7 @@ public class GameController {
 		GunEnemy enemy = new GunEnemy(positionX, positionY);
 		enemy.doWalkLeft();
 		enemieList.add(enemy);
-		
+
 		gameRoot.getChildren().add(enemy.getImageView());
 
 	}
@@ -792,7 +826,6 @@ public class GameController {
 		barrier = new Barrier(offsetX, offsetY);
 		delayImage(barrier, 1.5);
 //		gameRoot.getChildren().addAll(barrier.getImageView(), barrier.getBox());
-//		System.out.println("OPEN Barrier");
 		isBarrierOpen = true;
 	}
 
@@ -802,10 +835,6 @@ public class GameController {
 
 	public MainCharacter getPlayer() {
 		return player;
-	}
-
-	public ArrayList<Entity> getPlatforms() {
-		return platforms;
 	}
 
 	public Pane getGameRoot() {
@@ -820,12 +849,13 @@ public class GameController {
 		this.keys = keys;
 	}
 
-	public Weapon getPlayerWeapon() {
-		return player.getWeapon();
-	}
 
 	public int getPlayerPoint() {
 		return player.getPoint();
+	}
+
+	public ArrayList<ConsumableItem> getPlayerInventory() {
+		return player.getItemsInventory();
 	}
 
 }

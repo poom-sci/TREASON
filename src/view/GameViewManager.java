@@ -7,12 +7,14 @@ import java.util.HashMap;
 
 import javax.swing.text.StyledEditorKit.BoldAction;
 
+import exception.AddLeaderboardScoresFailedException;
 import gui.GameButton;
 import gui.GameSubScene;
 import gui.SpriteAnimation;
 import item.box.Box;
 import item.bullet.GunBullet;
 import item.character.MainCharacter;
+import item.consumable.ConsumableItem;
 import item.weapon.Weapon;
 import item.Entity;
 import javafx.animation.Animation;
@@ -56,7 +58,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import logic.AddLeaderboardScoresFailed;
 import logic.GameController;
 import logic.Leaderboards;
 import logic.LevelData;
@@ -91,9 +92,13 @@ public class GameViewManager {
 	private GameController player1Controller;
 	private Rectangle playerInfoBox;
 	private Rectangle heathBox;
+	private ImageView inventory;
 	private Weapon weapon;
 	private ImageView weaponImage;
+	private ImageView potionImage;
 	private Text bulletLeft;
+	private Text potionLeft;
+	private Text potionHotkey;
 
 	private boolean isPlayerDie;
 
@@ -104,7 +109,7 @@ public class GameViewManager {
 	public void inititializeStage() {
 		this.gamePane = new AnchorPane();
 		player1Controller = new GameController();
-		gameRoot=player1Controller.getGameRoot();
+		gameRoot = player1Controller.getGameRoot();
 		gamePane.getChildren().addAll(player1Controller.getBg(), gameRoot);
 		gameScene = new Scene(gamePane, WIDTH, HEIGHT);
 
@@ -159,7 +164,6 @@ public class GameViewManager {
 				time.set((now - startTime) / 1000.0);
 				update();
 				player1Controller.getControl();
-				
 
 			}
 		};
@@ -169,22 +173,25 @@ public class GameViewManager {
 	private void update() {
 		player1Controller.setKeys(keys);
 		player1Controller.setTime(time.doubleValue());
-		this.gameRoot = player1Controller.getGameRoot();
+		gameRoot = player1Controller.getGameRoot();
 		heathBox = player1Controller.getPlayer().getCurrentHPBox();
-		weapon = player1Controller.getPlayerWeapon();
+		weapon = player1Controller.getPlayer().getWeapon();
 		isPlayerDie = player1Controller.getPlayer().isDie();
+
 		if (isPlayerDie) {
 			gameTimer.stop();
-			AudioClip mouse_pressed_sound = new AudioClip(ClassLoader.getSystemResource("gameover_sound.wav").toString());
+			AudioClip mouse_pressed_sound = new AudioClip(
+					ClassLoader.getSystemResource("gameover_sound.wav").toString());
 			mouse_pressed_sound.play();
 			createGameoverSubScene();
 		}
 
-		if (weaponImage != player1Controller.getPlayerWeapon().getImageView()) {
+		if (weaponImage != player1Controller.getPlayer().getWeapon().getImageView()) {
 			createWeaponImage();
 		}
 
 		bulletLeft.setText("Bullet Left : " + weapon.getCurrentBullet());
+		potionLeft.setText("" + player1Controller.getPlayerInventory().get(0).getAmount());
 
 		if (isPressed(KeyCode.ESCAPE)) {
 			if (!alreadyPressedESCAPE) {
@@ -235,6 +242,14 @@ public class GameViewManager {
 		createWeaponImage();
 
 		createBulletLeft();
+
+		createInventoryBox();
+
+		createPotionImage();
+
+		createPotionLeft();
+
+		createPotionHotkey();
 	}
 
 	private void createBulletLeft() {
@@ -261,13 +276,51 @@ public class GameViewManager {
 		gamePane.getChildren().add(playerInfoBox);
 	}
 
+	private void createInventoryBox() {
+		if (inventory != null) {
+			gamePane.getChildren().remove(inventory);
+		}
+
+		inventory = new ImageView(new Image("inventory2.png"));
+		inventory.setFitHeight(70); 
+		inventory.setFitWidth(300); 
+		inventory.setOpacity(0.6);
+		inventory.setTranslateX(750);
+		inventory.setTranslateY(625);
+		
+		gamePane.getChildren().add(inventory);
+	}
+
+	private void createPotionImage() {
+		ConsumableItem item = player1Controller.getPlayerInventory().get(0);
+		ImageView imageView = item.getImageView();
+		imageView.setTranslateX(760);
+		imageView.setTranslateY(640);
+		gamePane.getChildren().add(imageView);
+	}
+
+	private void createPotionLeft() {
+
+		potionLeft = new Text("" + player1Controller.getPlayerInventory().get(0).getAmount());
+		potionLeft.setX(760);
+		potionLeft.setY(645);
+		gamePane.getChildren().add(potionLeft);
+	}
+
+	private void createPotionHotkey() {
+		potionHotkey = new Text("H");
+		potionHotkey.setX(805);
+		potionHotkey.setY(645);
+		gamePane.getChildren().add(potionHotkey);
+	}
+
 	private void createWeaponImage() {
 		if (weapon != null) {
 			gamePane.getChildren().remove(weaponImage);
 		}
 
-		weapon = player1Controller.getPlayerWeapon();
-		weaponImage = player1Controller.getPlayerWeapon().getImageView();
+		weapon = player1Controller.getPlayer().getWeapon();
+		weaponImage = weapon.getImageView();
 		weaponImage.setTranslateX(50);
 		weaponImage.setTranslateY(80);
 		gamePane.getChildren().add(weaponImage);
@@ -359,7 +412,7 @@ public class GameViewManager {
 		}
 
 		player1Controller = new GameController();
-		this.gameRoot=player1Controller.getGameRoot();
+		this.gameRoot = player1Controller.getGameRoot();
 
 		createPlayerInfo();
 
@@ -420,7 +473,7 @@ public class GameViewManager {
 					scoreBoard.saveScores();
 					gameStage.close();
 					menuStage.show();
-				} catch (AddLeaderboardScoresFailed e) {
+				} catch (AddLeaderboardScoresFailedException e) {
 					Alert alert = new Alert(AlertType.WARNING, "Add leaderboard failed, " + e.message);
 					alert.setTitle("Error");
 					alert.show();
@@ -459,7 +512,7 @@ public class GameViewManager {
 						scoreBoard.saveScores();
 						gameStage.close();
 						menuStage.show();
-					} catch (AddLeaderboardScoresFailed e) {
+					} catch (AddLeaderboardScoresFailedException e) {
 						System.out.println("Add leaderboard failed, " + e.message);
 					}
 				}

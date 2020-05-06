@@ -1,17 +1,16 @@
 package item.weapon;
 
+import exception.FireBulletFailedException;
 import item.bullet.Bullet;
 import item.bullet.GunBullet;
 import item.bullet.SwordSlice;
 import item.character.MainCharacter;
-import logic.FireBulletFailedException;
 import logic.Fireable;
 
 public class Sword extends Weapon {
 
 	public Sword(int bullet) {
 		super("sword.png", 60, 60);
-		this.name = "Sword";
 		this.maxBullet = 1;
 		bulletType = 'S';
 		addBullet(bullet);

@@ -1,6 +1,6 @@
-package logic;
+package exception;
 
-public class AddLeaderboardScoresFailed extends Exception {
+public class AddLeaderboardScoresFailedException extends Exception {
 	/**
 	 * 
 	 */
@@ -8,7 +8,7 @@ public class AddLeaderboardScoresFailed extends Exception {
 	// you CAN add SerialVersionID if eclipse gives you warning
 	public String message;
 	
-	public AddLeaderboardScoresFailed(String message){
+	public AddLeaderboardScoresFailedException(String message){
 		this.message=message;
 	}
 	

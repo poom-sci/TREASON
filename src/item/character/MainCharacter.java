@@ -7,6 +7,7 @@ import javax.swing.text.StyledEditorKit.BoldAction;
 
 import gui.GameButton;
 import gui.SpriteAnimation;
+import item.consumable.ConsumableItem;
 import item.weapon.Weapon;
 import javafx.animation.Animation;
 import javafx.geometry.Rectangle2D;
@@ -23,10 +24,13 @@ public class MainCharacter extends GameCharacter {
 
 	private int point;
 	private boolean isBlink = false;
+	protected ArrayList<ConsumableItem> itemsInventory;
 
 	public MainCharacter(int initX, int initY) {
 		super("main_character.png", initX, initY, 30, 60, 200);
 
+		
+		itemsInventory=new ArrayList<ConsumableItem>();
 		pictureWidth = 96;
 		pictureHeight = 96;
 		pictureOffsetX = 30;
@@ -68,6 +72,10 @@ public class MainCharacter extends GameCharacter {
 
 	public int getPoint() {
 		return point;
+	}
+	
+	public ArrayList<ConsumableItem> getItemsInventory() {
+		return itemsInventory;
 	}
 
 }

@@ -2,6 +2,8 @@ package item.weapon;
 
 import java.util.ArrayList;
 
+import exception.FireBulletFailedException;
+import item.Item;
 import item.bullet.Bomb;
 import item.bullet.Bullet;
 import item.bullet.GunBullet;
@@ -10,36 +12,18 @@ import item.bullet.SwordSlice;
 import item.character.MainCharacter;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import logic.FireBulletFailedException;
 import logic.Fireable;
 
-public abstract class Weapon {
+public abstract class Weapon extends Item {
 
 	protected int maxBullet;
-	protected String name;
 	protected int currentBullet;
-	protected String image_Path;
-	protected Image image;
-	protected ImageView imageView;
 	protected char bulletType;
-
-	protected int width;
-	protected int height;
 
 	protected ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 
-	protected int boundX;
-	protected int boundY;
-
 	public Weapon(String image_Path, int width, int height) {
-
-		image = new Image(image_Path);
-		imageView = new ImageView(image);
-		imageView.setFitHeight(height);
-		imageView.setFitWidth(width);
-		this.width = width;
-		this.height = height;
-//		bulletType = 'G';
+		super(image_Path,width,height);
 
 	}
 
@@ -103,10 +87,6 @@ public abstract class Weapon {
 		this.currentBullet = currentBullet;
 	}
 
-	public String getName() {
-		return name;
-	}
-
 	public Bullet fireBullet(item.character.GameCharacter character, boolean isRight) throws FireBulletFailedException {
 		if (currentBullet == 0) {
 			throw new FireBulletFailedException("There is no bullet left.");
@@ -164,21 +144,6 @@ public abstract class Weapon {
 		return bullets;
 	}
 
-	public ImageView getImageView() {
-		return imageView;
-	}
-
-	public Image getImage() {
-		return image;
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public int getHeight() {
-		return height;
-	}
 
 	public void addBullets(int ammo) {
 		this.currentBullet = this.currentBullet + ammo;

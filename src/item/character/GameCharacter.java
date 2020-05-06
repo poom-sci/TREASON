@@ -6,7 +6,7 @@ import gui.SpriteAnimation;
 import item.Entity;
 import item.bullet.RocketBullet;
 import item.bullet.SwordSlice;
-import item.consumable.Consumable;
+import item.consumable.ConsumableItem;
 import item.weapon.Weapon;
 import javafx.animation.Animation;
 import javafx.geometry.Rectangle2D;
@@ -61,8 +61,8 @@ public abstract class GameCharacter extends Entity {
 	protected int maxHP;
 	protected Rectangle currentHPBox;
 
-	protected ArrayList<Weapon> inventory;
-	protected ArrayList<Consumable> items;
+	protected ArrayList<Weapon> weaponsInventory;
+
 	protected int weaponKey = 0;
 
 	public GameCharacter(String image_path, int initX, int initY, int width, int height, int currentHP) {
@@ -81,7 +81,8 @@ public abstract class GameCharacter extends Entity {
 		this.maxHP = currentHP;
 		currentHPBox = new Rectangle(currentHP, 20);
 		setCurrentHPColor();
-		this.inventory = new ArrayList<Weapon>();
+		this.weaponsInventory = new ArrayList<Weapon>();
+
 
 		this.pictureWidth = 96;
 		this.pictureHeight = 96;
@@ -308,8 +309,8 @@ public abstract class GameCharacter extends Entity {
 		this.currentHPBox = currentHPBox;
 	}
 
-	public ArrayList<Weapon> getInventory() {
-		return inventory;
+	public ArrayList<Weapon> getWeaponsInventory() {
+		return weaponsInventory;
 	}
 
 	public Action getDieRight() {
@@ -378,18 +379,18 @@ public abstract class GameCharacter extends Entity {
 	public void changeWeaponLeft() {
 		weaponKey -= 1;
 		if (weaponKey < 0) {
-			weaponKey += inventory.size();
+			weaponKey += weaponsInventory.size();
 		}
-		weaponKey = weaponKey % inventory.size();
+		weaponKey = weaponKey % weaponsInventory.size();
 	}
 
 	public void changeWeaponRight() {
 		weaponKey += 1;
-		weaponKey = weaponKey % inventory.size();
+		weaponKey = weaponKey % weaponsInventory.size();
 	}
 
 	public Weapon getWeapon() {
-		return inventory.get(weaponKey);
+		return weaponsInventory.get(weaponKey);
 	}
 
 	public boolean isOnFloor() {
@@ -400,8 +401,11 @@ public abstract class GameCharacter extends Entity {
 		this.isOnFloor = isOnFloor;
 	}
 
-	public ArrayList<Consumable> getItems() {
-		return items;
+
+	public int getMaxHP() {
+		return maxHP;
 	}
+	
+	
 
 }

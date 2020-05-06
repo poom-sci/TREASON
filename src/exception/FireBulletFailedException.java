@@ -1,4 +1,4 @@
-package logic;
+package exception;
 
 //you CAN modify the first line
 public class FireBulletFailedException extends Exception {

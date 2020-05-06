@@ -21,7 +21,7 @@ public class GunEnemy extends GameCharacter {
 	public GunEnemy(int initX, int initY) {
 		super("main_character.png", initX, initY, 30, 60, 50);
 		Weapon gun = new Gun(1);
-		this.inventory.add(gun);
+		this.weaponsInventory.add(gun);
 		
 		this.disX = 60 * 5;
 		

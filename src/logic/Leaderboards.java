@@ -8,6 +8,8 @@ import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import exception.AddLeaderboardScoresFailedException;
+
 public class Leaderboards {
 	private static Leaderboards lBoard;
 	private String filePath;
@@ -36,19 +38,19 @@ public class Leaderboards {
 		return lBoard;
 	}
 
-	public void addPlayerScore(String name, int score, Double time) throws AddLeaderboardScoresFailed  {
+	public void addPlayerScore(String name, int score, Double time) throws AddLeaderboardScoresFailedException  {
 		if(name.length()==0) {
-			throw new AddLeaderboardScoresFailed("Name cannot left blank.");
+			throw new AddLeaderboardScoresFailedException("Name cannot left blank.");
 		}
 		if(name.length()>10) {
-			throw new AddLeaderboardScoresFailed("Name cannot be more than 10 characters.");
+			throw new AddLeaderboardScoresFailedException("Name cannot be more than 10 characters.");
 		}
 		if(topPlayer.contains(name)) {
-			throw new AddLeaderboardScoresFailed("Name cannot be same.");
+			throw new AddLeaderboardScoresFailedException("Name cannot be same.");
 		}
 		for (char c : name.toCharArray()) {
             if (!Character.isLetter(c) && !Character.isDigit(c)) {
-            	throw new AddLeaderboardScoresFailed("Name cannot be marks.");
+            	throw new AddLeaderboardScoresFailedException("Name cannot be marks.");
             }
         }
 			
