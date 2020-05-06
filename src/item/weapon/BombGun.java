@@ -3,28 +3,20 @@ package item.weapon;
 import item.bullet.Bullet;
 import item.bullet.Bomb;
 import item.bullet.RocketBullet;
+import logic.FireBulletFailedException;
 import logic.Fireable;
 
-public class BombGun extends Weapon implements Fireable {
+public class BombGun extends Weapon {
 	
-	public BombGun( int bulletLeft) {
+	public BombGun( int bullet) {
 		
 		super("rocketGun.png",120,40);
 		this.name = "Rocket";
-		this.bulletLeft = bulletLeft;
-		this.bulletFull = 10;
-		createBullet(bulletLeft);
+		this.maxBullet = 10;
+		bulletType='B';
+		addBullet(bullet);
+
 		
 	}
 
-
-	@Override
-	public void createBullet(int count) {
-		for (int i = 0; i < count; i++) {
-			Bullet bullet = new Bomb(true, 0, 0);
-			this.bullets.add(bullet);
-
-		}
-
-	}
 }

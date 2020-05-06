@@ -11,20 +11,12 @@ import logic.Explodable;
 public class Bomb extends Bullet implements Explodable {
 	
 	public Bomb(boolean isRight, int initX, int initY) {
-		super(isRight,initX,initY,40,40);
+		super("bomb.png",isRight,initX,initY,40,40);
 		// TODO Auto-generated constructor stub
 		this.disX=800;
 		this.disY=800;
 
-		this.isRight=isRight;
 		this.name="rocket";
-		
-		this.image_Path="bomb.png";
-		this.image=new Image(image_Path);
-		this.imageView = new ImageView(image);
-	    imageView.setFitHeight(height); 
-	    imageView.setFitWidth(width); 
-	    this.boundY=0;
 	    
 		this.sprite = new SpriteAnimation(this.imageView, Duration.millis(2000),15 , 2, 0, 0, 258, 250);
 		this.sprite.setCycleCount(Animation.INDEFINITE);

@@ -1,49 +1,44 @@
 package item.weapon;
 
 import item.bullet.Bullet;
+import item.bullet.GunBullet;
 import item.bullet.SwordSlice;
 import item.character.MainCharacter;
+import logic.FireBulletFailedException;
 import logic.Fireable;
 
-public class Sword extends Weapon implements Fireable  {
-	
-	public Sword( int bulletLeft) {
-		super("sword.png",60,60);
+public class Sword extends Weapon {
+
+	public Sword(int bullet) {
+		super("sword.png", 60, 60);
 		this.name = "Sword";
-		this.bulletLeft = bulletLeft;
-		this.bulletFull = 1;
-		createBullet(bulletLeft);
+		this.maxBullet = 1;
+		bulletType = 'S';
+		addBullet(bullet);
+
 	}
 
-
-	@Override
-	public void createBullet(int count) {
-		for (int i = 0; i < count; i++) {
-			Bullet bullet = new SwordSlice(true, 0, 0);
-			this.bullets.add(bullet);
-
+	public Bullet fireBullet(item.character.GameCharacter character, boolean isRight) throws FireBulletFailedException {
+		if (currentBullet == 0) {
+			throw new FireBulletFailedException("There is no bullet left.");
 		}
+		currentBullet -= 1;
+		bullets.get(0).setRight(isRight);
 
-	}
-
-	public Bullet fireBullet(item.character.GameCharacter character,boolean isRight) {
-		Bullet bullet= new SwordSlice(isRight, character.getX(), character.getY());
-		
-		bullet.setRight(isRight);
-		bullet.setInitX(character.getX());
-		bullet.setInitY(character.getY());
+		bullets.get(0).setInitX(character.getX());
+		bullets.get(0).setInitY(character.getY());
 		if (isRight) {
-			bullet.setBoundX(-10);
-			bullet.setX(character.getX() + 40);
-			bullet.setY(character.getY() + 0);
+			bullets.get(0).setX(character.getX() + 40);
+			bullets.get(0).setY(character.getY() + 20);
 		} else {
-			bullet.setBoundX(10);
-			bullet.setX(character.getX() -60);
-			bullet.setY(character.getY() + 0);
-			bullet.getImageView().setRotate(imageView.getRotate() + 180);
+			bullets.get(0).setX(character.getX() - 60);
+			bullets.get(0).setY(character.getY() + 20);
 		}
-		createBullet(1);
-		
-		return bullet;
+		if (!isRight) {
+			bullets.get(0).getImageView().setRotate(bullets.get(0).getImageView().getRotate() + 180);
+		}
+		addBullet(1);
+		return bullets.remove(0);
 	}
+
 }

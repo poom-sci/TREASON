@@ -13,14 +13,8 @@ public class Barrier extends Entity {
 
 	public Barrier(int initX, int initY) {
 
-		super(initX, initY, 80, 80);
-		this.image_Path = "lightBarrier.png";
-		this.box.setFill(Color.TRANSPARENT);
+		super("lightBarrier.png",initX, initY, 80, 80);
 
-		imageView = new ImageView(new Image(image_Path));
-		imageView.setViewport(new Rectangle2D(0, 0, 192, 192));
-		imageView.setFitHeight(80);
-		imageView.setFitWidth(80);
 		imageView.setOpacity(0.5);
 		this.boundX=15;
 

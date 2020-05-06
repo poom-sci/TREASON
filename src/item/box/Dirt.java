@@ -9,13 +9,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
-public class Box extends Entity {
+public class Dirt extends Entity {
 	
 	
 	
-	public Box(int initX,int initY, int width, int height) {
-		super( "box.jpg",initX, initY,width,height);
-
+	public Dirt(int initX,int initY, int width, int height) {
+		super("dirtTest.png",initX, initY,width,height);
 	}
 	
 

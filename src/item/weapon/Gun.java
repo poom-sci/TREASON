@@ -8,26 +8,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import logic.Fireable;
 
-public class Gun extends Weapon implements Fireable {
+public class Gun extends Weapon {
 
-	public Gun( int bulletLeft) {
+	public Gun( int bullet) {
 		super("gun.jpg",60,60);
 		this.name = "Gun";
-		this.bulletLeft = bulletLeft;
-		this.bulletFull = 15;
-		createBullet(bulletLeft);
-		
+		this.maxBullet = 15;
+		this.bulletType='G';
+		addBullet(bullet);
 	}
 
 
-	@Override
-	public void createBullet(int count) {
-		for (int i = 0; i < count; i++) {
-			Bullet bullet = new GunBullet(true, 0, 0);
-			this.bullets.add(bullet);
-
-		}
-
-	}
 
 }

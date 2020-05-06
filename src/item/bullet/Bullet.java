@@ -11,12 +11,8 @@ public class Bullet extends Entity {
 	protected int damage;
 	
 	
-	public Bullet(boolean isRight,int initX,int initY,int width,int height) {
-		super( initX, initY,width,height);
-		this.width=width;
-		this.height=height;
-		this.x=initX;
-		this.y=initY;
+	public Bullet(String image_Path,boolean isRight,int initX,int initY,int width,int height) {
+		super(image_Path, initX, initY,width,height);
 		this.isRight=isRight;
 		
 	}
@@ -26,13 +22,9 @@ public class Bullet extends Entity {
 		return isRight;
 	}
 
-
 	public void setRight(boolean isRight) {
 		this.isRight = isRight;
 	}
-
-
-
 
 	public int getDamage() {
 		return damage;

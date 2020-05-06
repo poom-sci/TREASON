@@ -12,25 +12,14 @@ import logic.Explodable;
 public class RocketBullet extends Bullet implements Explodable {
 
 	public RocketBullet(boolean isRight, int initX, int initY) {
-		super(isRight,initX,initY,60,30);
+		super("rocket.png",isRight,initX,initY,60,30);
 		// TODO Auto-generated constructor stub
 		this.disX=800;
 		this.disY=800;
 
-		this.isRight=isRight;
 		this.name="rocket";
 		damage=100;
 		
-		this.image_Path="rocket.png";
-		this.image=new Image(image_Path);
-		this.imageView = new ImageView(image);
-	    imageView.setFitHeight(height); 
-	    imageView.setFitWidth(width); 
-
-		if(!this.isRight) {
-			imageView.setRotate(imageView.getRotate()+180);
-			
-		}
 	}
 
 	@Override

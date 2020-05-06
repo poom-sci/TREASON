@@ -43,19 +43,15 @@ public class MainCharacter extends GameCharacter {
 
 	public void blink() {
 		isBlink = true;
-//		if(image_Path=="main_character.png") {
-//			image_Path="main_character_red.png";
-//
-//		}
-//		else {
-//			image_Path="main_character.png";
-//		}
 		if (imageView.getOpacity() == 1) {
 			imageView.setOpacity(0.5);
 		}else {
 			imageView.setOpacity(1);
 		}
-//		createAnimation();
+	}
+	
+	public void setOpacityNormal() {
+		imageView.setOpacity(1);
 	}
 
 	public boolean isBlink() {

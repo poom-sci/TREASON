@@ -6,6 +6,7 @@ import gui.SpriteAnimation;
 import item.Entity;
 import item.bullet.RocketBullet;
 import item.bullet.SwordSlice;
+import item.consumable.Consumable;
 import item.weapon.Weapon;
 import javafx.animation.Animation;
 import javafx.geometry.Rectangle2D;
@@ -47,26 +48,28 @@ public abstract class GameCharacter extends Entity {
 	protected Duration fireTime;
 	protected Duration dieTime;
 	protected Duration jumpTime;
-	
+
 	protected int pictureWidth;
 	protected int pictureHeight;
 	protected int pictureOffsetX;
 	protected int pictureOffsetY;
 	protected int pictureColumn;
-	
-	protected boolean isOnFloor=false;
 
-	protected int health;
-	protected Rectangle healthBox;
+	protected boolean isOnFloor = false;
+
+	protected int currentHP;
+	protected int maxHP;
+	protected Rectangle currentHPBox;
 
 	protected ArrayList<Weapon> inventory;
+	protected ArrayList<Consumable> items;
 	protected int weaponKey = 0;
 
-	public GameCharacter(String image_path, int initX, int initY, int width, int height, int health) {
-		super(initX, initY, width, height);
+	public GameCharacter(String image_path, int initX, int initY, int width, int height, int currentHP) {
+		super(image_path,initX, initY, width, height);
 
 		this.image_Path = image_path;
-		box.setFill(Color.TRANSPARENT);
+		box.setFill(Color.BLACK);
 
 		this.lowBox = new Rectangle(10, 10);
 		this.lowBox.setFill(Color.ALICEBLUE);
@@ -74,15 +77,16 @@ public abstract class GameCharacter extends Entity {
 		this.highBox = new Rectangle(10, 10);
 		this.highBox.setFill(Color.RED);
 
-		this.health = health;
-		healthBox = new Rectangle(health, 20);
-		setHealthColor();
+		this.currentHP = currentHP;
+		this.maxHP = currentHP;
+		currentHPBox = new Rectangle(currentHP, 20);
+		setCurrentHPColor();
 		this.inventory = new ArrayList<Weapon>();
-		
-		this.pictureWidth=96;
-		this.pictureHeight=96;
-		this.pictureOffsetX=30;
-		this.pictureOffsetY=0;
+
+		this.pictureWidth = 96;
+		this.pictureHeight = 96;
+		this.pictureOffsetX = 30;
+		this.pictureOffsetY = 0;
 //
 //		turnTime = Duration.millis(1000);
 //		walkTime = Duration.millis(1000);
@@ -93,20 +97,19 @@ public abstract class GameCharacter extends Entity {
 		createAnimation();
 
 	}
-	
 
 	public void createAnimation() {
 		imageView = new ImageView(new Image(image_Path));
 		imageView.setViewport(new Rectangle2D(pictureOffsetX, pictureOffsetY, pictureWidth, pictureHeight));
-		sprite = new SpriteAnimation(imageView, Duration.millis(1000), 5, 5, pictureOffsetX, pictureOffsetY, pictureWidth, pictureHeight);
+		sprite = new SpriteAnimation(imageView, Duration.millis(1000), 5, 5, pictureOffsetX, pictureOffsetY,
+				pictureWidth, pictureHeight);
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
 
 		boundX = 32;
 		boundY = 18;
-
-		this.x = (int) box.getTranslateX();
-		this.y = (int) box.getTranslateY();
+		setX(initX);
+		setY(initY);
 
 		createAction();
 		turnLeft.setAction(true);
@@ -141,11 +144,12 @@ public abstract class GameCharacter extends Entity {
 		}
 		sprite.pause();
 	}
-	
+
 	public void doTurnRight() {
 		resetAction();
 //		boundX = 30;
-		sprite = new SpriteAnimation(imageView, turnTime, 5, 5, pictureOffsetX, pictureOffsetY+ pictureHeight* 0, pictureWidth, pictureHeight);
+		sprite = new SpriteAnimation(imageView, turnTime, 5, 5, pictureOffsetX, pictureOffsetY + pictureHeight * 0,
+				pictureWidth, pictureHeight);
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
 		turnRight.setAction(true);
@@ -154,7 +158,8 @@ public abstract class GameCharacter extends Entity {
 	public void doTurnLeft() {
 		resetAction();
 //		boundX = 30;
-		sprite = new SpriteAnimation(imageView, turnTime, 5, 5, pictureOffsetX, pictureOffsetY+ pictureHeight* 1, pictureWidth, pictureHeight);
+		sprite = new SpriteAnimation(imageView, turnTime, 5, 5, pictureOffsetX, pictureOffsetY + pictureHeight * 1,
+				pictureWidth, pictureHeight);
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
 		turnLeft.setAction(true);
@@ -163,7 +168,8 @@ public abstract class GameCharacter extends Entity {
 	public void doWalkLeft() {
 		resetAction();
 //		boundX = 30;
-		sprite = new SpriteAnimation(imageView, walkTime, 8, 8, pictureOffsetX, pictureOffsetY+ pictureHeight * 2, pictureWidth, pictureHeight);
+		sprite = new SpriteAnimation(imageView, walkTime, 8, 8, pictureOffsetX, pictureOffsetY + pictureHeight * 2,
+				pictureWidth, pictureHeight);
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
 		walkLeft.setAction(true);
@@ -172,24 +178,26 @@ public abstract class GameCharacter extends Entity {
 	public void doWalkRight() {
 		resetAction();
 //		boundX = 30;
-		sprite = new SpriteAnimation(imageView, walkTime, 8, 8, pictureOffsetX, pictureOffsetY+ pictureHeight * 3, pictureWidth, pictureHeight);
+		sprite = new SpriteAnimation(imageView, walkTime, 8, 8, pictureOffsetX, pictureOffsetY + pictureHeight * 3,
+				pictureWidth, pictureHeight);
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
 		walkRight.setAction(true);
 	}
-	
+
 	public void doFireLeft() {
 		resetAction();
-		sprite = new SpriteAnimation(imageView, fireTime, 5, 8, pictureOffsetX, pictureOffsetY+ pictureHeight * 4, pictureWidth, pictureHeight);
+		sprite = new SpriteAnimation(imageView, fireTime, 5, 8, pictureOffsetX, pictureOffsetY + pictureHeight * 4,
+				pictureWidth, pictureHeight);
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
 		fireLeft.setAction(true);
 	}
 
-
 	public void doFireRight() {
 		resetAction();
-		sprite = new SpriteAnimation(imageView, fireTime, 5, 8, pictureOffsetX, pictureOffsetY+ pictureHeight * 5, pictureWidth, pictureHeight);
+		sprite = new SpriteAnimation(imageView, fireTime, 5, 8, pictureOffsetX, pictureOffsetY + pictureHeight * 5,
+				pictureWidth, pictureHeight);
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
 		fireRight.setAction(true);
@@ -199,7 +207,8 @@ public abstract class GameCharacter extends Entity {
 	public void doDieLeft() {
 		resetAction();
 //		boundX = 30;
-		sprite = new SpriteAnimation(imageView, dieTime, 8, 8, pictureOffsetX, pictureOffsetY+ pictureHeight * 6, pictureWidth, pictureHeight);
+		sprite = new SpriteAnimation(imageView, dieTime, 8, 8, pictureOffsetX, pictureOffsetY + pictureHeight * 6,
+				pictureWidth, pictureHeight);
 		sprite.setCycleCount(1);
 		sprite.play();
 		dieLeft.setAction(true);
@@ -208,19 +217,20 @@ public abstract class GameCharacter extends Entity {
 	public void doDieRight() {
 		resetAction();
 //		boundX = 30;
-		sprite = new SpriteAnimation(imageView, dieTime, 8, 8, pictureOffsetX, pictureOffsetY+ pictureHeight * 7, pictureWidth, pictureHeight);
+		sprite = new SpriteAnimation(imageView, dieTime, 8, 8, pictureOffsetX, pictureOffsetY + pictureHeight * 7,
+				pictureWidth, pictureHeight);
 		sprite.setCycleCount(1);
 		sprite.play();
 		dieRight.setAction(true);
 	}
 
-	protected void setHealthColor() {
-		if (this.health > 150) {
-			healthBox.setFill(Color.GREEN);
-		} else if (50<this.health && this.health <= 150) {
-			this.healthBox.setFill(Color.ORANGE);
-		} else if (this.health <= 50) {
-			this.healthBox.setFill(Color.RED);
+	protected void setCurrentHPColor() {
+		if (this.currentHP > 150) {
+			currentHPBox.setFill(Color.GREEN);
+		} else if (50 < this.currentHP && this.currentHP <= 150) {
+			this.currentHPBox.setFill(Color.ORANGE);
+		} else if (this.currentHP <= 50) {
+			this.currentHPBox.setFill(Color.RED);
 		}
 	}
 
@@ -265,33 +275,37 @@ public abstract class GameCharacter extends Entity {
 		return actions;
 	}
 
-	public void decreasedHealth(int damage) {
-		setHealth(this.health - damage);
-		setHealthColor();
+	public void decreasedCurrentHP(int damage) {
+		setCurrentHP(this.currentHP - damage);
+		setCurrentHPColor();
 	}
 
-	public void increaseHealth(int potion) {
-		setHealth(this.health + potion);
-		setHealthColor();
+	public void increaseCurrentHP(int heal) {
+		int healedHP = this.currentHP + heal;
+		if (healedHP > this.maxHP) {
+			healedHP = this.maxHP;
+		}
+		setCurrentHP(healedHP);
+		setCurrentHPColor();
 	}
 
-	public int getHealth() {
-		return health;
+	public int getCurrentHP() {
+		return currentHP;
 	}
 
-	public void setHealth(int health) {
-		this.health = health;
-		this.healthBox.setWidth(health);
-		setHealthColor();
+	public void setCurrentHP(int currentHP) {
+		this.currentHP = currentHP;
+		this.currentHPBox.setWidth(currentHP);
+		setCurrentHPColor();
 
 	}
 
-	public Rectangle getHealthBox() {
-		return healthBox;
+	public Rectangle getCurrentHPBox() {
+		return currentHPBox;
 	}
 
-	public void setHealthBox(Rectangle healthBox) {
-		this.healthBox = healthBox;
+	public void setCurrentHPBox(Rectangle currentHPBox) {
+		this.currentHPBox = currentHPBox;
 	}
 
 	public ArrayList<Weapon> getInventory() {
@@ -311,7 +325,7 @@ public abstract class GameCharacter extends Entity {
 	}
 
 	public boolean checkTurn(ArrayList<Entity> platforms) {
-		if(!isOnFloor) {
+		if (!isOnFloor) {
 			return false;
 		}
 
@@ -322,7 +336,7 @@ public abstract class GameCharacter extends Entity {
 			this.highBox.setTranslateX(getX() + 30);
 			this.highBox.setTranslateY(getY());
 		} else {
-			this.lowBox.setTranslateX(getX() - 30);
+			this.lowBox.setTranslateX(getX() - 10);
 			this.lowBox.setTranslateY(getY() + 60);
 
 			this.highBox.setTranslateX(getX() - 30);
@@ -385,6 +399,9 @@ public abstract class GameCharacter extends Entity {
 	public void setOnFloor(boolean isOnFloor) {
 		this.isOnFloor = isOnFloor;
 	}
-	
-	
+
+	public ArrayList<Consumable> getItems() {
+		return items;
+	}
+
 }

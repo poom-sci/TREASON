@@ -10,29 +10,25 @@ import gui.SpriteAnimation;
 public class SwordSlice extends Bullet {
 
 	public SwordSlice(boolean isRight, int initX, int initY) {
-		super(isRight,initX,initY, 60, 80);
+		super("sword_slice.png",isRight,initX,initY, 50, 50);
 		// TODO Auto-generated constructor stub
 		this.disX = 20;
 		this.disY = 20;
 		
 		damage=50;
-		this.isRight = isRight;
 		this.name = "slice";
 
-		this.image_Path = "sword_slice.png";
-		this.image = new Image(image_Path);
-		this.imageView = new ImageView(image);
-		this.imageView.setFitHeight(height+20);
-		this.boundY=10;
-		this.imageView.setFitWidth(width);
+		this.addOnY=-15;
+		this.boundY=-20;
+		creatAnimation();
+
+	}
+	
+	private void creatAnimation() {
 		this.imageView.setViewport(new Rectangle2D(0, 0, 110, 129));
 
-		this.sprite = new SpriteAnimation(imageView, Duration.millis(200),4, 4, 0, 0, 110, 129);
-		this.sprite.setCycleCount(1);
+		this.sprite = new SpriteAnimation(imageView, Duration.millis(500),4, 4, 0, 0, 110, 129);
+		this.sprite.setCycleCount(Animation.INDEFINITE);
 		this.sprite.play();
-
-//		if (!this.isRight) {
-//			imageView.setRotate(imageView.getRotate() + 180);
-//		}
 	}
 }

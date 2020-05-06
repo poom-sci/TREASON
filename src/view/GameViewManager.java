@@ -102,9 +102,9 @@ public class GameViewManager {
 	}
 
 	public void inititializeStage() {
-		gameRoot = new Pane();
-		player1Controller = new GameController(gameRoot);
 		this.gamePane = new AnchorPane();
+		player1Controller = new GameController();
+		gameRoot=player1Controller.getGameRoot();
 		gamePane.getChildren().addAll(player1Controller.getBg(), gameRoot);
 		gameScene = new Scene(gamePane, WIDTH, HEIGHT);
 
@@ -157,9 +157,9 @@ public class GameViewManager {
 			public void handle(long timestamp) {
 				long now = System.currentTimeMillis();
 				time.set((now - startTime) / 1000.0);
-				System.out.println(time);
-				player1Controller.getControl();
 				update();
+				player1Controller.getControl();
+				
 
 			}
 		};
@@ -170,7 +170,7 @@ public class GameViewManager {
 		player1Controller.setKeys(keys);
 		player1Controller.setTime(time.doubleValue());
 		this.gameRoot = player1Controller.getGameRoot();
-		heathBox = player1Controller.getPlayerHealthBox();
+		heathBox = player1Controller.getPlayer().getCurrentHPBox();
 		weapon = player1Controller.getPlayerWeapon();
 		isPlayerDie = player1Controller.getPlayer().isDie();
 		if (isPlayerDie) {
@@ -184,7 +184,7 @@ public class GameViewManager {
 			createWeaponImage();
 		}
 
-		bulletLeft.setText("Bullet Left : " + weapon.getBulletLeft());
+		bulletLeft.setText("Bullet Left : " + weapon.getCurrentBullet());
 
 		if (isPressed(KeyCode.ESCAPE)) {
 			if (!alreadyPressedESCAPE) {
@@ -242,7 +242,7 @@ public class GameViewManager {
 			gamePane.getChildren().remove(bulletLeft);
 		}
 
-		bulletLeft = new Text("Bullet Left : " + weapon.getBulletLeft());
+		bulletLeft = new Text("Bullet Left : " + weapon.getCurrentBullet());
 		bulletLeft.setX(180);
 		bulletLeft.setY(100);
 		gamePane.getChildren().add(bulletLeft);
@@ -278,7 +278,7 @@ public class GameViewManager {
 			gamePane.getChildren().remove(heathBox);
 		}
 
-		heathBox = player1Controller.getPlayerHealthBox();
+		heathBox = player1Controller.getPlayer().getCurrentHPBox();
 		gamePane.getChildren().add(heathBox);
 		heathBox.setTranslateX(50);
 		heathBox.setTranslateY(50);
@@ -351,15 +351,15 @@ public class GameViewManager {
 	private void restart() {
 
 		menuPane.getChildren().remove(menuBox);
+		gameRoot.getChildren().clear();
 		this.gamePane.getChildren().remove(menuPane);
 		for (int i = 0; i < 4; i++) {
 			this.gamePane.getChildren().remove(menuButtons.get(0));
 			menuButtons.remove(menuButtons.get(0));
 		}
-		this.gamePane.getChildren().remove(gameRoot);
-		gameRoot = new Pane();
-		player1Controller = new GameController(gameRoot);
-		this.gamePane.getChildren().add(gameRoot);
+
+		player1Controller = new GameController();
+		this.gameRoot=player1Controller.getGameRoot();
 
 		createPlayerInfo();
 

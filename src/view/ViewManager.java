@@ -35,6 +35,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import logic.Leaderboards;
+import logic.LevelData;
 
 public class ViewManager {
 
@@ -205,7 +206,7 @@ public class ViewManager {
 				scoreBoard.loadScore();
 
 				Label header = new Label("Player   : Score   : time");
-				header.setTextFill(Color.web("EA8F3C"));
+				header.setTextFill(Color.DARKRED);
 				try {
 					header.setFont(Font.loadFont(new FileInputStream("res/PixelTakhisis-ZajJ.ttf"), 23));
 				} catch (FileNotFoundException e) {
@@ -214,7 +215,7 @@ public class ViewManager {
 				}
 //				 setting the position of the text
 				header.setLayoutX(100);
-				header.setLayoutY(50 );
+				header.setLayoutY(100);
 				
 				ScoreSubScene.getPane().getChildren().add(header);
 				
@@ -222,7 +223,7 @@ public class ViewManager {
 					Label text = new Label();
 					// Setting the text to be added.
 					text.setText((i+1)+". "+scoreBoard.getTopPlayer(i));
-					text.setTextFill(Color.web("EA8F3C"));
+					text.setTextFill(Color.LIGHTCYAN);
 					try {
 						text.setFont(Font.loadFont(new FileInputStream("res/PixelTakhisis-ZajJ.ttf"), 23));
 					} catch (FileNotFoundException e) {
@@ -231,7 +232,7 @@ public class ViewManager {
 					}
 //					 setting the position of the text
 					text.setLayoutX(70);
-					text.setLayoutY(100 + i * 20);
+					text.setLayoutY(130 + i * 20);
 					ScoreSubScene.getPane().getChildren().add(text);
 					scoreBoard.saveScores();
 				}
@@ -250,7 +251,11 @@ public class ViewManager {
 			public void handle(ActionEvent arg0) {
 				ShowSubScene(HelpSubScene);
 
-				Leaderboards scoreBoard = Leaderboards.getInstance();
+//				LevelData levelD = LevelData.getInstance();
+//				levelD.loadLevel(1);
+//				System.out.println(levelD.getEnemieList());
+//				mainPane.getChildren().add(levelD.getGameRoot());
+				
 				Text text = new Text();
 
 				// Setting the text to be added.

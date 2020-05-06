@@ -34,9 +34,11 @@ public abstract class Entity {
 	
 	protected int boundX;
 	protected int boundY;
+	protected int addOnX;
+	protected int addOnY;
 
 	
-    public Entity(int initX,int initY,int width,int height) {
+    public Entity(String image_Path,int initX,int initY,int width,int height) {
     	box=new Rectangle(width,height);
 		this.width = width;
 		this.height = height;
@@ -44,10 +46,15 @@ public abstract class Entity {
 		
 		this.initX=initX;
 		this.initY=initY;
+		
+		image=new Image(image_Path);
+		imageView = new ImageView(image);
+	    imageView.setFitHeight(height); 
+	    imageView.setFitWidth(width); 
 
 		
-//		setX(initX);
-//		setY(initY);
+		setX(initX);
+		setY(initY);
     	
 	}
 
@@ -118,9 +125,9 @@ public abstract class Entity {
 
 
 	public void setX(int x) {
-		this.x = x;
-		this.box.setTranslateX(x);
-		this.imageView.setTranslateX(this.x-boundX);
+		this.x = x+addOnX;
+		this.box.setTranslateX(x+addOnX);
+		this.imageView.setTranslateX(this.x-boundX+addOnX);
 	}
 
 
@@ -130,9 +137,9 @@ public abstract class Entity {
 
 
 	public void setY(int y) {
-		this.y = y;
-		this.box.setTranslateY(y);
-		this.imageView.setTranslateY(this.y-boundY);
+		this.y = y+addOnY;
+		this.box.setTranslateY(y+addOnY);
+		this.imageView.setTranslateY(this.y-boundY+addOnY);
 		
 	}
 
