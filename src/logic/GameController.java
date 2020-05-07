@@ -191,16 +191,19 @@ public class GameController {
 				movePlayerY(player.getVelocityY());
 			}
 
+
 			if (player.getCurrentHP() <= 0 || player.getY() >= levelHeight) {
 
-				if (!isDie) {
-					if (player.getIsWalkLeft() || player.getIsTurnLeft()) {
+//				if (!isDie) {
+					if (player.isRight()) {
 						player.doDieLeft();
-					} else if (player.getIsWalkRight() || player.getIsTurnRight()) {
+					} else{
 						player.doDieRight();
 					}
 					isDie = true;
-				}
+					System.out.println("1321584535145314344");
+					return;
+//				}
 			} else {
 				if (isBarrierOpen) {
 					barrier.setX(offsetX);
@@ -317,7 +320,7 @@ public class GameController {
 								gameRoot.getChildren().addAll(recoverylight.getImageView());
 								isRecoverylightOpen=true;
 							} catch (ConsumeItemFailedException e) {
-								System.out.println("Fire bullet failed, " + e.message);
+								System.out.println("Use potion failed, " + e.message);
 							}
 							alreadyPressedH = true;
 						}

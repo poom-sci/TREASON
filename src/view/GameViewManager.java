@@ -96,9 +96,9 @@ public class GameViewManager {
 	private Weapon weapon;
 	private ImageView weaponImage;
 	private ImageView potionImage;
-	private Text bulletLeft;
-	private Text potionLeft;
-	private Text potionHotkey;
+	private Label bulletLeft;
+	private Label potionLeft;
+	private Label potionHotkey;
 
 	private boolean isPlayerDie;
 
@@ -190,7 +190,7 @@ public class GameViewManager {
 			createWeaponImage();
 		}
 
-		bulletLeft.setText("Bullet Left : " + weapon.getCurrentBullet());
+		bulletLeft.setText("" + weapon.getCurrentBullet());
 		potionLeft.setText("" + player1Controller.getPlayerInventory().get(0).getAmount());
 
 		if (isPressed(KeyCode.ESCAPE)) {
@@ -257,9 +257,17 @@ public class GameViewManager {
 			gamePane.getChildren().remove(bulletLeft);
 		}
 
-		bulletLeft = new Text("Bullet Left : " + weapon.getCurrentBullet());
-		bulletLeft.setX(180);
-		bulletLeft.setY(100);
+		bulletLeft = new Label("" + weapon.getCurrentBullet());
+		try {
+//			bulletLeft.setTextFill(Color.web("EA8F3C"));
+			bulletLeft.setFont(Font.loadFont(new FileInputStream("res/PixelTakhisis-ZajJ.ttf"), 23));
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		bulletLeft.setTranslateX(190);
+		bulletLeft.setTranslateY(80);
 		gamePane.getChildren().add(bulletLeft);
 	}
 
@@ -301,16 +309,16 @@ public class GameViewManager {
 
 	private void createPotionLeft() {
 
-		potionLeft = new Text("" + player1Controller.getPlayerInventory().get(0).getAmount());
-		potionLeft.setX(760);
-		potionLeft.setY(645);
+		potionLeft = new Label("" + player1Controller.getPlayerInventory().get(0).getAmount());
+		potionLeft.setTranslateX(760);
+		potionLeft.setTranslateY(645);
 		gamePane.getChildren().add(potionLeft);
 	}
 
 	private void createPotionHotkey() {
-		potionHotkey = new Text("H");
-		potionHotkey.setX(805);
-		potionHotkey.setY(645);
+		potionHotkey = new Label("H");
+		potionHotkey.setTranslateX(805);
+		potionHotkey.setTranslateY(645);
 		gamePane.getChildren().add(potionHotkey);
 	}
 
