@@ -15,30 +15,31 @@ import javafx.util.Duration;
 import logic.Action;
 
 public class BossEnemy extends GameCharacter {
-	protected Weapon weapon;
+	
 
 	public BossEnemy(int initX, int initY) {
-		super("boss.png", initX, initY, 100, 160, 1000);
+		super("boss.png", initX, initY, 100, 160, 500);
 		Weapon gun = new BombGun(1);
 		this.weaponsInventory.add(gun);
-		
-		point=5000;
-		pictureWidth=122;
-		pictureHeight=110;
-		pictureOffsetX=pictureWidth*0;
-		pictureOffsetY=pictureHeight*0;
-		boundX=53;
-		boundY=30;
+		velocityX=2;
+
+		point = 5000;
+		pictureWidth = 122;
+		pictureHeight = 110;
+		pictureOffsetX = pictureWidth * 0;
+		pictureOffsetY = pictureHeight * 0;
+		boundX = 53;
+		boundY = 30;
 
 		turnTime = Duration.millis(1000);
 		walkTime = Duration.millis(1000);
 		fireTime = Duration.millis(200);
 		dieTime = Duration.millis(2000);
 		jumpTime = Duration.millis(1000);
-		
+
 		setX(initX);
 		setY(initY);
-		
+
 		sprite.stop();
 		imageView.setViewport(new Rectangle2D(pictureOffsetX, pictureOffsetY, pictureWidth, pictureHeight));
 		imageView.setFitWidth(200);
@@ -48,7 +49,6 @@ public class BossEnemy extends GameCharacter {
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
 	}
-	
 //	public void createAnimation() {
 //		imageView = new ImageView(new Image(image_Path));
 //		imageView.setViewport(new Rectangle2D(pictureOffsetX, pictureOffsetY, pictureWidth, pictureHeight));

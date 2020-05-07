@@ -151,11 +151,11 @@ public abstract class Weapon extends Item {
 			bullet.setX(x);
 			bullet.setY(y);
 		}
-		if(!(bullet instanceof Bomb)) {
+
 			if (!isRight) {
 				bullet.getImageView().setRotate(bullet.getImageView().getRotate() + 180);
 			}
-		}
+		
 		
 		return bullet;
 

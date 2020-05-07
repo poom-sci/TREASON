@@ -31,6 +31,7 @@ public abstract class GameCharacter extends Entity {
 //	protected int y;
 
 	protected ArrayList<Action> actions;
+	protected boolean pensioner=false;
 
 	protected Action turnLeft;
 	protected Action turnRight;
@@ -61,6 +62,7 @@ public abstract class GameCharacter extends Entity {
 	protected int maxHP;
 	protected Rectangle currentHPBox;
 	protected int point;
+	protected int finalPositionX;
 
 	protected ArrayList<Weapon> weaponsInventory;
 
@@ -418,7 +420,23 @@ public abstract class GameCharacter extends Entity {
 		return point;
 	}
 
-	
+	public boolean isPensioner() {
+		return pensioner;
+	}
+
+	public void setPensioner(boolean pensioner) {
+		this.pensioner = pensioner;
+	}
+
+
+	public int getFinalPositionX() {
+		return finalPositionX;
+	}
+
+	public void setFinalPositionX(int finalPositionX) {
+		this.finalPositionX = finalPositionX;
+	}
+
 	
 
 }

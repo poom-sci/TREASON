@@ -6,6 +6,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import logic.Explodable;
 
@@ -17,6 +18,8 @@ public class Bomb extends Bullet implements Explodable {
 		this.disX = 800;
 		this.disY = 800;
 		damage=50;
+		
+		this.box.setFill(Color.AZURE);
 
 		this.sprite = new SpriteAnimation(this.imageView, Duration.millis(2000), 15, 2, 0, 0, 258, 250);
 		this.sprite.setCycleCount(Animation.INDEFINITE);
@@ -26,7 +29,7 @@ public class Bomb extends Bullet implements Explodable {
 
 	@Override
 	public void explode() {
-
+System.out.println(isRight());
 		AudioClip granade_sound = new AudioClip(ClassLoader.getSystemResource("explosion_sound.wav").toString());
 		granade_sound.setVolume(0.1);
 		granade_sound.play();
@@ -44,7 +47,7 @@ public class Bomb extends Bullet implements Explodable {
 		this.box.setWidth(128);
 		this.height = 128;
 		this.box.setHeight(128);
-		this.imageView.setX(this.box.getTranslateX());
+		this.imageView.setX(this.box.getTranslateX()-50);
 		this.imageView.setY(this.box.getTranslateY() - 70);
 		if (!this.isRight) {
 			this.box.setTranslateX(this.box.getTranslateX() - this.width / 2);

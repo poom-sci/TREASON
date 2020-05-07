@@ -12,7 +12,7 @@ public class SwordSlice extends Bullet {
 	public SwordSlice(boolean isRight, int initX, int initY) {
 		super("sword_slice.png",isRight,initX,initY, 50, 50);
 		// TODO Auto-generated constructor stub
-		this.disX = 20;
+		this.disX = 30;
 		this.disY = 20;
 		
 		damage=20;
