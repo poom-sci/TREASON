@@ -55,11 +55,12 @@ public abstract class GameCharacter extends Entity {
 	protected int pictureOffsetY;
 	protected int pictureColumn;
 
-	protected boolean isOnFloor = false;
+	protected boolean isOnFloor=false;
 
 	protected int currentHP;
 	protected int maxHP;
 	protected Rectangle currentHPBox;
+	protected int point;
 
 	protected ArrayList<Weapon> weaponsInventory;
 
@@ -100,20 +101,25 @@ public abstract class GameCharacter extends Entity {
 	}
 
 	public void createAnimation() {
+		createAction();
 		imageView = new ImageView(new Image(image_Path));
 		imageView.setViewport(new Rectangle2D(pictureOffsetX, pictureOffsetY, pictureWidth, pictureHeight));
+//		imageView.setFitWidth(width);
+//		imageView.setFitHeight(height);
 		sprite = new SpriteAnimation(imageView, Duration.millis(1000), 5, 5, pictureOffsetX, pictureOffsetY,
 				pictureWidth, pictureHeight);
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
+	
 
 		boundX = 32;
 		boundY = 18;
 		setX(initX);
 		setY(initY);
 
-		createAction();
-		turnLeft.setAction(true);
+//		turnLeft.setAction(true);
+//		doTurnRight();
+	
 
 	}
 
@@ -143,7 +149,9 @@ public abstract class GameCharacter extends Entity {
 		for (Action e : actions) {
 			e.setAction(false);
 		}
-		sprite.pause();
+		if(sprite!=null) {
+			sprite.stop();
+		}
 	}
 
 	public void doTurnRight() {
@@ -313,16 +321,16 @@ public abstract class GameCharacter extends Entity {
 		return weaponsInventory;
 	}
 
-	public Action getDieRight() {
-		return dieRight;
+	public boolean getIsDieRight() {
+		return dieRight.isAction();
 	}
 
-	public Action getDieLeft() {
-		return dieLeft;
+	public boolean getIsDieLeft() {
+		return dieLeft.isAction();
 	}
 
 	public boolean isDie() {
-		return (dieRight.isAction() || dieLeft.isAction());
+		return currentHP<=0;
 	}
 
 	public boolean checkTurn(ArrayList<Entity> platforms) {
@@ -405,6 +413,11 @@ public abstract class GameCharacter extends Entity {
 	public int getMaxHP() {
 		return maxHP;
 	}
+
+	public int getPoint() {
+		return point;
+	}
+
 	
 	
 

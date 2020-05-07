@@ -15,8 +15,8 @@ public class SwordSlice extends Bullet {
 		this.disX = 20;
 		this.disY = 20;
 		
-		damage=50;
-		this.name = "slice";
+		damage=20;
+		this.velocityX=2;
 
 		this.addOnY=-15;
 		this.boundY=-20;

@@ -16,9 +16,8 @@ public class RocketBullet extends Bullet implements Explodable {
 		// TODO Auto-generated constructor stub
 		this.disX=800;
 		this.disY=800;
-
-		this.name="rocket";
-		damage=100;
+		this.velocityX=2;
+		damage=30;
 		
 	}
 
@@ -54,7 +53,6 @@ public class RocketBullet extends Bullet implements Explodable {
 		this.box.setTranslateY(this.box.getTranslateY()-this.height/2+20);
 
 		
-		System.out.println(100000000);
 		
 		
 	}

@@ -17,8 +17,6 @@ public abstract class Entity {
 	protected int width;
 	protected int height;
 	
-	
-	protected String name;
 	protected Rectangle box;
 	protected Image image;
 	protected ImageView imageView;
@@ -36,6 +34,8 @@ public abstract class Entity {
 	protected int boundY;
 	protected int addOnX;
 	protected int addOnY;
+	
+	protected double finalTime;
 
 	
     public Entity(String image_Path,int initX,int initY,int width,int height) {
@@ -64,40 +64,18 @@ public abstract class Entity {
 	}
 
 
-	public void setWidth(int width) {
-		this.width = width;
-	}
-
-
 	public int getHeight() {
 		return height;
 	}
-
-
-	public void setHeight(int height) {
-		this.height = height;
-	}
-
 
 	public Rectangle getBox() {
 		return box;
 	}
 
 
-	public Animation getSprite() {
-		return sprite;
-	}
-	
-
 	public String getImage_Path() {
 		return image_Path;
 	}
-
-
-	public void setImage_Path(String image_Path) {
-		this.image_Path = image_Path;
-	}
-
 
 	public int getBoundX() {
 		return boundX;
@@ -174,23 +152,8 @@ public abstract class Entity {
 	}
 
 
-	public void setDisX(int disX) {
-		this.disX = disX;
-	}
-
-
 	public int getDisY() {
 		return disY;
-	}
-
-
-	public void setDisY(int disY) {
-		this.disY = disY;
-	}
-
-
-	public void setSprite(Animation sprite) {
-		this.sprite = sprite;
 	}
 
 
@@ -220,6 +183,18 @@ public abstract class Entity {
 	public void addVelocityY(int velocityY) {
 		this.velocityY +=velocityY;
 	}
+
+
+	public double getFinalTime() {
+		return finalTime;
+	}
+
+
+	public void setFinalTime(double finalTime) {
+		this.finalTime = finalTime;
+	}
+	
+	
     
     
 }

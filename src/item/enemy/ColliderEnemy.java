@@ -16,9 +16,11 @@ import logic.Action;
 public class ColliderEnemy extends GameCharacter {
 
 	public ColliderEnemy(int initX, int initY) {
-		super("main_character.png",initX, initY, 30, 60, 100);
+		super("main_character.png",initX, initY, 30, 60, 30);
 		
+		point=100;
 		this.disX = 60 * 5;
+		velocityX=1;
 
 		this.pictureWidth=96;
 		this.pictureHeight=96;

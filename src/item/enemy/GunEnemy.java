@@ -19,11 +19,13 @@ import logic.Action;
 public class GunEnemy extends GameCharacter {
 
 	public GunEnemy(int initX, int initY) {
-		super("main_character.png", initX, initY, 30, 60, 50);
+		super("main_character.png", initX, initY, 30, 60, 20);
 		Weapon gun = new Gun(1);
 		this.weaponsInventory.add(gun);
 		
+		point=200;
 		this.disX = 60 * 5;
+		velocityX=1;
 		
 		pictureWidth=96;
 		pictureHeight=96;

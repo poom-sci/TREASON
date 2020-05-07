@@ -9,7 +9,6 @@ public class Effect extends Entity {
 		super(image_Path, initX, initY, width, height);
 		// TODO Auto-generated constructor stub
 		isInUsed=true;
-		System.out.println(99999999);
 	}
 
 	public boolean isInUsed() {

@@ -9,6 +9,7 @@ import item.bullet.Bullet;
 import item.bullet.GunBullet;
 import item.bullet.RocketBullet;
 import item.bullet.SwordSlice;
+import item.character.GameCharacter;
 import item.character.MainCharacter;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -23,7 +24,7 @@ public abstract class Weapon extends Item {
 	protected ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 
 	public Weapon(String image_Path, int width, int height) {
-		super(image_Path,width,height);
+		super(image_Path, width, height);
 
 	}
 
@@ -35,7 +36,6 @@ public abstract class Weapon extends Item {
 				Bullet bullet = new GunBullet(true, 0, 0);
 				this.bullets.add(bullet);
 				currentBullet += 1;
-				System.out.println("addG");
 				if (currentBullet == maxBullet) {
 					return;
 				}
@@ -75,6 +75,7 @@ public abstract class Weapon extends Item {
 			}
 			break;
 		}
+
 		}
 
 	}
@@ -92,48 +93,72 @@ public abstract class Weapon extends Item {
 			throw new FireBulletFailedException("There is no bullet left.");
 		}
 		currentBullet -= 1;
-		Bullet bullet =bullets.get(0);
+		Bullet bullet = bullets.get(0);
+
+		bullet = setPositionBullet(character, isRight, bullet);
+
+		return bullets.remove(0);
+	}
+
+
+	public Bullet fireBulletInfinite(item.character.GameCharacter character, boolean isRight) {
+		Bullet bullet;
+
+		switch (bulletType) {
+		case 'G': {
+			bullet = new GunBullet(isRight, character.getX(), character.getY());
+			bullet = setPositionBullet(character, isRight, bullet);
+			return bullet;
+		}
+		case 'R': {
+			bullet = new RocketBullet(isRight, character.getX(), character.getY());
+			bullet = setPositionBullet(character, isRight, bullet);
+			return bullet;
+		}
+		case 'S': {
+			bullet = new SwordSlice(isRight, character.getX(), character.getY());
+			bullet = setPositionBullet(character, isRight, bullet);
+			return bullet;
+		}
+		case 'B': {
+			bullet = new Bomb(isRight, character.getX(), character.getY());
+			bullet = setPositionBullet(character, isRight, bullet);
+			bullet.setVelocityY(-10);
+			return bullet;
+		}
+		default:
+			bullet = new GunBullet(isRight, character.getX(), character.getY());
+			bullet = setPositionBullet(character, isRight, bullet);
+			return bullet;
+
+		}
+	}
+	
+	private Bullet setPositionBullet(GameCharacter character, boolean isRight, Bullet bullet) {
 		bullet.setRight(isRight);
-
-
 		if (isRight) {
-			int x=character.getX() + 40;
-			int y=character.getY() + 20;
+			int x = character.getX() + 40;
+			int y = character.getY() + 20;
 			bullet.setInitX(x);
 			bullet.setInitY(y);
 			bullet.setX(x);
 			bullet.setY(y);
 		} else {
-			int x=character.getX() - 40;
-			int y=character.getY() + 20;
-			bullets.get(0).setInitX(x);
+			int x = character.getX() - 40;
+			int y = character.getY() + 20;
+			bullet.setInitX(x);
 			bullet.setInitY(y);
 			bullet.setX(x);
 			bullet.setY(y);
 		}
-		if (!isRight) {
-			bullet.getImageView().setRotate(bullet.getImageView().getRotate() + 180);
+		if(!(bullet instanceof Bomb)) {
+			if (!isRight) {
+				bullet.getImageView().setRotate(bullet.getImageView().getRotate() + 180);
+			}
 		}
-
-		return bullets.remove(0);
-	}
-
-	public Bullet fireBulletInfinite(item.character.GameCharacter character, boolean isRight) {
-		Bullet bullet = new GunBullet(isRight, character.getX(), character.getY());
-		bullet.setRight(isRight);
-		bullet.setInitX(character.getX());
-		bullet.setInitY(character.getY());
-		if (isRight) {
-			bullet.setX(character.getX() + 40);
-			bullet.setY(character.getY() + 20);
-		} else {
-			bullet.setX(character.getX() - 30);
-			bullet.setY(character.getY() + 20);
-		}
-		if (!isRight) {
-			bullet.getImageView().setRotate(bullet.getImageView().getRotate() + 180);
-		}
+		
 		return bullet;
+
 	}
 
 	public boolean isEmpty() {
@@ -143,7 +168,6 @@ public abstract class Weapon extends Item {
 	public ArrayList<Bullet> getBullets() {
 		return bullets;
 	}
-
 
 	public void addBullets(int ammo) {
 		this.currentBullet = this.currentBullet + ammo;

@@ -14,6 +14,7 @@ public class Bullet extends Entity {
 	public Bullet(String image_Path,boolean isRight,int initX,int initY,int width,int height) {
 		super(image_Path, initX, initY,width,height);
 		this.isRight=isRight;
+
 		
 	}
 

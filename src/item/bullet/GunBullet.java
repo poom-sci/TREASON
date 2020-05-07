@@ -12,9 +12,8 @@ public class GunBullet extends Bullet {
 		super("bullet.png",isRight,initX,initY,20,10);
 		this.disX=300;
 		this.disY=300;
-		this.name="bullet";
-		damage=50;
-	
+		damage=10;
+		this.velocityX=2;
 //	    this.boundY=15;
 	}
 	

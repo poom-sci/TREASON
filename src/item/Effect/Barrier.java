@@ -14,14 +14,14 @@ public class Barrier extends Effect {
 
 	public Barrier(int initX, int initY) {
 
-		super("lightBarrier.png",initX, initY, 80, 80);
+		super("white.png",initX, initY, 80, 80);
 
-		imageView.setOpacity(0.5);
+		imageView.setOpacity(0);
 		this.boundX=15;
 
-		sprite = new SpriteAnimation(imageView, Duration.millis(3000), 30, 5, 0, 0, 192, 192);
-		sprite.setCycleCount(Animation.INDEFINITE);
-		sprite.play();
+//		sprite = new SpriteAnimation(imageView, Duration.millis(3000), 30, 5, 0, 0, 192, 192);
+//		sprite.setCycleCount(Animation.INDEFINITE);
+//		sprite.play();
 
 	}
 
