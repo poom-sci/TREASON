@@ -3,6 +3,7 @@ package item.weapon;
 import java.util.ArrayList;
 
 import exception.FireBulletFailedException;
+import implement.Fireable;
 import item.Item;
 import item.bullet.Bomb;
 import item.bullet.Bullet;
@@ -13,7 +14,6 @@ import item.character.GameCharacter;
 import item.character.MainCharacter;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import logic.Fireable;
 
 public abstract class Weapon extends Item {
 
@@ -88,7 +88,7 @@ public abstract class Weapon extends Item {
 		this.currentBullet = currentBullet;
 	}
 
-	public Bullet fireBullet(item.character.GameCharacter character, boolean isRight) throws FireBulletFailedException {
+	public Bullet fireBullet(GameCharacter character, boolean isRight) throws FireBulletFailedException {
 		if (currentBullet == 0) {
 			throw new FireBulletFailedException("There is no bullet left.");
 		}
@@ -101,7 +101,7 @@ public abstract class Weapon extends Item {
 	}
 
 
-	public Bullet fireBulletInfinite(item.character.GameCharacter character, boolean isRight) {
+	public Bullet fireBulletInfinite(GameCharacter character, boolean isRight) {
 		Bullet bullet;
 
 		switch (bulletType) {

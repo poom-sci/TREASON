@@ -152,6 +152,16 @@ public class ViewManager {
 
 					@Override
 					public void handle(ActionEvent arg0) {
+						if(gameManager!=null) {
+							gameManager=null;
+							System.gc();
+							NowShowing=null;
+							System.gc();
+							gameManager=null;
+							System.gc();
+							gameStage=null;
+							System.gc();
+						}
 
 						gameManager = new GameViewManager();
 						gameManager.createNewGame(mainStage);

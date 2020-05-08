@@ -1,6 +1,7 @@
 package item.bullet;
 
 import gui.SpriteAnimation;
+import implement.Explodable;
 import javafx.animation.Animation;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
@@ -8,7 +9,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-import logic.Explodable;
 
 public class Bomb extends Bullet implements Explodable {
 
@@ -29,7 +29,6 @@ public class Bomb extends Bullet implements Explodable {
 
 	@Override
 	public void explode() {
-System.out.println(isRight());
 		AudioClip granade_sound = new AudioClip(ClassLoader.getSystemResource("explosion_sound.wav").toString());
 		granade_sound.setVolume(0.1);
 		granade_sound.play();

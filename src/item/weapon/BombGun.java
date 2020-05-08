@@ -2,9 +2,10 @@ package item.weapon;
 
 import item.bullet.Bullet;
 import exception.FireBulletFailedException;
+import implement.Fireable;
 import item.bullet.Bomb;
 import item.bullet.RocketBullet;
-import logic.Fireable;
+import item.character.GameCharacter;
 
 public class BombGun extends Weapon {
 	
@@ -17,5 +18,23 @@ public class BombGun extends Weapon {
 
 		
 	}
+
+//	@Override
+//	public void fireBullet(GameCharacter character, boolean isRight) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	@Override
+//	public void fireBulletInfinite(GameCharacter character, boolean isRight) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	@Override
+//	public void setPositionBullet(GameCharacter character, boolean isRight, Bullet bullet) {
+//		// TODO Auto-generated method stub
+//		
+//	}
 
 }

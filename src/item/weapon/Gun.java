@@ -1,12 +1,12 @@
 package item.weapon;
 
+import implement.Fireable;
 import item.bullet.Bullet;
 import item.bullet.GunBullet;
 import item.character.MainCharacter;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import logic.Fireable;
 
 public class Gun extends Weapon {
 

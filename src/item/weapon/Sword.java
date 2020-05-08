@@ -1,11 +1,11 @@
 package item.weapon;
 
 import exception.FireBulletFailedException;
+import implement.Fireable;
 import item.bullet.Bullet;
 import item.bullet.GunBullet;
 import item.bullet.SwordSlice;
 import item.character.MainCharacter;
-import logic.Fireable;
 
 public class Sword extends Weapon {
 

@@ -15,6 +15,7 @@ import com.sun.javafx.geom.Shape;
 import exception.ConsumeItemFailedException;
 import exception.FireBulletFailedException;
 import gui.SpriteAnimation;
+import implement.Explodable;
 import item.bullet.Bomb;
 import item.bullet.Bullet;
 import item.bullet.GunBullet;
@@ -238,6 +239,10 @@ public class GameController {
 
 	public void getControl() {
 		try {
+			if (isGameEnd) {
+				removeAll();
+				return;
+			}
 //			System.out.println(offsetX);
 //			System.out.println(gameRoot.getLayoutX());
 
@@ -307,7 +312,6 @@ public class GameController {
 					if (enemieList.size() == 0) {
 						checkPortal();
 					}
-
 
 				}
 
@@ -517,7 +521,7 @@ public class GameController {
 		for (int i = 0; i < enemieList.size(); i++) {
 			GameCharacter enemy = enemieList.get(i);
 			int distance = enemy.getX() - player.getX();
-			if(enemy instanceof ColliderEnemy) {
+			if (enemy instanceof ColliderEnemy) {
 				continue;
 			}
 			if (Math.abs(distance) < 450) {
@@ -542,7 +546,7 @@ public class GameController {
 
 		Bullet bullet = enemyCharacter.getWeapon().fireBulletInfinite(enemyCharacter, isRight);
 
-		if (enemyCharacter instanceof GunEnemy ) {
+		if (enemyCharacter instanceof GunEnemy) {
 			enemyBullets.add(bullet);
 			gameRoot.getChildren().addAll(bullet.getImageView());
 		}
@@ -682,13 +686,11 @@ public class GameController {
 				gameRoot.getChildren().remove(item.getImageView());
 				gameRoot.getChildren().remove(item.getBox());
 				playerBullets.remove(item);
-//				System.out.println("rocket collide");
 
-				if (item instanceof RocketBullet) {
-					((RocketBullet) item).explode();
+				if (item instanceof Explodable) {
+					((Explodable) item).explode();
 					checkEnemyCollision(item);
 					timedEntity(item, 1.0);
-					System.out.println("rocket collide");
 					return;
 				}
 				if (item instanceof SwordSlice) {
@@ -1017,6 +1019,7 @@ public class GameController {
 		enemieList.remove(enemy);
 		if (Character instanceof BossEnemy) {
 			isWin = true;
+			hasBoss = false;
 			isBossStart = false;
 			isGameEnd = true;
 		}
@@ -1085,6 +1088,32 @@ public class GameController {
 		item = null;
 	}
 
+	private void removeAll() {
+		platforms.clear();
+		portalList.clear();
+		enemieList.clear();
+		potionList.clear();
+		ammoList.clear();
+		treeList.clear();
+		gameRoot.getChildren().clear();
+		platforms = null;
+		portalList = null;
+		enemieList = null;
+		potionList = null;
+		ammoList = null;
+		treeList = null;
+		hasBoss = false;
+		isBossStart = false;
+		boss = null;
+		light = null;
+		recoverylight = null;
+		barrier = null;
+
+		levelWidth = 0;
+		levelHeight = 0;
+		System.gc();
+	}
+
 	private void createBarrier() {
 		barrier = new Barrier(offsetX, offsetY);
 		timedEntity(barrier, 1.5);
@@ -1125,6 +1154,14 @@ public class GameController {
 
 	public boolean isWin() {
 		return isWin;
+	}
+
+	public void setWin(boolean isWin) {
+		this.isWin = isWin;
+	}
+
+	public void setGameEnd(boolean isGameEnd) {
+		this.isGameEnd = isGameEnd;
 	}
 
 }

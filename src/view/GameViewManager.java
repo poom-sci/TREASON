@@ -170,13 +170,6 @@ public class GameViewManager {
 	}
 
 	private void update() {
-		player1Controller.setKeys(keys);
-		player1Controller.setTime(time.doubleValue());
-		gameRoot = player1Controller.getGameRoot();
-		heathBox = player1Controller.getPlayer().getCurrentHPBox();
-		weapon = player1Controller.getPlayer().getWeapon();
-//		isPlayerDie = player1Controller.getPlayer().isDie();
-
 		if (player1Controller.isGameEnd()) {
 			gameTimer.stop();
 			AudioClip mouse_pressed_sound = new AudioClip(
@@ -184,8 +177,16 @@ public class GameViewManager {
 			mouse_pressed_sound.play();
 			createEndSubScene();
 		}
-		
-		if(weaponImage!=player1Controller.getPlayer().getWeapon().getImageView()) {
+		player1Controller.setKeys(keys);
+		player1Controller.setTime(time.doubleValue());
+		gameRoot = player1Controller.getGameRoot();
+		heathBox = player1Controller.getPlayer().getCurrentHPBox();
+		weapon = player1Controller.getPlayer().getWeapon();
+//		isPlayerDie = player1Controller.getPlayer().isDie();
+
+
+
+		if (weaponImage != player1Controller.getPlayer().getWeapon().getImageView()) {
 			createWeaponImage();
 		}
 
@@ -399,6 +400,7 @@ public class GameViewManager {
 				gameStage.hide();
 				menuStage.show();
 				menuPane.setVisible(false);
+				
 			}
 
 		});
@@ -425,7 +427,6 @@ public class GameViewManager {
 			this.gamePane.getChildren().remove(menuButtons.get(0));
 			menuButtons.remove(menuButtons.get(0));
 		}
-
 		player1Controller = new GameController();
 		this.gameRoot = player1Controller.getGameRoot();
 
@@ -486,8 +487,12 @@ public class GameViewManager {
 					scoreBoard.addPlayerScore(textField.getText(), player1Controller.getPlayerPoint(),
 							time.doubleValue());
 					scoreBoard.saveScores();
+					player1Controller.setGameEnd(false);
+					player1Controller.setWin(false);
 					gameStage.close();
-					menuStage.show();
+					menuStage.close();
+//					menuStage.show();
+					removeAll();
 				} catch (AddLeaderboardScoresFailedException e) {
 					Alert alert = new Alert(AlertType.WARNING, "Add leaderboard failed, " + e.message);
 					alert.setTitle("Error");
@@ -507,8 +512,12 @@ public class GameViewManager {
 			@Override
 			public void handle(ActionEvent arg0) {
 				isGameover = true;
+				player1Controller.setGameEnd(false);
+				player1Controller.setWin(false);
 				gameStage.close();
-				menuStage.show();
+				menuStage.close();
+//				menuStage.show();
+				removeAll();
 
 			}
 
@@ -525,8 +534,12 @@ public class GameViewManager {
 						scoreBoard.addPlayerScore(textField.getText(), player1Controller.getPlayerPoint(),
 								time.doubleValue());
 						scoreBoard.saveScores();
+						player1Controller.setGameEnd(false);
+						player1Controller.setWin(false);
 						gameStage.close();
-						menuStage.show();
+						menuStage.close();
+//						menuStage.show();
+						removeAll();
 					} catch (AddLeaderboardScoresFailedException e) {
 						System.out.println("Add leaderboard failed, " + e.message);
 					}
@@ -537,6 +550,31 @@ public class GameViewManager {
 
 		gamePane.getChildren().addAll(nameScores, textField, scoreScores, timeScores);
 
+	}
+
+	private void removeAll() {
+		gameViewManager = null;
+		gameRoot = null;
+		player1Controller = null;
+		playerInfoBox = null;
+		heathBox = null;
+		inventory = null;
+		weaponImage = null;
+		weapon = null;
+		bulletNumber = null;
+		potionNumber = null;
+		ammoNumber = null;
+
+		gamePane = null;
+		gameScene = null;
+		gameStage = null;
+		gameTimer = null;
+
+		menuButtons = null;
+		menuPane = null;
+		menuBox = null;
+
+		System.gc();
 	}
 
 	private void createBlackDrop() {

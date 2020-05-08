@@ -1,13 +1,13 @@
 package item.bullet;
 
 import gui.SpriteAnimation;
+import implement.Explodable;
 import javafx.animation.Animation;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
-import logic.Explodable;
 
 public class RocketBullet extends Bullet implements Explodable {
 
