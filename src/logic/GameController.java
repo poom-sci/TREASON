@@ -517,6 +517,9 @@ public class GameController {
 		for (int i = 0; i < enemieList.size(); i++) {
 			GameCharacter enemy = enemieList.get(i);
 			int distance = enemy.getX() - player.getX();
+			if(enemy instanceof ColliderEnemy) {
+				continue;
+			}
 			if (Math.abs(distance) < 450) {
 				enemyFireMethod(enemy);
 			}
@@ -532,13 +535,14 @@ public class GameController {
 	}
 
 	private Bullet enemyFireMethod(GameCharacter enemyCharacter) {
+
 		int distance = enemyCharacter.getX() - player.getX();
 		boolean isRight = distance < 0;
 		boolean isBeforeRight = enemyCharacter.isRight();
 
 		Bullet bullet = enemyCharacter.getWeapon().fireBulletInfinite(enemyCharacter, isRight);
 
-		if (enemyCharacter instanceof GunEnemy || enemyCharacter instanceof ColliderEnemy) {
+		if (enemyCharacter instanceof GunEnemy ) {
 			enemyBullets.add(bullet);
 			gameRoot.getChildren().addAll(bullet.getImageView());
 		}

@@ -47,7 +47,7 @@ public abstract class ConsumableItem extends Item {
 			}
 			
 			this.amount -= 1;
-			player.increaseCurrentHP(40);
+			player.increaseCurrentHP(100);
 			break;
 		}
 		case 'A': {

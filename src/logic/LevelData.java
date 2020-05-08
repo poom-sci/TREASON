@@ -28,7 +28,7 @@ import javafx.scene.text.Font;
 public class LevelData {
 	private static final String[] LEVEL1 = new String[] {
 			"10000000000000000000000000000000000000000000000000000000000000000000000001",
-			"1000000000000000000000000000000000000000000000000000000000000H000000000001",
+			"1000000000000000000000000000000000000000000000000000000000000HC00000000001",
 			"10000000000000000000000000000000000000000000000000000000000011100G00000001",
 			"10000000000000000000000000000000000000000000000000000000000000000111100001",
 			"100000000000000000000000000000000000000000000GH000000000000000000000000001",
@@ -37,13 +37,12 @@ public class LevelData {
 			"100011100G000000000000000000000000G000111100000000001000011100111001110111",
 			"100000000111000G0000001001000000111100000000000000011000000000000000000111",
 			"1000000G0000001110000110011000000000000000000000001111000G00000G0000000111",
-			"10000011100000000000111001110000000G000000000G0001111111111111111111111111",
+			"1000001110000000000011100111000C000G00C000000G0001111111111111111111111111",
 			"11111111100111100011111001111111111111111111111111111111111111111111111111" };
 
-	private static final String[] LEVEL2 = new String[] { 
+	private static final String[] LEVEL2 = new String[] { "100000000000000000000000000000000000000000000000000001",
 			"100000000000000000000000000000000000000000000000000001",
-			"100000000000000000000000000000000000000000000000000001",
-			"1000000000000000000G0000HA0000000000000000000000000001",
+			"10000000000000C0000GC000HA0000000000000000000000000001",
 			"100000000000011000111100110000000000000000000000000001",
 			"100000000110000000000000000000000000000000000000000001",
 			"100000000000000000000000000000000000000000000000000P01",
@@ -54,18 +53,12 @@ public class LevelData {
 			"101111111000000000000000011111111111111111111111111111",
 			"111111111001111000111110011111111111111111111111111111" };
 
-	private static final String[] LEVEL3 = new String[] { 
-			"1000000000000000000000000000000000001",
-			"1000000000000000000000000000000000001", 
-			"1000000000000000000000000000000000001",
-			"1000000000000010000000000000000000B01", 
-			"1000000000000010000000000000000000001",
-			"1000000000000011000000000000000000001", 
-			"1000000000011111000000000000000000111",
-			"1000000000100011000000000000000000111", 
-			"1000000001000011000111001110011100111",
-			"1000000010000011000000000000000000111", 
-			"1000000100000011100000000000000000111",
+	private static final String[] LEVEL3 = new String[] { "1000000000000000000000000000000000001",
+			"1000000000000000000000000000000000001", "1000000000000000000000000000000000001",
+			"1000000000000010000000000000000000B01", "1000000000000010000000000000000000001",
+			"1000000000000011000000000000000000001", "1000000000011111000000000000000000111",
+			"1000000000100011000000000000000000111", "1000000001000011000111001110011100111",
+			"1000000010000011000000000000000000111", "1000000100000011100000000000000000111",
 			"1111111111111111111111111111111111111" };
 
 	public static final String[][] ALLLEVELMAP = new String[][] { LEVEL1, LEVEL2, LEVEL3 };
@@ -79,8 +72,8 @@ public class LevelData {
 	private BossEnemy boss;
 	private ArrayList<GameCharacter> enemieList;
 	private ArrayList<PotionBox> potionList;
-	private ArrayList<AmmoBox> ammoList ;
-	private ArrayList<Oak> treeList ;
+	private ArrayList<AmmoBox> ammoList;
+	private ArrayList<Oak> treeList;
 	private Rectangle bg;
 
 	private int levelWidth;
@@ -137,14 +130,14 @@ public class LevelData {
 					break;
 				case 'G':
 					GameCharacter gunEnemy = new GunEnemy(j * 60, i * 60);
-					gunEnemy.doTurnLeft();
+					gunEnemy.doWalkLeft();
 					enemieList.add(gunEnemy);
 					gameRoot.getChildren().add(gunEnemy.getImageView());
 
 					break;
 				case 'C':
 					GameCharacter colliderEnemy = new ColliderEnemy(j * 60, i * 60);
-					colliderEnemy.doTurnLeft();
+					colliderEnemy.doWalkLeft();
 					enemieList.add(colliderEnemy);
 					gameRoot.getChildren().add(colliderEnemy.getImageView());
 
@@ -163,39 +156,38 @@ public class LevelData {
 					boss = new BossEnemy(j * 60, i * 60);
 //					gameRoot.getChildren().addAll(boss.getBox());
 					gameRoot.getChildren().add(boss.getImageView());
-					
-					Rectangle box=new Rectangle(j * 60-1550,180,280,70);
+
+					Rectangle box = new Rectangle(j * 60 - 1550, 180, 280, 70);
 					box.setOpacity(0.4);
 					box.setFill(Color.ANTIQUEWHITE);
-					Label bossStage=new Label("boss Stage");
-					
+					Label bossStage = new Label("boss Stage");
+
 					try {
 //						bulletLeft.setTextFill(Color.web("EA8F3C"));
 						bossStage.setFont(Font.loadFont(new FileInputStream("res/PixelTakhisis-ZajJ.ttf"), 23));
-						bossStage.setTranslateX(j * 60-1500);
+						bossStage.setTranslateX(j * 60 - 1500);
 						bossStage.setTranslateY(200);
 
 					} catch (FileNotFoundException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					gameRoot.getChildren().addAll(box,bossStage);
-					
+					gameRoot.getChildren().addAll(box, bossStage);
 
 					break;
 
 				case 'H':
-					PotionBox potionBox = new PotionBox(j * 60, i * 60,60, 60);
+					PotionBox potionBox = new PotionBox(j * 60, i * 60, 60, 60);
 					potionList.add(potionBox);
 					gameRoot.getChildren().add(potionBox.getImageView());
 					break;
 				case 'A':
-					AmmoBox ammoBox = new AmmoBox(j * 60, i * 60,60, 60);
+					AmmoBox ammoBox = new AmmoBox(j * 60, i * 60, 60, 60);
 					ammoList.add(ammoBox);
 					gameRoot.getChildren().add(ammoBox.getImageView());
 					break;
 				case 'T':
-					Oak tree = new Oak(j * 60, i * 60,310, 240);
+					Oak tree = new Oak(j * 60, i * 60, 310, 240);
 					treeList.add(tree);
 					gameRoot.getChildren().add(tree.getImageView());
 					break;
@@ -251,7 +243,5 @@ public class LevelData {
 	public ArrayList<Oak> getTreeList() {
 		return treeList;
 	}
-	
-	
 
 }
