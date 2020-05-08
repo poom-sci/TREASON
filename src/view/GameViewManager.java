@@ -93,12 +93,11 @@ public class GameViewManager {
 	private Rectangle playerInfoBox;
 	private Rectangle heathBox;
 	private ImageView inventory;
-	private Weapon weapon;
 	private ImageView weaponImage;
-	private ImageView potionImage;
-	private Label bulletLeft;
-	private Label potionLeft;
-	private Label potionHotkey;
+	private Weapon weapon;
+	private Label bulletNumber;
+	private Label potionNumber;
+	private Label ammoNumber;
 
 	private boolean isPlayerDie;
 
@@ -176,23 +175,23 @@ public class GameViewManager {
 		gameRoot = player1Controller.getGameRoot();
 		heathBox = player1Controller.getPlayer().getCurrentHPBox();
 		weapon = player1Controller.getPlayer().getWeapon();
-		isPlayerDie = player1Controller.getPlayer().isDie();
+//		isPlayerDie = player1Controller.getPlayer().isDie();
 
-		if (isPlayerDie) {
+		if (player1Controller.isGameEnd()) {
 			gameTimer.stop();
 			AudioClip mouse_pressed_sound = new AudioClip(
 					ClassLoader.getSystemResource("gameover_sound.wav").toString());
 			mouse_pressed_sound.play();
-			createGameoverSubScene();
+			createEndSubScene();
 		}
-
-		if (weaponImage != player1Controller.getPlayer().getWeapon().getImageView()) {
+		
+		if(weaponImage!=player1Controller.getPlayer().getWeapon().getImageView()) {
 			createWeaponImage();
 		}
 
-		bulletLeft.setText("" + weapon.getCurrentBullet());
-		potionLeft.setText("" + player1Controller.getPlayerInventory().get(0).getAmount());
-
+		bulletNumber.setText("" + weapon.getCurrentBullet());
+		potionNumber.setText("" + player1Controller.getPlayerInventory().get(0).getAmount());
+		ammoNumber.setText("" + player1Controller.getPlayerInventory().get(1).getAmount());
 		if (isPressed(KeyCode.ESCAPE)) {
 			if (!alreadyPressedESCAPE) {
 				menuPane.setVisible(true);
@@ -245,30 +244,31 @@ public class GameViewManager {
 
 		createInventoryBox();
 
-		createPotionImage();
+		createInventoryImage();
 
 		createPotionLeft();
 
-		createPotionHotkey();
+		createAmmoLeft();
+
 	}
 
 	private void createBulletLeft() {
-		if (bulletLeft != null) {
-			gamePane.getChildren().remove(bulletLeft);
+		if (bulletNumber != null) {
+			gamePane.getChildren().remove(bulletNumber);
 		}
 
-		bulletLeft = new Label("" + weapon.getCurrentBullet());
+		bulletNumber = new Label("" + weapon.getCurrentBullet());
 		try {
 //			bulletLeft.setTextFill(Color.web("EA8F3C"));
-			bulletLeft.setFont(Font.loadFont(new FileInputStream("res/PixelTakhisis-ZajJ.ttf"), 23));
+			bulletNumber.setFont(Font.loadFont(new FileInputStream("res/PixelTakhisis-ZajJ.ttf"), 23));
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		bulletLeft.setTranslateX(190);
-		bulletLeft.setTranslateY(80);
-		gamePane.getChildren().add(bulletLeft);
+		bulletNumber.setTranslateX(190);
+		bulletNumber.setTranslateY(80);
+		gamePane.getChildren().add(bulletNumber);
 	}
 
 	private void createPlayerInfoBox() {
@@ -285,41 +285,48 @@ public class GameViewManager {
 	}
 
 	private void createInventoryBox() {
-		if (inventory != null) {
-			gamePane.getChildren().remove(inventory);
-		}
 
 		inventory = new ImageView(new Image("inventory2.png"));
-		inventory.setFitHeight(70); 
-		inventory.setFitWidth(300); 
+		inventory.setFitHeight(70);
+		inventory.setFitWidth(300);
 		inventory.setOpacity(0.6);
 		inventory.setTranslateX(750);
 		inventory.setTranslateY(625);
-		
+
 		gamePane.getChildren().add(inventory);
 	}
 
-	private void createPotionImage() {
-		ConsumableItem item = player1Controller.getPlayerInventory().get(0);
-		ImageView imageView = item.getImageView();
-		imageView.setTranslateX(760);
-		imageView.setTranslateY(640);
-		gamePane.getChildren().add(imageView);
+	private void createInventoryImage() {
+
+		for (int i = 0; i < player1Controller.getPlayerInventory().size(); i++) {
+			ConsumableItem item = player1Controller.getPlayerInventory().get(i);
+			ImageView imageView = item.getImageView();
+			imageView.setTranslateX(760 + 78 * i);
+			imageView.setTranslateY(640);
+			gamePane.getChildren().add(imageView);
+
+			Label potionHotkey = new Label(item.getHotKey() + "");
+			potionHotkey.setTranslateX(805 + 85 * i);
+			potionHotkey.setTranslateY(645);
+			gamePane.getChildren().add(potionHotkey);
+		}
+
 	}
 
 	private void createPotionLeft() {
 
-		potionLeft = new Label("" + player1Controller.getPlayerInventory().get(0).getAmount());
-		potionLeft.setTranslateX(760);
-		potionLeft.setTranslateY(645);
-		gamePane.getChildren().add(potionLeft);
+		potionNumber = new Label("" + player1Controller.getPlayerInventory().get(0).getAmount());
+		potionNumber.setTranslateX(760);
+		potionNumber.setTranslateY(645);
+		gamePane.getChildren().add(potionNumber);
 	}
 
-	private void createPotionHotkey() {
-		potionHotkey = new Label("H");
-		potionHotkey.setTranslateX(805);
-		potionHotkey.setTranslateY(645);
-		gamePane.getChildren().add(potionHotkey);
+	private void createAmmoLeft() {
+
+		ammoNumber = new Label("" + player1Controller.getPlayerInventory().get(1).getAmount());
+		ammoNumber.setTranslateX(760 + 70);
+		ammoNumber.setTranslateY(645);
+		gamePane.getChildren().add(ammoNumber);
 	}
 
 	private void createWeaponImage() {
@@ -430,10 +437,10 @@ public class GameViewManager {
 
 	}
 
-	private void createGameoverSubScene() {
+	private void createEndSubScene() {
 		createBlackDrop();
 
-		createLogoGameover();
+		createLogo();
 
 		Label nameScores = new Label("Name :");
 		Label scoreScores = new Label("Score : " + player1Controller.getPlayerPoint());
@@ -539,13 +546,25 @@ public class GameViewManager {
 		gamePane.getChildren().add(GameoverSubScene);
 	}
 
-	private void createLogoGameover() {
-		ImageView logo = new ImageView("gameover.png");
+	private void createLogo() {
+		String image_path;
+		ImageView logo;
+		if (player1Controller.isWin()) {
+			image_path = "win.png";
+			logo = new ImageView(image_path);
+			logo.setLayoutX(350);
+			logo.setLayoutY(50);
+			logo.setFitHeight(300);
+			logo.setFitWidth(600);
+		} else {
+			image_path = "gameover.png";
+			logo = new ImageView(image_path);
+			logo.setLayoutX(1280 / 2 - 300 * 1.5);
+			logo.setLayoutY(50);
+			logo.setFitHeight(300 * 1.5);
+			logo.setFitWidth(600 * 1.5);
+		}
 
-		logo.setLayoutX(1280 / 2 - 300 * 1.5);
-		logo.setLayoutY(50);
-		logo.setFitHeight(300 * 1.5);
-		logo.setFitWidth(600 * 1.5);
 		logo.setOnMouseEntered(new EventHandler<MouseEvent>() {
 
 			@Override

@@ -72,7 +72,7 @@ public abstract class GameCharacter extends Entity {
 		super(image_path,initX, initY, width, height);
 
 		this.image_Path = image_path;
-		box.setFill(Color.BLACK);
+		box.setFill(Color.TRANSPARENT);
 
 		this.lowBox = new Rectangle(10, 10);
 		this.lowBox.setFill(Color.ALICEBLUE);

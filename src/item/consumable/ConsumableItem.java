@@ -22,6 +22,7 @@ public abstract class ConsumableItem extends Item {
 	protected ImageView imageView ;
 	protected int width;
 	protected int height;
+	protected char hotKey;
 	
 	public ConsumableItem(String image_Path,int width, int height,int amount) {
 		super(image_Path,width,height);
@@ -49,7 +50,11 @@ public abstract class ConsumableItem extends Item {
 			player.increaseCurrentHP(40);
 			break;
 		}
-		case 'R': {
+		case 'A': {
+			if(player.getWeapon().getCurrentBullet()== player.getWeapon().getMaxBullet()) {
+				throw new ConsumeItemFailedException("bullet is full.");
+			}
+			player.getWeapon().addBullet(10);
 			this.amount -= 1;
 			break;
 		}
@@ -70,6 +75,12 @@ public abstract class ConsumableItem extends Item {
 	public int getAmount() {
 		return this.amount;
 	}
+
+	public char getHotKey() {
+		return hotKey;
+	}
+	
+	
 
 
 	

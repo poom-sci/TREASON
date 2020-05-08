@@ -18,7 +18,7 @@ public class BossEnemy extends GameCharacter {
 	
 
 	public BossEnemy(int initX, int initY) {
-		super("boss.png", initX, initY, 100, 160, 500);
+		super("boss.png", initX, initY, 100, 160, 1000);
 		Weapon gun = new BombGun(1);
 		this.weaponsInventory.add(gun);
 		velocityX=2;

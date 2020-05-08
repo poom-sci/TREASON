@@ -23,6 +23,7 @@ import item.bullet.SwordSlice;
 import item.character.GameCharacter;
 import item.character.MainCharacter;
 import item.consumable.Potion;
+import item.consumable.Ammo;
 import item.consumable.ConsumableItem;
 import item.enemy.BossEnemy;
 import item.enemy.ColliderEnemy;
@@ -34,17 +35,21 @@ import item.weapon.Sword;
 import item.weapon.Weapon;
 import item.Entity;
 import item.Effect.Barrier;
+import item.Effect.Light;
 import item.Effect.Warning;
 import item.Effect.recoveryLight;
-import item.box.Ammo;
+import item.box.AmmoBox;
 import item.box.Box;
 import item.box.Oak;
 import item.box.Portal;
+import item.box.PotionBox;
 import javafx.animation.Animation;
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
@@ -65,19 +70,21 @@ public class GameController {
 	private ArrayList<Entity> platforms = new ArrayList<Entity>();
 	private ArrayList<Portal> portalList = new ArrayList<Portal>();
 	private ArrayList<Bullet> playerBullets = new ArrayList<Bullet>();
+	private ArrayList<Bullet> bossBombList = new ArrayList<Bullet>();
 	private ArrayList<Entity> timedEntityList = new ArrayList<Entity>();
+	private ArrayList<Bullet> enemyBullets = new ArrayList<Bullet>();
 	private Rectangle bg;
 
-//	private ArrayList<Potion> potions = new ArrayList<Potion>();
-//	private ArrayList<Ammo> ammoBoxes = new ArrayList<Ammo>();
-//	private ArrayList<Oak> trees = new ArrayList<Oak>();
+	private ArrayList<PotionBox> potionList = new ArrayList<PotionBox>();
+	private ArrayList<AmmoBox> ammoList = new ArrayList<AmmoBox>();
+	private ArrayList<Oak> treeList = new ArrayList<Oak>();
 
 	private int counter = 0;
 
-	private ArrayList<Bullet> bossBombList = new ArrayList<Bullet>();
-	private ArrayList<BossEnemy> bossList = new ArrayList<BossEnemy>();
+	private BossEnemy boss;
+	private boolean hasBoss = false;
+	private boolean isWin = false;
 	private ArrayList<GameCharacter> enemieList = new ArrayList<GameCharacter>();
-	private ArrayList<Bullet> enemyBullets = new ArrayList<Bullet>();
 
 	private int levelWidth;
 	private int levelHeight;
@@ -89,20 +96,24 @@ public class GameController {
 	private boolean alreadyPressedW = false;
 	private boolean alreadyPressedSPACE = false;
 	private boolean alreadyPressedH = false;
+	private boolean alreadyPressedJ = false;
 
 	private boolean isEnemyFire = false;
 
 	private int offsetX;
 	private int offsetY;
 
-	private boolean isDie = false;
 	private boolean isBarrierOpen = false;
+	private boolean islight = false;
 	private boolean isRecoverylightOpen = false;
+	private Light light;
 	private recoveryLight recoverylight;
 	private Barrier barrier;
+
 	private boolean isBossStart = false;
 	private boolean isBossMove = false;
 	private int pensioner = 0;
+	private boolean isGameEnd = false;
 
 	public GameController() {
 		createLevel(1);
@@ -115,9 +126,13 @@ public class GameController {
 		if (gameRoot != null) {
 			platforms.clear();
 			portalList.clear();
-			bossList.clear();
 			enemieList.clear();
+			potionList.clear();
+			ammoList.clear();
+			treeList.clear();
 			gameRoot.getChildren().clear();
+			hasBoss = false;
+			isBossStart = false;
 		}
 
 		levelD = LevelData.getInstance();
@@ -125,14 +140,22 @@ public class GameController {
 
 		platforms.addAll(levelD.getPlatforms());
 		portalList.addAll(levelD.getPortalList());
-		bossList = levelD.getBossList();
 		enemieList.addAll(levelD.getEnemieList());
+		potionList.addAll(levelD.getPotionList());
+		ammoList.addAll(levelD.getAmmoList());
+		treeList.clear();
+		if (levelD.getBoss() != null) {
+			boss = levelD.getBoss();
+			hasBoss = true;
+		} else {
+			hasBoss = false;
+		}
 
 		gameRoot = levelD.getGameRoot();
 		bg = levelD.getBg();
 		this.levelHeight = levelD.getLevelHeight();
 		this.levelWidth = levelD.getLevelWidth();
-		
+		gameRoot.setLayoutX(0);
 
 		createPlayer();
 
@@ -140,22 +163,28 @@ public class GameController {
 
 	private void createPlayer() {
 		if (player == null) {
-			player = new MainCharacter(3000, 0);
+			player = new MainCharacter(100, 540);
 		}
-		player.setX(3600);
-//		player.doTurnLeft();
+		player.setX(100);
+
 		gameRoot.getChildren().addAll(player.getBox(), player.getImageView());
 
 		createRocketGun();
 		createGun();
 		createSword();
 		createPotion();
+		createAmmo();
 
 	}
 
 	private void createPotion() {
 		Potion potion = new Potion(1);
 		player.getItemsInventory().add(potion);
+	}
+
+	private void createAmmo() {
+		Ammo ammo = new Ammo(1);
+		player.getItemsInventory().add(ammo);
 	}
 
 	private void createGun() {
@@ -174,6 +203,12 @@ public class GameController {
 	}
 
 	private void gravity() {
+		if (player.getVelocityY() < 10) {
+			player.addVelocityY(1);
+		}
+		if (player.getY() <= levelHeight) {
+			movePlayerY(player.getVelocityY());
+		}
 		for (int i = 0; i < enemieList.size(); i++) {
 			GameCharacter enemy = enemieList.get(i);
 			if (enemy.getVelocityY() < 10) {
@@ -183,37 +218,32 @@ public class GameController {
 				moveEnemyY(enemy, enemy.getVelocityY());
 			}
 		}
-		for (int i = 0; i < bossList.size(); i++) {
-			GameCharacter boss = bossList.get(i);
+
+		if (hasBoss) {
 			if (boss.getVelocityY() < 10) {
 				boss.addVelocityY(1);
 			}
 			if (boss.getY() <= levelHeight) {
 				moveEnemyY(boss, boss.getVelocityY());
 			}
-		}
-		for (int i = 0; i < bossBombList.size(); i++) {
-			Bullet bomb = bossBombList.get(i);
-			moveEnemyBulletY(bomb, bomb.getVelocityY());
-			if (bomb.getVelocityY() < 10) {
-				bomb.addVelocityY(1);
+			for (int i = 0; i < bossBombList.size(); i++) {
+				Bullet bomb = bossBombList.get(i);
+				moveEnemyBulletY(bomb, bomb.getVelocityY());
+				if (bomb.getVelocityY() < 10) {
+					bomb.addVelocityY(1);
+				}
 			}
 		}
 	}
 
 	public void getControl() {
 		try {
+//			System.out.println(offsetX);
+//			System.out.println(gameRoot.getLayoutX());
 
 			counter += 1;
 
 			gravity();
-
-			if (player.getVelocityY() < 10) {
-				player.addVelocityY(1);
-			}
-			if (player.getY() <= levelHeight) {
-				movePlayerY(player.getVelocityY());
-			}
 
 			if (player.getCurrentHP() <= 0 || player.getY() >= levelHeight) {
 
@@ -223,22 +253,10 @@ public class GameController {
 				} else {
 					player.doDieRight();
 				}
-				isDie = true;
+				isGameEnd = true;
 				return;
 //				}
 			} else {
-				if (isBarrierOpen) {
-					barrier.setX(offsetX);
-					barrier.setY(offsetY);
-					if (counter % 5 == 0) {
-						player.blink();
-
-					}
-				}
-				if (isRecoverylightOpen) {
-					recoverylight.setX(offsetX);
-					recoverylight.setY(offsetY);
-				}
 
 				if ((Math.round(time) % 3) == 0) {
 					if (!isEnemyFire) {
@@ -250,35 +268,47 @@ public class GameController {
 					isEnemyFire = false;
 				}
 
-				if (isBossStart) {
-					
-					if(isBossMove) {
-						moveBossX();
-					}else {
-						if (counter % 100 == 0) {
+				if (hasBoss) {
+					if (isBossStart) {
 
-							bossFireBullet();
-							System.out.println("fire");
+						if (isBossMove) {
+							moveBossX();
+						} else {
+							if (counter % 100 == 0) {
 
+								bossFireBullet();
+
+							}
+						}
+
+						if (counter % 200 == 0) {
+							if (pensioner <= 3) {
+								randomGunEnemyInRange(levelWidth - 1100, levelWidth - 240, 540, 540);
+								pensioner += 1;
+							}
+						}
+						if ((Math.round(time) % 30) == 0) {
+							int randomNumber = (int) Math.round(Math.random() * (3) + 1);
+							if (randomNumber == 1) {
+								moveBossTo(levelWidth - 1080, 0);
+							} else if (randomNumber == 2) {
+								moveBossTo(levelWidth - 780, 0);
+
+							} else if (randomNumber == 3) {
+								moveBossTo(levelWidth - 480, 0);
+
+							}
 						}
 					}
-
-					if (counter % 200 == 0) {
-						if (pensioner <= 3) {
-							randomGunEnemyInRange(levelWidth - 1220, levelWidth - 240, 540, 540);
-							pensioner += 1;
-						}
-					}
-					if ((Math.round(time) % 20) == 0) {
-						moveBossTo( levelWidth - 1220,0);
-					}
-
-//						randomGunEnemyInRange(300, 200, 0, 0);
 
 				}
 
 				if (isPressed(KeyCode.ENTER)) {
-					checkPortal();
+					if (enemieList.size() == 0) {
+						checkPortal();
+					}
+
+
 				}
 
 				offsetX = player.getX();
@@ -377,16 +407,55 @@ public class GameController {
 					alreadyPressedH = false;
 				}
 
+				if (isPressed(KeyCode.H)) {
+					if (!alreadyPressedH) {
+						if (player.getMaxHP() != player.getCurrentHP()) {
+							try {
+								ConsumableItem item = player.getItemsInventory().get(0);
+								item.consumed(player);
+								recoverylight = new recoveryLight(offsetX, offsetY);
+								timedEntity(recoverylight, 1.5);
+								isRecoverylightOpen = true;
+							} catch (ConsumeItemFailedException e) {
+								System.out.println("Use potion failed, " + e.message);
+							}
+							alreadyPressedH = true;
+						}
+					}
+				} else {
+					alreadyPressedH = false;
+				}
+
+				if (isPressed(KeyCode.J)) {
+					if (!alreadyPressedJ) {
+
+						try {
+							ConsumableItem item = player.getItemsInventory().get(1);
+							item.consumed(player);
+							light = new Light(offsetX, offsetY);
+							timedEntity(light, 1.5);
+							islight = true;
+						} catch (ConsumeItemFailedException e) {
+							System.out.println("Use ammo failed, " + e.message);
+						}
+						alreadyPressedJ = true;
+
+					}
+				} else {
+					alreadyPressedJ = false;
+				}
+
 				// follow player x
 
 				if (offsetX > 640 && offsetX < levelWidth - 640) {
 					gameRoot.setLayoutX(-(offsetX - 640));
 				}
 				if (offsetX > levelWidth - 1280) {
-					gameRoot.setLayoutX(-(levelWidth - 1280));
-				}
-				if (offsetX > levelWidth - 1280) {
-					isBossStart = true;
+					if (hasBoss) {
+						gameRoot.setLayoutX(-(levelWidth - 1280));
+						isBossStart = true;
+					}
+
 				}
 			}
 		} catch (Exception e) {
@@ -402,6 +471,22 @@ public class GameController {
 		moveBullets();
 		checkPlayerCollision();
 		checkTime();
+		if (isBarrierOpen) {
+			barrier.setX(offsetX);
+			barrier.setY(offsetY);
+			if (counter % 5 == 0) {
+				player.blink();
+
+			}
+		}
+		if (isRecoverylightOpen) {
+			recoverylight.setX(offsetX);
+			recoverylight.setY(offsetY);
+		}
+		if (islight) {
+			light.setX(offsetX);
+			light.setY(offsetY);
+		}
 	}
 
 	private void fireBullet(boolean isRight) {
@@ -440,14 +525,10 @@ public class GameController {
 	}
 
 	private void bossFireBullet() {
-		for (int i = 0; i < bossList.size(); i++) {
-			GameCharacter boss = bossList.get(i);
 
-			int velocityX = (int) Math.round(Math.random() * (4)) + 1;
-//				int velocityX = 1;
-			enemyFireMethod(boss).setVelocityX(velocityX);
+		int velocityX = (int) Math.round(Math.random() * (2)) + 1;
+		enemyFireMethod(boss).setVelocityX(velocityX);
 
-		}
 	}
 
 	private Bullet enemyFireMethod(GameCharacter enemyCharacter) {
@@ -487,8 +568,7 @@ public class GameController {
 		for (int i = 0; i < size;) {
 			Portal portal = portalList.get(i);
 			if (player.getBox().getBoundsInParent().intersects(portal.getBox().getBoundsInParent())) {
-
-				changeMap();
+				createLevel(portal.getLevel());
 				size -= 1;
 				continue;
 			}
@@ -522,12 +602,15 @@ public class GameController {
 				moveEnemybulletX(bullet, -bullet.getVelocityX());
 			}
 		}
-		for (int i = 0; i < bossBombList.size(); i++) {
-			Bullet bossBomb = bossBombList.get(i);
-			if (bossBomb.isRight()) {
-				moveEnemybulletX(bossBomb, bossBomb.getVelocityX());
-			} else {
-				moveEnemybulletX(bossBomb, -bossBomb.getVelocityX());
+
+		if (hasBoss) {
+			for (int i = 0; i < bossBombList.size(); i++) {
+				Bullet bossBomb = bossBombList.get(i);
+				if (bossBomb.isRight()) {
+					moveEnemybulletX(bossBomb, bossBomb.getVelocityX());
+				} else {
+					moveEnemybulletX(bossBomb, -bossBomb.getVelocityX());
+				}
 			}
 		}
 
@@ -684,7 +767,7 @@ public class GameController {
 	}
 
 	private void moveBossX() {
-		BossEnemy boss = bossList.get(0);
+
 		boolean movingRight = boss.getFinalPositionX() - boss.getX() > 0;
 		int value = boss.getVelocityX();
 //		boss.setVelocityY(-40);
@@ -700,20 +783,19 @@ public class GameController {
 //			}
 			boss.setX(boss.getX() + (movingRight ? value : -value));
 		}
-		if(boss.isOnFloor()) {
-			isBossMove=false;
+		if (boss.isOnFloor() && boss.getFinalPositionX() == boss.getX()) {
+			isBossMove = false;
 			return;
 		}
 
 	}
-	
+
 	private void moveBossTo(int positionX, int positionY) {
-		isBossMove=true;
-		BossEnemy boss = bossList.get(0);
+		isBossMove = true;
 		boolean movingRight = positionX - boss.getX() > 0;
 		int value = boss.getVelocityX();
-		 boss.setFinalPositionX(positionX);
-		boss.setVelocityY(-55);
+		boss.setFinalPositionX(positionX);
+		boss.setVelocityY(-30);
 
 		for (int i = 0; i < Math.abs(value); i++) {
 
@@ -804,15 +886,12 @@ public class GameController {
 					if (movingDown) {
 						if (item.getY() + item.getHeight() == platform.getY()) {
 //							item.setY(item.getY() - 1);
-
 							return;
 						}
 					} else {
 						if (item.getY() == platform.getY() + 60) {
 //							item.setY(item.getY() + 1);
-
 							return;
-
 						}
 					}
 				}
@@ -843,26 +922,22 @@ public class GameController {
 
 	private boolean checkBossCollision(Entity item) {
 		boolean isHit = false;
-		for (int i = 0; i < bossList.size();) {
-			GameCharacter boss = bossList.get(i);
-			if (item.getBox().getBoundsInParent().intersects(boss.getBox().getBoundsInParent())) {
-
-				if (item instanceof Bullet) {
-					boss.decreasedCurrentHP(((Bullet) item).getDamage());
-				}
-				if (boss.isDie()) {
-					characterDie(boss);
-					i -= 1;
-
-				}
-				if (bossList.size() == 0) {
-					return true;
-				}
-
-				isHit = true;
-			}
-			i += 1;
+		if (!hasBoss) {
+			return false;
 		}
+
+		if (item.getBox().getBoundsInParent().intersects(boss.getBox().getBoundsInParent())) {
+
+			if (item instanceof Bullet) {
+				boss.decreasedCurrentHP(((Bullet) item).getDamage());
+			}
+			if (boss.isDie()) {
+				characterDie(boss);
+			}
+
+			isHit = true;
+		}
+
 		return isHit;
 	}
 
@@ -903,7 +978,29 @@ public class GameController {
 				continue;
 			}
 			i++;
+		}
+		for (int i = 0; i < ammoList.size();) {
+			AmmoBox ammo = ammoList.get(i);
+			if (player.getBox().getBoundsInParent().intersects(ammo.getBox().getBoundsInParent())) {
+				gameRoot.getChildren().remove(ammo.getImageView());
+				player.getItemsInventory().get(1).addAmount(1);
+				ammoList.remove(ammo);
 
+				continue;
+			}
+			i++;
+		}
+
+		for (int i = 0; i < potionList.size();) {
+			PotionBox potionBox = potionList.get(i);
+			if (player.getBox().getBoundsInParent().intersects(potionBox.getBox().getBoundsInParent())) {
+				gameRoot.getChildren().remove(potionBox.getImageView());
+				player.getItemsInventory().get(0).addAmount(1);
+				potionList.remove(potionBox);
+
+				continue;
+			}
+			i++;
 		}
 
 	}
@@ -914,7 +1011,11 @@ public class GameController {
 		timedEntity(enemy, 1.5);
 
 		enemieList.remove(enemy);
-		bossList.remove(enemy);
+		if (Character instanceof BossEnemy) {
+			isWin = true;
+			isBossStart = false;
+			isGameEnd = true;
+		}
 
 		player.addPoint(enemy.getPoint());
 
@@ -972,12 +1073,6 @@ public class GameController {
 		int positionY = y1 + randomNumberY;
 		Warning warning = new Warning(positionX, positionY);
 		timedEntity(warning, 1.0);
-		System.out.println("awrn");
-//		GunEnemy enemy = new GunEnemy(positionX, positionY);
-//		enemy.setPensioner(true);
-//		enemy.doWalkLeft();
-//		enemieList.add(enemy);
-//		gameRoot.getChildren().add(warning.getImageView());
 
 	}
 
@@ -1018,6 +1113,14 @@ public class GameController {
 
 	public ArrayList<ConsumableItem> getPlayerInventory() {
 		return player.getItemsInventory();
+	}
+
+	public boolean isGameEnd() {
+		return isGameEnd;
+	}
+
+	public boolean isWin() {
+		return isWin;
 	}
 
 }

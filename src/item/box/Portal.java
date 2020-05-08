@@ -11,19 +11,22 @@ import javafx.util.Duration;
 
 public class Portal extends Entity {
 	
+	private int level;
+	
 	public Portal( int initX,int initY,int width, int height) {
 		super("portal-white.png", initX, initY,width,height);
-//		imageView = new ImageView(new Image(image_Path));
-////		imageView.setViewport(new Rectangle2D(0, 0, 182, 206));
-//		imageView.setFitHeight(60);
-//		imageView.setFitWidth(60);
-//		
-//		sprite = new SpriteAnimation(imageView, Duration.millis(1000), 8, 4, 0, 206, 182, 206);
-//		sprite.setCycleCount(Animation.INDEFINITE);
-//		sprite.play();
+		
+
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
 	}
 	
-	public void Teleport(int level) {
-		
-	}
+
+	
 }

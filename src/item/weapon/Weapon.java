@@ -36,7 +36,7 @@ public abstract class Weapon extends Item {
 				Bullet bullet = new GunBullet(true, 0, 0);
 				this.bullets.add(bullet);
 				currentBullet += 1;
-				if (currentBullet == maxBullet) {
+				if (currentBullet >= maxBullet) {
 					return;
 				}
 			}
@@ -47,7 +47,7 @@ public abstract class Weapon extends Item {
 				Bullet bullet = new RocketBullet(true, 0, 0);
 				this.bullets.add(bullet);
 				currentBullet += 1;
-				if (currentBullet == maxBullet) {
+				if (currentBullet>= maxBullet) {
 					return;
 				}
 			}
@@ -58,7 +58,7 @@ public abstract class Weapon extends Item {
 				Bullet bullet = new SwordSlice(true, 0, 0);
 				this.bullets.add(bullet);
 				currentBullet += 1;
-				if (currentBullet == maxBullet) {
+				if (currentBullet >= maxBullet) {
 					return;
 				}
 			}
@@ -69,7 +69,7 @@ public abstract class Weapon extends Item {
 				Bullet bullet = new Bomb(true, 0, 0);
 				this.bullets.add(bullet);
 				currentBullet += 1;
-				if (currentBullet == maxBullet) {
+				if (currentBullet >= maxBullet) {
 					return;
 				}
 			}
@@ -172,5 +172,11 @@ public abstract class Weapon extends Item {
 	public void addBullets(int ammo) {
 		this.currentBullet = this.currentBullet + ammo;
 	}
+
+	public int getMaxBullet() {
+		return maxBullet;
+	}
+	
+	
 
 }
