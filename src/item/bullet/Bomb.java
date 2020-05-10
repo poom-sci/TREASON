@@ -46,13 +46,9 @@ public class Bomb extends Bullet implements Explodable {
 		this.box.setWidth(128);
 		this.height = 128;
 		this.box.setHeight(128);
-		this.imageView.setX(this.box.getTranslateX()-50);
-		this.imageView.setY(this.box.getTranslateY() - 70);
-		if (!this.isRight) {
-			this.box.setTranslateX(this.box.getTranslateX() - this.width / 2);
-			this.imageView.setX(this.box.getTranslateX() - 20);
-		}
-
+		this.imageView.setX(this.box.getTranslateX()-this.width / 2 );
+		this.imageView.setY(this.box.getTranslateY() - this.height / 2 );
+		this.box.setTranslateX(this.box.getTranslateX() - this.width / 2 + 20);
 		this.box.setTranslateY(this.box.getTranslateY() - this.height / 2 + 20);
 
 	}

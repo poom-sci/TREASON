@@ -15,7 +15,10 @@ import com.sun.javafx.geom.Shape;
 import exception.ConsumeItemFailedException;
 import exception.FireBulletFailedException;
 import gui.SpriteAnimation;
+import implement.Consumeable;
 import implement.Explodable;
+import implement.Fireable;
+import implement.Interactable;
 import item.bullet.Bomb;
 import item.bullet.Bullet;
 import item.bullet.GunBullet;
@@ -70,14 +73,17 @@ public class GameController {
 
 	private ArrayList<Entity> platforms = new ArrayList<Entity>();
 	private ArrayList<Portal> portalList = new ArrayList<Portal>();
+	private ArrayList<Entity> playerInteractEntity = new ArrayList<Entity>();
+	private ArrayList<Entity> enemyInteractEntity = new ArrayList<Entity>();
 	private ArrayList<Bullet> playerBullets = new ArrayList<Bullet>();
-	private ArrayList<Bullet> bossBombList = new ArrayList<Bullet>();
+	
 	private ArrayList<Entity> timedEntityList = new ArrayList<Entity>();
-	private ArrayList<Bullet> enemyBullets = new ArrayList<Bullet>();
+	private ArrayList<Bullet> enemyBulletsX = new ArrayList<Bullet>();
+	private ArrayList<Bullet> enemyBulletsY = new ArrayList<Bullet>();
 	private Rectangle bg;
 
-	private ArrayList<PotionBox> potionList = new ArrayList<PotionBox>();
-	private ArrayList<AmmoBox> ammoList = new ArrayList<AmmoBox>();
+//	private ArrayList<PotionBox> potionList = new ArrayList<PotionBox>();
+//	private ArrayList<AmmoBox> ammoList = new ArrayList<AmmoBox>();
 	private ArrayList<Oak> treeList = new ArrayList<Oak>();
 
 	private int counter = 0;
@@ -118,7 +124,6 @@ public class GameController {
 
 	public GameController() {
 		createLevel(1);
-		gameRoot.setLayoutX(0);
 
 	}
 
@@ -128,8 +133,9 @@ public class GameController {
 			platforms.clear();
 			portalList.clear();
 			enemieList.clear();
-			potionList.clear();
-			ammoList.clear();
+			playerInteractEntity.clear();
+//			potionList.clear();
+//			ammoList.clear();
 			treeList.clear();
 			gameRoot.getChildren().clear();
 			hasBoss = false;
@@ -142,8 +148,9 @@ public class GameController {
 		platforms.addAll(levelD.getPlatforms());
 		portalList.addAll(levelD.getPortalList());
 		enemieList.addAll(levelD.getEnemieList());
-		potionList.addAll(levelD.getPotionList());
-		ammoList.addAll(levelD.getAmmoList());
+		playerInteractEntity.addAll(levelD.getPlayerInteractEntity());
+//		potionList.addAll(levelD.getPotionList());
+//		ammoList.addAll(levelD.getAmmoList());
 		treeList.clear();
 		if (levelD.getBoss() != null) {
 			boss = levelD.getBoss();
@@ -204,12 +211,14 @@ public class GameController {
 	}
 
 	private void gravity() {
+
 		if (player.getVelocityY() < 10) {
 			player.addVelocityY(1);
 		}
 		if (player.getY() <= levelHeight) {
 			movePlayerY(player.getVelocityY());
 		}
+
 		for (int i = 0; i < enemieList.size(); i++) {
 			GameCharacter enemy = enemieList.get(i);
 			if (enemy.getVelocityY() < 10) {
@@ -217,6 +226,16 @@ public class GameController {
 			}
 			if (enemy.getY() <= levelHeight) {
 				moveEnemyY(enemy, enemy.getVelocityY());
+			}
+		}
+		for (int i = 0; i < enemyBulletsY.size(); i++) {
+			Bullet bullet = enemyBulletsY.get(i);
+			if (bullet.getY() <= levelHeight) {
+				moveEnemyBulletY(bullet, bullet.getVelocityY());
+			}
+			moveEnemyBulletY(bullet, bullet.getVelocityY());
+			if (bullet.getVelocityY() < 10) {
+				bullet.addVelocityY(1);
 			}
 		}
 
@@ -227,13 +246,6 @@ public class GameController {
 			if (boss.getY() <= levelHeight) {
 				moveEnemyY(boss, boss.getVelocityY());
 			}
-			for (int i = 0; i < bossBombList.size(); i++) {
-				Bullet bomb = bossBombList.get(i);
-				moveEnemyBulletY(bomb, bomb.getVelocityY());
-				if (bomb.getVelocityY() < 10) {
-					bomb.addVelocityY(1);
-				}
-			}
 		}
 	}
 
@@ -243,16 +255,12 @@ public class GameController {
 				removeAll();
 				return;
 			}
-//			System.out.println(offsetX);
-//			System.out.println(gameRoot.getLayoutX());
-
 			counter += 1;
 
 			gravity();
 
 			if (player.getCurrentHP() <= 0 || player.getY() >= levelHeight) {
 
-//				if (!isDie) {
 				if (player.isRight()) {
 					player.doDieLeft();
 				} else {
@@ -267,7 +275,6 @@ public class GameController {
 					if (!isEnemyFire) {
 						allEnemyFireBullet();
 						isEnemyFire = true;
-//						randomGunEnemyInRange(300, 200, 0, 0);
 					}
 				} else {
 					isEnemyFire = false;
@@ -280,9 +287,7 @@ public class GameController {
 							moveBossX();
 						} else {
 							if (counter % 100 == 0) {
-
 								bossFireBullet();
-
 							}
 						}
 
@@ -382,9 +387,7 @@ public class GameController {
 							if (!player.getIsFireLeft()) {
 								player.doFireLeft();
 								fireBullet(false);
-
 							}
-
 						}
 						alreadyPressedSPACE = true;
 					}
@@ -394,37 +397,18 @@ public class GameController {
 
 				if (isPressed(KeyCode.H)) {
 					if (!alreadyPressedH) {
-						if (player.getMaxHP() != player.getCurrentHP()) {
-							try {
-								ConsumableItem item = player.getItemsInventory().get(0);
-								item.consumed(player);
-								recoverylight = new recoveryLight(offsetX, offsetY);
-								timedEntity(recoverylight, 1.5);
-								isRecoverylightOpen = true;
-							} catch (ConsumeItemFailedException e) {
-								System.out.println("Use potion failed, " + e.message);
-							}
-							alreadyPressedH = true;
-						}
-					}
-				} else {
-					alreadyPressedH = false;
-				}
 
-				if (isPressed(KeyCode.H)) {
-					if (!alreadyPressedH) {
-						if (player.getMaxHP() != player.getCurrentHP()) {
-							try {
-								ConsumableItem item = player.getItemsInventory().get(0);
-								item.consumed(player);
-								recoverylight = new recoveryLight(offsetX, offsetY);
-								timedEntity(recoverylight, 1.5);
-								isRecoverylightOpen = true;
-							} catch (ConsumeItemFailedException e) {
-								System.out.println("Use potion failed, " + e.message);
-							}
-							alreadyPressedH = true;
+						try {
+							ConsumableItem item = player.getItemsInventory().get(0);
+							((Consumeable) item).consumed(player);
+							recoverylight = new recoveryLight(offsetX, offsetY);
+							timedEntity(recoverylight, 1.5);
+							isRecoverylightOpen = true;
+						} catch (ConsumeItemFailedException e) {
+							System.out.println("Use potion failed, " + e.message);
 						}
+						alreadyPressedH = true;
+
 					}
 				} else {
 					alreadyPressedH = false;
@@ -435,7 +419,7 @@ public class GameController {
 
 						try {
 							ConsumableItem item = player.getItemsInventory().get(1);
-							item.consumed(player);
+							((Consumeable) item).consumed(player);
 							light = new Light(offsetX, offsetY);
 							timedEntity(light, 1.5);
 							islight = true;
@@ -464,8 +448,9 @@ public class GameController {
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println(e);
+			e.printStackTrace();
 		}
+
 		System.gc();
 
 	}
@@ -495,9 +480,12 @@ public class GameController {
 
 	private void fireBullet(boolean isRight) {
 		try {
-			Bullet bullet = player.getWeapon().fireBullet(player, isRight);
+
+			Weapon weapon = player.getWeapon();
+			Bullet bullet = ((Fireable) weapon).fireBullet(player, isRight);
+
 			playerBullets.add(bullet);
-			gameRoot.getChildren().addAll(bullet.getBox(), bullet.getImageView());
+			gameRoot.getChildren().addAll(bullet.getImageView());
 
 			if (bullet instanceof RocketBullet) {
 				AudioClip granade_sound = new AudioClip(ClassLoader.getSystemResource("granade_sound.wav").toString());
@@ -533,7 +521,7 @@ public class GameController {
 
 	private void bossFireBullet() {
 
-		int velocityX = (int) Math.round(Math.random() * (2)) + 1;
+		int velocityX = (int) Math.round(Math.random() * (4)) + 1;
 		enemyFireMethod(boss).setVelocityX(velocityX);
 
 	}
@@ -544,15 +532,17 @@ public class GameController {
 		boolean isRight = distance < 0;
 		boolean isBeforeRight = enemyCharacter.isRight();
 
-		Bullet bullet = enemyCharacter.getWeapon().fireBulletInfinite(enemyCharacter, isRight);
+		Weapon weapon = enemyCharacter.getWeapon();
+		Bullet bullet;
 
-		if (enemyCharacter instanceof GunEnemy) {
-			enemyBullets.add(bullet);
-			gameRoot.getChildren().addAll(bullet.getImageView());
-		}
+		bullet = ((Fireable) weapon).fireBulletInfinite(enemyCharacter, isRight);
+		enemyBulletsX.add(bullet);
+		playerInteractEntity.add(bullet);
+		gameRoot.getChildren().addAll(bullet.getImageView());
+
 		if (enemyCharacter instanceof BossEnemy) {
-			bossBombList.add(bullet);
-			gameRoot.getChildren().addAll(bullet.getImageView());
+			enemyBulletsY.add(bullet);
+			gameRoot.getChildren().addAll(bullet.getBox());
 			return bullet;
 		}
 
@@ -567,6 +557,7 @@ public class GameController {
 		} else {
 			enemyCharacter.doWalkLeft();
 		}
+
 		return bullet;
 
 	}
@@ -584,15 +575,6 @@ public class GameController {
 		}
 	}
 
-	private void changeMap() {
-		gameRoot.getChildren().clear();
-		gameRoot.setLayoutX(0);
-
-		gameRoot.getChildren().addAll(player.getBox(), player.getImageView());
-		player.setX(100);
-		player.setY(0);
-	}
-
 	private void moveBullets() {
 		for (int i = 0; i < playerBullets.size(); i++) {
 			Bullet bullet = playerBullets.get(i);
@@ -602,23 +584,12 @@ public class GameController {
 				movePlayerBulletX(playerBullets.get(i), -bullet.getVelocityX());
 			}
 		}
-		for (int i = 0; i < enemyBullets.size(); i++) {
-			Bullet bullet = enemyBullets.get(i);
+		for (int i = 0; i < enemyBulletsX.size(); i++) {
+			Bullet bullet = enemyBulletsX.get(i);
 			if (bullet.isRight()) {
 				moveEnemybulletX(bullet, bullet.getVelocityX());
 			} else {
 				moveEnemybulletX(bullet, -bullet.getVelocityX());
-			}
-		}
-
-		if (hasBoss) {
-			for (int i = 0; i < bossBombList.size(); i++) {
-				Bullet bossBomb = bossBombList.get(i);
-				if (bossBomb.isRight()) {
-					moveEnemybulletX(bossBomb, bossBomb.getVelocityX());
-				} else {
-					moveEnemybulletX(bossBomb, -bossBomb.getVelocityX());
-				}
 			}
 		}
 
@@ -695,7 +666,6 @@ public class GameController {
 				}
 				if (item instanceof SwordSlice) {
 					checkEnemyCollision(item);
-
 					timedEntity(item, 0.2);
 					return;
 				}
@@ -722,14 +692,13 @@ public class GameController {
 				if (isOutOfRange || isCollisionPlatform) {
 					gameRoot.getChildren().remove(item.getImageView());
 					gameRoot.getChildren().remove(item.getBox());
-					playerBullets.remove(item);
-					enemyBullets.remove(item);
+					enemyBulletsX.remove(item);
+					enemyBulletsY.remove(item);
 
-					if (item instanceof RocketBullet) {
-						((RocketBullet) item).explode();
+					if (item instanceof Explodable) {
+						((Explodable) item).explode();
 						checkEnemyCollision(item);
 						timedEntity(item, 1.0);
-						playerBullets.remove(item);
 						return;
 					}
 					if (item instanceof SwordSlice) {
@@ -738,15 +707,6 @@ public class GameController {
 						playerBullets.remove(item);
 						return;
 					}
-					if (item instanceof Bomb && bossBombList.contains(item)) {
-						System.out.println("x");
-						((Bomb) item).explode();
-						timedEntity(item, 1.0);
-						bossBombList.remove(item);
-
-						return;
-					}
-
 					item = null;
 					return;
 				}
@@ -881,25 +841,26 @@ public class GameController {
 			for (Entity platform : platforms) {
 				if (item.getBox().getBoundsInParent().intersects(platform.getBox().getBoundsInParent())) {
 					gameRoot.getChildren().remove(item.getImageView());
-					if (item instanceof Bomb) {
-						System.out.println("Y");
-						((Bomb) item).explode();
-						checkPlayerCollision();
+					enemyBulletsY.remove(item);
+					enemyBulletsX.remove(item);
+					if (item instanceof Explodable) {
+						((Explodable) item).explode();
+						checkEnemyCollision(item);
 						timedEntity(item, 1.0);
-						bossBombList.remove(item);
 						return;
 					}
-					if (movingDown) {
-						if (item.getY() + item.getHeight() == platform.getY()) {
-//							item.setY(item.getY() - 1);
-							return;
-						}
-					} else {
-						if (item.getY() == platform.getY() + 60) {
-//							item.setY(item.getY() + 1);
-							return;
-						}
-					}
+
+//					if (movingDown) {
+//						if (item.getY() + item.getHeight() == platform.getY()) {
+////							item.setY(item.getY() - 1);
+//							return;
+//						}
+//					} else {
+//						if (item.getY() == platform.getY() + 60) {
+////							item.setY(item.getY() + 1);
+//							return;
+//						}
+//					}
 				}
 			}
 			item.setY(item.getY() + (movingDown ? 1 : -1));
@@ -959,54 +920,31 @@ public class GameController {
 			player.decreasedCurrentHP(50);
 			createBarrier();
 		}
-
-		for (int i = 0; i < enemyBullets.size();) {
-			Bullet bullet = enemyBullets.get(i);
-			if (player.getBox().getBoundsInParent().intersects(bullet.getBox().getBoundsInParent())) {
-				player.decreasedCurrentHP(bullet.getDamage());
-				enemyBullets.remove(bullet);
-				removeEntity(bullet);
-				continue;
+		
+		for(int i=0;i<playerInteractEntity.size();i++) {
+			Entity item =playerInteractEntity.get(i);
+			if (player.getBox().getBoundsInParent().intersects(item.getBox().getBoundsInParent())) {
+				if(item instanceof Interactable) {
+					((Interactable) item).interact(player);
+					playerInteractEntity.remove(item);
+					removeEntity(item);
+					continue;
+				}
+				if(item instanceof Bullet) {
+					Bullet bullet = (Bullet) item;
+					player.decreasedCurrentHP(bullet.getDamage());
+					playerInteractEntity.remove(bullet);
+					enemyBulletsX.remove(bullet);
+					enemyBulletsY.remove(bullet);
+					if (bullet instanceof Explodable) {
+						((Explodable) bullet).explode();
+						checkEnemyCollision(bullet);
+						timedEntity(bullet, 1.0);
+					}
+					removeEntity(bullet);
+					continue;
+				}
 			}
-			i++;
-
-		}
-
-		for (int i = 0; i < bossBombList.size();) {
-			Bullet bullet = bossBombList.get(i);
-			if (player.getBox().getBoundsInParent().intersects(bullet.getBox().getBoundsInParent())) {
-				player.decreasedCurrentHP(bullet.getDamage());
-				gameRoot.getChildren().remove(bullet.getImageView());
-				((Bomb) bullet).explode();
-				timedEntity(bullet, 1.0);
-				bossBombList.remove(bullet);
-
-				continue;
-			}
-			i++;
-		}
-		for (int i = 0; i < ammoList.size();) {
-			AmmoBox ammo = ammoList.get(i);
-			if (player.getBox().getBoundsInParent().intersects(ammo.getBox().getBoundsInParent())) {
-				gameRoot.getChildren().remove(ammo.getImageView());
-				player.getItemsInventory().get(1).addAmount(1);
-				ammoList.remove(ammo);
-
-				continue;
-			}
-			i++;
-		}
-
-		for (int i = 0; i < potionList.size();) {
-			PotionBox potionBox = potionList.get(i);
-			if (player.getBox().getBoundsInParent().intersects(potionBox.getBox().getBoundsInParent())) {
-				gameRoot.getChildren().remove(potionBox.getImageView());
-				player.getItemsInventory().get(0).addAmount(1);
-				potionList.remove(potionBox);
-
-				continue;
-			}
-			i++;
 		}
 
 	}
@@ -1034,14 +972,12 @@ public class GameController {
 		if (enemy.isPensioner()) {
 			pensioner -= 1;
 		}
-
 	}
 
 	private void timedEntity(Entity entity, Double duration) {
 		timedEntityList.add(entity);
 		entity.setFinalTime(time + duration);
 		gameRoot.getChildren().add(entity.getImageView());
-//		gameRoot.getChildren().add(entity.getBox());
 	}
 
 	private void checkTime() {
@@ -1092,15 +1028,15 @@ public class GameController {
 		platforms.clear();
 		portalList.clear();
 		enemieList.clear();
-		potionList.clear();
-		ammoList.clear();
+//		potionList.clear();
+//		ammoList.clear();
 		treeList.clear();
 		gameRoot.getChildren().clear();
 		platforms = null;
 		portalList = null;
 		enemieList = null;
-		potionList = null;
-		ammoList = null;
+//		potionList = null;
+//		ammoList = null;
 		treeList = null;
 		hasBoss = false;
 		isBossStart = false;

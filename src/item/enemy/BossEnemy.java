@@ -49,22 +49,5 @@ public class BossEnemy extends GameCharacter {
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
 	}
-//	public void createAnimation() {
-//		imageView = new ImageView(new Image(image_Path));
-//		imageView.setViewport(new Rectangle2D(pictureOffsetX, pictureOffsetY, pictureWidth, pictureHeight));
-//		sprite = new SpriteAnimation(imageView, Duration.millis(1000), 8, 4, pictureOffsetX, pictureOffsetY,
-//				pictureWidth, pictureHeight);
-//		sprite.setCycleCount(Animation.INDEFINITE);
-//		sprite.play();
-//
-//		boundX = 32;
-//		boundY = 18;
-//		setX(initX);
-//		setY(initY);
-//
-//		createAction();
-//		turnLeft.setAction(true);
-//
-//	}
 
 }

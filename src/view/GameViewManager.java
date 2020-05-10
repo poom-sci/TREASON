@@ -106,7 +106,7 @@ public class GameViewManager {
 	}
 
 	public void inititializeStage() {
-		this.gamePane = new AnchorPane();
+		gamePane = new AnchorPane();
 		player1Controller = new GameController();
 		gameRoot = player1Controller.getGameRoot();
 		gamePane.getChildren().addAll(player1Controller.getBg(), gameRoot);
@@ -489,10 +489,10 @@ public class GameViewManager {
 					scoreBoard.saveScores();
 					player1Controller.setGameEnd(false);
 					player1Controller.setWin(false);
-					gameStage.close();
+//					gameStage.close();
 					menuStage.close();
 //					menuStage.show();
-					removeAll();
+//					removeAll();
 				} catch (AddLeaderboardScoresFailedException e) {
 					Alert alert = new Alert(AlertType.WARNING, "Add leaderboard failed, " + e.message);
 					alert.setTitle("Error");
@@ -515,9 +515,9 @@ public class GameViewManager {
 				player1Controller.setGameEnd(false);
 				player1Controller.setWin(false);
 				gameStage.close();
-				menuStage.close();
-//				menuStage.show();
-				removeAll();
+//				menuStage.close();
+				menuStage.show();
+//				removeAll();
 
 			}
 

@@ -71,9 +71,10 @@ public class LevelData {
 	private ArrayList<Portal> portalList;
 	private BossEnemy boss;
 	private ArrayList<GameCharacter> enemieList;
-	private ArrayList<PotionBox> potionList;
-	private ArrayList<AmmoBox> ammoList;
-	private ArrayList<Oak> treeList;
+	private ArrayList<Entity> playerInteractEntity ;
+//	private ArrayList<PotionBox> potionList;
+//	private ArrayList<AmmoBox> ammoList;
+//	private ArrayList<Oak> treeList;
 	private Rectangle bg;
 
 	private int levelWidth;
@@ -85,9 +86,10 @@ public class LevelData {
 		platforms = new ArrayList<Entity>();
 		portalList = new ArrayList<Portal>();
 		enemieList = new ArrayList<GameCharacter>();
-		potionList = new ArrayList<PotionBox>();
-		ammoList = new ArrayList<AmmoBox>();
-		treeList = new ArrayList<Oak>();
+		playerInteractEntity = new ArrayList<Entity>();
+//		potionList = new ArrayList<PotionBox>();
+//		ammoList = new ArrayList<AmmoBox>();
+//		treeList = new ArrayList<Oak>();
 		gameRoot = new Pane();
 	}
 
@@ -106,9 +108,10 @@ public class LevelData {
 		platforms.clear();
 		portalList.clear();
 		enemieList.clear();
-		potionList.clear();
-		ammoList.clear();
-		treeList.clear();
+		playerInteractEntity.clear();
+//		potionList.clear();
+//		ammoList.clear();
+//		treeList.clear();
 		gameRoot.getChildren().clear();
 
 		bg = new Rectangle(1280, 720);
@@ -178,17 +181,17 @@ public class LevelData {
 
 				case 'H':
 					PotionBox potionBox = new PotionBox(j * 60, i * 60, 60, 60);
-					potionList.add(potionBox);
+					playerInteractEntity.add(potionBox);
 					gameRoot.getChildren().add(potionBox.getImageView());
 					break;
 				case 'A':
 					AmmoBox ammoBox = new AmmoBox(j * 60, i * 60, 60, 60);
-					ammoList.add(ammoBox);
+					playerInteractEntity.add(ammoBox);
 					gameRoot.getChildren().add(ammoBox.getImageView());
 					break;
 				case 'T':
 					Oak tree = new Oak(j * 60, i * 60, 310, 240);
-					treeList.add(tree);
+					playerInteractEntity.add(tree);
 					gameRoot.getChildren().add(tree.getImageView());
 					break;
 				}
@@ -232,16 +235,22 @@ public class LevelData {
 		return levelHeight;
 	}
 
-	public ArrayList<PotionBox> getPotionList() {
-		return potionList;
+	public ArrayList<Entity> getPlayerInteractEntity() {
+		return playerInteractEntity;
 	}
 
-	public ArrayList<AmmoBox> getAmmoList() {
-		return ammoList;
-	}
-
-	public ArrayList<Oak> getTreeList() {
-		return treeList;
-	}
+//	public ArrayList<PotionBox> getPotionList() {
+//		return potionList;
+//	}
+//
+//	public ArrayList<AmmoBox> getAmmoList() {
+//		return ammoList;
+//	}
+//
+//	public ArrayList<Oak> getTreeList() {
+//		return treeList;
+//	}
+	
+	
 
 }

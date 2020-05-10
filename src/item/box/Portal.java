@@ -15,8 +15,6 @@ public class Portal extends Entity {
 	
 	public Portal( int initX,int initY,int width, int height) {
 		super("portal-white.png", initX, initY,width,height);
-		
-
 	}
 
 	public int getLevel() {

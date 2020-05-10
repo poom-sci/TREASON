@@ -51,9 +51,6 @@ public class RocketBullet extends Bullet implements Explodable {
 
 		
 		this.box.setTranslateY(this.box.getTranslateY()-this.height/2+20);
-
-		
-		
-		
+	
 	}
 }
