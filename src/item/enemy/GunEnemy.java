@@ -3,6 +3,7 @@ package item.enemy;
 import java.util.ArrayList;
 
 import gui.SpriteAnimation;
+import item.Action;
 import item.Entity;
 import item.character.GameCharacter;
 import item.weapon.Gun;
@@ -14,7 +15,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-import logic.Action;
 
 public class GunEnemy extends GameCharacter {
 

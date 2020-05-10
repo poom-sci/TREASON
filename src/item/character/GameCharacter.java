@@ -3,6 +3,7 @@ package item.character;
 import java.util.ArrayList;
 
 import gui.SpriteAnimation;
+import item.Action;
 import item.Entity;
 import item.bullet.RocketBullet;
 import item.bullet.SwordSlice;
@@ -15,7 +16,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-import logic.Action;
 
 public abstract class GameCharacter extends Entity {
 //	protected ImageView imageView;

@@ -99,7 +99,6 @@ public class GameViewManager {
 	private Label potionNumber;
 	private Label ammoNumber;
 
-	private boolean isPlayerDie;
 
 	public GameViewManager() {
 		inititializeStage();
@@ -124,7 +123,7 @@ public class GameViewManager {
 		gameStage = new Stage();
 		gameStage.setScene(gameScene);
 		gameStage.setTitle("Game Scene2");
-//		gameStage.setResizable(false);
+		gameStage.setResizable(false);
 
 		menuButtons = new ArrayList<GameButton>();
 		isGameover = false;

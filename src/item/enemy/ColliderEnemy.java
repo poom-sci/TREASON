@@ -3,6 +3,7 @@ package item.enemy;
 import java.util.ArrayList;
 
 import gui.SpriteAnimation;
+import item.Action;
 import item.character.GameCharacter;
 import item.weapon.Gun;
 import item.weapon.Weapon;
@@ -11,7 +12,6 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
-import logic.Action;
 
 public class ColliderEnemy extends GameCharacter {
 

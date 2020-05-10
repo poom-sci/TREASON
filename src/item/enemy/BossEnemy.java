@@ -3,6 +3,7 @@ package item.enemy;
 import java.util.ArrayList;
 
 import gui.SpriteAnimation;
+import item.Action;
 import item.character.GameCharacter;
 import item.weapon.BombGun;
 import item.weapon.Gun;
@@ -12,7 +13,6 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
-import logic.Action;
 
 public class BossEnemy extends GameCharacter {
 	

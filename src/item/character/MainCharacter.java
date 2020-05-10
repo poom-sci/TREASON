@@ -7,6 +7,7 @@ import javax.swing.text.StyledEditorKit.BoldAction;
 
 import gui.GameButton;
 import gui.SpriteAnimation;
+import item.Action;
 import item.consumable.ConsumableItem;
 import item.weapon.Weapon;
 import javafx.animation.Animation;
@@ -18,7 +19,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-import logic.Action;
 
 public class MainCharacter extends GameCharacter {
 

@@ -87,9 +87,6 @@ public class LevelData {
 		portalList = new ArrayList<Portal>();
 		enemieList = new ArrayList<GameCharacter>();
 		playerInteractEntity = new ArrayList<Entity>();
-//		potionList = new ArrayList<PotionBox>();
-//		ammoList = new ArrayList<AmmoBox>();
-//		treeList = new ArrayList<Oak>();
 		gameRoot = new Pane();
 	}
 
@@ -109,10 +106,8 @@ public class LevelData {
 		portalList.clear();
 		enemieList.clear();
 		playerInteractEntity.clear();
-//		potionList.clear();
-//		ammoList.clear();
-//		treeList.clear();
 		gameRoot.getChildren().clear();
+		boss=null;
 
 		bg = new Rectangle(1280, 720);
 		bg.setFill(new ImagePattern(new Image("game_background.jpg", 1280, 720, false, true)));
@@ -238,18 +233,6 @@ public class LevelData {
 	public ArrayList<Entity> getPlayerInteractEntity() {
 		return playerInteractEntity;
 	}
-
-//	public ArrayList<PotionBox> getPotionList() {
-//		return potionList;
-//	}
-//
-//	public ArrayList<AmmoBox> getAmmoList() {
-//		return ammoList;
-//	}
-//
-//	public ArrayList<Oak> getTreeList() {
-//		return treeList;
-//	}
 	
 	
 

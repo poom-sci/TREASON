@@ -60,8 +60,6 @@ public class ViewManager {
 	private GameViewManager gameManager;
 	private Stage gameStage;
 
-	private HashMap<KeyCode, Boolean> keys = new HashMap<KeyCode, Boolean>();
-
 	public ViewManager() {
 
 		menuButtons = new ArrayList<GameButton>();
@@ -152,14 +150,9 @@ public class ViewManager {
 
 					@Override
 					public void handle(ActionEvent arg0) {
-						if(gameManager!=null) {
-							gameManager=null;
-							System.gc();
-							NowShowing=null;
-							System.gc();
-							gameManager=null;
-							System.gc();
-							gameStage=null;
+						if (gameManager != null) {
+							gameManager = null;
+							gameStage = null;
 							System.gc();
 						}
 
@@ -180,25 +173,25 @@ public class ViewManager {
 
 					@Override
 					public void handle(ActionEvent arg0) {
-						if (gameManager != null) {
-							if (gameManager.getIsGameover()) {
-								System.out.println("no save");
-							} else {
-								if (hasGameStage) {
-									gameStage.show();
-									mainStage.hide();
-									gameManager.getGameTimer().start();
-								} else {
-									System.out.println("no save");
-								}
+						if (hasGameStage) {
+							if (!gameManager.getIsGameover()) {
+								gameStage.show();
+								mainStage.hide();
+								gameManager.getGameTimer().start();
 							}
-
+							else {
+								System.out.println("no save");
+							}
+						}else {
+							System.out.println("no save");
 						}
 					}
+
 				});
 
 			}
 		});
+
 	}
 
 	private void createScoreButton() {
@@ -226,13 +219,13 @@ public class ViewManager {
 //				 setting the position of the text
 				header.setLayoutX(100);
 				header.setLayoutY(100);
-				
+
 				ScoreSubScene.getPane().getChildren().add(header);
-				
+
 				for (int i = 0; i < scoreBoard.getTopPlayer().size(); i++) {
 					Label text = new Label();
 					// Setting the text to be added.
-					text.setText((i+1)+". "+scoreBoard.getTopPlayer(i));
+					text.setText((i + 1) + ". " + scoreBoard.getTopPlayer(i));
 					text.setTextFill(Color.LIGHTCYAN);
 					try {
 						text.setFont(Font.loadFont(new FileInputStream("res/PixelTakhisis-ZajJ.ttf"), 23));
@@ -265,7 +258,7 @@ public class ViewManager {
 //				levelD.loadLevel(1);
 //				System.out.println(levelD.getEnemieList());
 //				mainPane.getChildren().add(levelD.getGameRoot());
-				
+
 				Text text = new Text();
 
 				// Setting the text to be added.

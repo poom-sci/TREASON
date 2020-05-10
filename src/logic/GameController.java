@@ -134,8 +134,6 @@ public class GameController {
 			portalList.clear();
 			enemieList.clear();
 			playerInteractEntity.clear();
-//			potionList.clear();
-//			ammoList.clear();
 			treeList.clear();
 			gameRoot.getChildren().clear();
 			hasBoss = false;
@@ -149,8 +147,6 @@ public class GameController {
 		portalList.addAll(levelD.getPortalList());
 		enemieList.addAll(levelD.getEnemieList());
 		playerInteractEntity.addAll(levelD.getPlayerInteractEntity());
-//		potionList.addAll(levelD.getPotionList());
-//		ammoList.addAll(levelD.getAmmoList());
 		treeList.clear();
 		if (levelD.getBoss() != null) {
 			boss = levelD.getBoss();
@@ -1022,21 +1018,18 @@ public class GameController {
 	private void removeEntity(Entity item) {
 		gameRoot.getChildren().remove(item.getImageView());
 		item = null;
+		System.gc();
 	}
 
 	private void removeAll() {
 		platforms.clear();
 		portalList.clear();
 		enemieList.clear();
-//		potionList.clear();
-//		ammoList.clear();
 		treeList.clear();
 		gameRoot.getChildren().clear();
 		platforms = null;
 		portalList = null;
 		enemieList = null;
-//		potionList = null;
-//		ammoList = null;
 		treeList = null;
 		hasBoss = false;
 		isBossStart = false;

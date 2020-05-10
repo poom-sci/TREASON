@@ -19,11 +19,8 @@ public class Leaderboards {
 	private ArrayList<Integer> topScores;
 	private ArrayList<Double> topTimes;
 
-	private final int NUMBER = 10;
-
 	private Leaderboards() {
 		filePath = new File("").getAbsolutePath();
-//		filePath = "";
 		highScores = "Scores";
 
 		topPlayer = new ArrayList<String>();

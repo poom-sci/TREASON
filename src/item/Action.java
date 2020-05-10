@@ -1,4 +1,4 @@
-package logic;
+package item;
 
 public class Action {
 	private boolean action;
@@ -20,11 +20,8 @@ public class Action {
 		this.action = action;
 	}
 
-
 	public String getName() {
 		return name;
 	}
-	
-	
-	
+
 }
