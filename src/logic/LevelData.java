@@ -72,9 +72,6 @@ public class LevelData {
 	private BossEnemy boss;
 	private ArrayList<GameCharacter> enemieList;
 	private ArrayList<Entity> playerInteractEntity ;
-//	private ArrayList<PotionBox> potionList;
-//	private ArrayList<AmmoBox> ammoList;
-//	private ArrayList<Oak> treeList;
 	private Rectangle bg;
 
 	private int levelWidth;

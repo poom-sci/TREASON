@@ -74,17 +74,12 @@ public class GameController {
 	private ArrayList<Entity> platforms = new ArrayList<Entity>();
 	private ArrayList<Portal> portalList = new ArrayList<Portal>();
 	private ArrayList<Entity> playerInteractEntity = new ArrayList<Entity>();
-	private ArrayList<Entity> enemyInteractEntity = new ArrayList<Entity>();
 	private ArrayList<Bullet> playerBullets = new ArrayList<Bullet>();
 	
 	private ArrayList<Entity> timedEntityList = new ArrayList<Entity>();
 	private ArrayList<Bullet> enemyBulletsX = new ArrayList<Bullet>();
 	private ArrayList<Bullet> enemyBulletsY = new ArrayList<Bullet>();
 	private Rectangle bg;
-
-//	private ArrayList<PotionBox> potionList = new ArrayList<PotionBox>();
-//	private ArrayList<AmmoBox> ammoList = new ArrayList<AmmoBox>();
-	private ArrayList<Oak> treeList = new ArrayList<Oak>();
 
 	private int counter = 0;
 
@@ -134,7 +129,6 @@ public class GameController {
 			portalList.clear();
 			enemieList.clear();
 			playerInteractEntity.clear();
-			treeList.clear();
 			gameRoot.getChildren().clear();
 			hasBoss = false;
 			isBossStart = false;
@@ -147,7 +141,6 @@ public class GameController {
 		portalList.addAll(levelD.getPortalList());
 		enemieList.addAll(levelD.getEnemieList());
 		playerInteractEntity.addAll(levelD.getPlayerInteractEntity());
-		treeList.clear();
 		if (levelD.getBoss() != null) {
 			boss = levelD.getBoss();
 			hasBoss = true;
@@ -688,6 +681,7 @@ public class GameController {
 				if (isOutOfRange || isCollisionPlatform) {
 					gameRoot.getChildren().remove(item.getImageView());
 					gameRoot.getChildren().remove(item.getBox());
+					playerInteractEntity.remove(item);
 					enemyBulletsX.remove(item);
 					enemyBulletsY.remove(item);
 
