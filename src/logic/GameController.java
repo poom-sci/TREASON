@@ -496,7 +496,6 @@ public class GameController {
 
 		if (enemyCharacter instanceof BossEnemy) {
 			enemyBulletsY.add(bullet);
-			gameRoot.getChildren().addAll(bullet.getBox());
 			return bullet;
 		}
 

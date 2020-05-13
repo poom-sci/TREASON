@@ -389,17 +389,14 @@ public class GameViewManager {
 		pauseMenu = null;
 		playerInfoBox = null;
 		playerInventory = null;
-		
 		gameEndingScene = null;
 		gameViewManager = null;
 		gameRoot = null;
 		player1Controller = null;
-
 		gamePane = null;
 		gameScene = null;
 		gameStage = null;
 		gameTimer = null;
-
 		pauseMenu = null;
 
 		System.gc();

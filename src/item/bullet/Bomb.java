@@ -19,7 +19,7 @@ public class Bomb extends Bullet implements Explodable {
 		this.disY = 800;
 		damage=50;
 		
-		this.box.setFill(Color.AZURE);
+//		this.box.setFill(Color.AZURE);
 
 		this.sprite = new SpriteAnimation(this.imageView, Duration.millis(2000), 15, 2, 0, 0, 258, 250);
 		this.sprite.setCycleCount(Animation.INDEFINITE);
