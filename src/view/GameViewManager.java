@@ -9,7 +9,11 @@ import javax.swing.text.StyledEditorKit.BoldAction;
 
 import exception.AddLeaderboardScoresFailedException;
 import gui.GameButton;
+import gui.GameEndingScene;
 import gui.GameSubScene;
+import gui.PauseMenu;
+import gui.PlayerInfoBox;
+import gui.PlayerInventoryBox;
 import gui.SpriteAnimation;
 import item.box.Box;
 import item.bullet.GunBullet;
@@ -77,39 +81,38 @@ public class GameViewManager {
 	private Stage menuStage;
 	private AnimationTimer gameTimer;
 
-	private static ArrayList<GameButton> menuButtons;
 	boolean alreadyPressedESCAPE = false;
-	private Pane menuPane;
-	private Rectangle menuBox;
 	private boolean isPause;
 
 	private HashMap<KeyCode, Boolean> keys = new HashMap<KeyCode, Boolean>();
 
 	private Boolean isGameover;
+	private AudioClip gameThemeSong;
 
 	private Pane gameRoot;
 
 	private GameController player1Controller;
-	private Rectangle playerInfoBox;
-	private Rectangle heathBox;
-	private ImageView inventory;
-	private ImageView weaponImage;
-	private Weapon weapon;
-	private Label bulletNumber;
-	private Label potionNumber;
-	private Label ammoNumber;
-
+	private PauseMenu pauseMenu;
+	private PlayerInfoBox playerInfoBox;
+	private PlayerInventoryBox playerInventory;
+	private GameEndingScene gameEndingScene;
 
 	public GameViewManager() {
 		inititializeStage();
 	}
 
 	public void inititializeStage() {
+
 		gamePane = new AnchorPane();
 		player1Controller = new GameController();
 		gameRoot = player1Controller.getGameRoot();
 		gamePane.getChildren().addAll(player1Controller.getBg(), gameRoot);
 		gameScene = new Scene(gamePane, WIDTH, HEIGHT);
+
+		gameThemeSong = new AudioClip(ClassLoader.getSystemResource("Off_limits.wav").toString());
+		gameThemeSong.setCycleCount(AudioClip.INDEFINITE);
+		gameThemeSong.setVolume(0.5);
+		gameThemeSong.play();
 
 		gameScene.setOnKeyPressed(event -> keys.put(event.getCode(), true));
 		gameScene.setOnKeyReleased(event -> keys.put(event.getCode(), false));
@@ -125,7 +128,6 @@ public class GameViewManager {
 		gameStage.setTitle("Game Scene2");
 		gameStage.setResizable(false);
 
-		menuButtons = new ArrayList<GameButton>();
 		isGameover = false;
 
 		createMenu();
@@ -171,31 +173,28 @@ public class GameViewManager {
 	private void update() {
 		if (player1Controller.isGameEnd()) {
 			gameTimer.stop();
-			AudioClip mouse_pressed_sound = new AudioClip(
-					ClassLoader.getSystemResource("gameover_sound.wav").toString());
-			mouse_pressed_sound.play();
+			AudioClip gameover_sound = new AudioClip(ClassLoader.getSystemResource("gameover_sound.wav").toString());
+			gameover_sound.play();
+			gameThemeSong.stop();
 			createEndSubScene();
 		}
-		player1Controller.setKeys(keys);
+
 		player1Controller.setTime(time.doubleValue());
-		gameRoot = player1Controller.getGameRoot();
-		heathBox = player1Controller.getPlayer().getCurrentHPBox();
-		weapon = player1Controller.getPlayer().getWeapon();
-//		isPlayerDie = player1Controller.getPlayer().isDie();
 
-
-
-		if (weaponImage != player1Controller.getPlayer().getWeapon().getImageView()) {
-			createWeaponImage();
+		playerInfoBox.setPlayerHP(player1Controller.getPlayer().getCurrentHPBox());
+		playerInfoBox.getNumber().setText("" + player1Controller.getPlayer().getWeapon().getCurrentBullet());
+		if (playerInfoBox.getWeaponImage() != player1Controller.getPlayer().getWeapon().getImageView()) {
+			playerInfoBox.changeWeaponImage(player1Controller.getPlayer().getWeapon().getImageView());
 		}
 
-		bulletNumber.setText("" + weapon.getCurrentBullet());
-		potionNumber.setText("" + player1Controller.getPlayerInventory().get(0).getAmount());
-		ammoNumber.setText("" + player1Controller.getPlayerInventory().get(1).getAmount());
+		playerInventory.getNumberItem1()
+				.setText("" + player1Controller.getPlayer().getItemsInventory().get(0).getAmount());
+		playerInventory.getNumberItem2()
+				.setText("" + player1Controller.getPlayer().getItemsInventory().get(1).getAmount());
+
 		if (isPressed(KeyCode.ESCAPE)) {
 			if (!alreadyPressedESCAPE) {
-				menuPane.setVisible(true);
-				System.out.println("show");
+				pauseMenu.setVisible(true);
 				gameTimer.stop();
 				alreadyPressedESCAPE = true;
 				isPause = true;
@@ -211,13 +210,11 @@ public class GameViewManager {
 
 				if (key.getCode() == KeyCode.ESCAPE) {
 					if (isPause) {
-						menuPane.setVisible(false);
-						System.out.println("hide");
+						pauseMenu.setVisible(false);
 						gameTimer.start();
 						isPause = false;
 					} else {
-						menuPane.setVisible(true);
-						System.out.println("show");
+						pauseMenu.setVisible(true);
 						gameTimer.stop();
 						alreadyPressedESCAPE = true;
 						isPause = true;
@@ -234,147 +231,34 @@ public class GameViewManager {
 
 	private void createPlayerInfo() {
 
-		createPlayerInfoBox();
+		playerInfoBox = new PlayerInfoBox();
+		playerInfoBox.setTranslateX(50);
+		playerInfoBox.setTranslateY(50);
+		this.gamePane.getChildren().add(playerInfoBox);
 
-		createHealthBox();
+		playerInventory = new PlayerInventoryBox(player1Controller.getPlayer());
+		playerInventory.setTranslateX(750);
+		playerInventory.setTranslateY(625);
+		this.gamePane.getChildren().add(playerInventory);
 
-		createWeaponImage();
-
-		createBulletLeft();
-
-		createInventoryBox();
-
-		createInventoryImage();
-
-		createPotionLeft();
-
-		createAmmoLeft();
-
-	}
-
-	private void createBulletLeft() {
-		if (bulletNumber != null) {
-			gamePane.getChildren().remove(bulletNumber);
-		}
-
-		bulletNumber = new Label("" + weapon.getCurrentBullet());
-		try {
-//			bulletLeft.setTextFill(Color.web("EA8F3C"));
-			bulletNumber.setFont(Font.loadFont(new FileInputStream("res/PixelTakhisis-ZajJ.ttf"), 23));
-
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		bulletNumber.setTranslateX(190);
-		bulletNumber.setTranslateY(80);
-		gamePane.getChildren().add(bulletNumber);
-	}
-
-	private void createPlayerInfoBox() {
-		if (playerInfoBox != null) {
-			gamePane.getChildren().remove(playerInfoBox);
-		}
-
-		Rectangle playerInfoBox = new Rectangle(250, 120);
-		playerInfoBox.setTranslateX(30);
-		playerInfoBox.setTranslateY(30);
-		playerInfoBox.setFill(Color.ANTIQUEWHITE);
-		playerInfoBox.setOpacity(0.5);
-		gamePane.getChildren().add(playerInfoBox);
-	}
-
-	private void createInventoryBox() {
-
-		inventory = new ImageView(new Image("inventory2.png"));
-		inventory.setFitHeight(70);
-		inventory.setFitWidth(300);
-		inventory.setOpacity(0.6);
-		inventory.setTranslateX(750);
-		inventory.setTranslateY(625);
-
-		gamePane.getChildren().add(inventory);
-	}
-
-	private void createInventoryImage() {
-
-		for (int i = 0; i < player1Controller.getPlayerInventory().size(); i++) {
-			ConsumableItem item = player1Controller.getPlayerInventory().get(i);
-			ImageView imageView = item.getImageView();
-			imageView.setTranslateX(760 + 78 * i);
-			imageView.setTranslateY(640);
-			gamePane.getChildren().add(imageView);
-
-			Label potionHotkey = new Label(item.getHotKey() + "");
-			potionHotkey.setTranslateX(805 + 85 * i);
-			potionHotkey.setTranslateY(645);
-			gamePane.getChildren().add(potionHotkey);
-		}
-
-	}
-
-	private void createPotionLeft() {
-
-		potionNumber = new Label("" + player1Controller.getPlayerInventory().get(0).getAmount());
-		potionNumber.setTranslateX(760);
-		potionNumber.setTranslateY(645);
-		gamePane.getChildren().add(potionNumber);
-	}
-
-	private void createAmmoLeft() {
-
-		ammoNumber = new Label("" + player1Controller.getPlayerInventory().get(1).getAmount());
-		ammoNumber.setTranslateX(760 + 70);
-		ammoNumber.setTranslateY(645);
-		gamePane.getChildren().add(ammoNumber);
-	}
-
-	private void createWeaponImage() {
-		if (weapon != null) {
-			gamePane.getChildren().remove(weaponImage);
-		}
-
-		weapon = player1Controller.getPlayer().getWeapon();
-		weaponImage = weapon.getImageView();
-		weaponImage.setTranslateX(50);
-		weaponImage.setTranslateY(80);
-		gamePane.getChildren().add(weaponImage);
-	}
-
-	private void createHealthBox() {
-		if (heathBox != null) {
-			gamePane.getChildren().remove(heathBox);
-		}
-
-		heathBox = player1Controller.getPlayer().getCurrentHPBox();
-		gamePane.getChildren().add(heathBox);
-		heathBox.setTranslateX(50);
-		heathBox.setTranslateY(50);
 	}
 
 	private void createMenu() {
-		menuPane = new Pane();
 
-		menuBox = new Rectangle(400, 1000);
-		menuBox.setFill(Color.GREY);
-		menuBox.setOpacity(0.5);
-		menuPane.getChildren().add(menuBox);
+		pauseMenu = new PauseMenu();
 
-		GameButton resume = new GameButton("Resume");
-		addMenuButton(resume);
+		GameButton resume = pauseMenu.getResume();
 		resume.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent arg0) {
 				gameTimer.start();
-				menuPane.setVisible(false);
+				pauseMenu.setVisible(false);
 
 			}
 		});
 
-		GameButton restart = new GameButton("Restart");
-		addMenuButton(restart);
-
+		GameButton restart = pauseMenu.getRestart();
 		restart.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -385,96 +269,59 @@ public class GameViewManager {
 
 		});
 
-		GameButton option = new GameButton("Option");
-		addMenuButton(option);
-
-		GameButton menu = new GameButton("Menu");
-		addMenuButton(menu);
-
-		menu.setOnAction(new EventHandler<ActionEvent>() {
+		GameButton exit = pauseMenu.getExit();
+		exit.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent arg0) {
-
 				gameStage.hide();
 				menuStage.show();
-				menuPane.setVisible(false);
-				
+				pauseMenu.setVisible(false);
+				gameThemeSong.stop();
+
 			}
 
 		});
 
-		menuPane.setVisible(false);
-		menuPane.toFront();
-		gamePane.getChildren().addAll(menuPane);
-	}
+		ImageView soundImage = pauseMenu.getSound();
 
-	private void addMenuButton(GameButton button) {
-		button.setLayoutX(120);
-		menuPane.getChildren().add(button);
-		button.setLayoutY(100 + (menuButtons.size() * 100));
-		menuButtons.add(button);
+		soundImage.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
+			@Override
+			public void handle(MouseEvent event) {
+				pauseMenu.changeSound();
+				if (gameThemeSong.isPlaying()) {
+					gameThemeSong.stop();
+				} else {
+					gameThemeSong.play();
+				}
+			}
+		});
+
+		pauseMenu.setVisible(false);
+		gamePane.getChildren().addAll(pauseMenu);
 	}
 
 	private void restart() {
 
-		menuPane.getChildren().remove(menuBox);
 		gameRoot.getChildren().clear();
-		this.gamePane.getChildren().remove(menuPane);
-		for (int i = 0; i < 4; i++) {
-			this.gamePane.getChildren().remove(menuButtons.get(0));
-			menuButtons.remove(menuButtons.get(0));
-		}
+		this.gamePane.getChildren().remove(pauseMenu);
+		
 		player1Controller = new GameController();
 		this.gameRoot = player1Controller.getGameRoot();
 
 		createPlayerInfo();
-
 		createMenu();
-
 		gameTimer.start();
 
 	}
 
 	private void createEndSubScene() {
-		createBlackDrop();
+		gameEndingScene = new GameEndingScene(player1Controller.isWin(), player1Controller.getPlayerPoint(),
+				time.doubleValue());
+		gamePane.getChildren().add(gameEndingScene);
 
-		createLogo();
-
-		Label nameScores = new Label("Name :");
-		Label scoreScores = new Label("Score : " + player1Controller.getPlayerPoint());
-		Label timeScores = new Label("Time : " + time.doubleValue());
-		TextField textField = new TextField();
-		try {
-			nameScores.setTextFill(Color.web("EA8F3C"));
-			nameScores.setFont(Font.loadFont(new FileInputStream("res/PixelTakhisis-ZajJ.ttf"), 23));
-
-			scoreScores.setTextFill(Color.web("EA8F3C"));
-			scoreScores.setFont(Font.loadFont(new FileInputStream("res/PixelTakhisis-ZajJ.ttf"), 23));
-
-			timeScores.setTextFill(Color.web("EA8F3C"));
-			timeScores.setFont(Font.loadFont(new FileInputStream("res/PixelTakhisis-ZajJ.ttf"), 23));
-
-			textField.setFont(Font.loadFont(new FileInputStream("res/PixelTakhisis-ZajJ.ttf"), 23));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		nameScores.setLayoutX(500);
-		nameScores.setLayoutY(408);
-		textField.setLayoutX(600);
-		textField.setLayoutY(400);
-		scoreScores.setLayoutX(500);
-		scoreScores.setLayoutY(460);
-		timeScores.setLayoutX(500);
-		timeScores.setLayoutY(510);
-
-		GameButton submitButton = new GameButton("submit");
-		gamePane.getChildren().add(submitButton);
-		submitButton.setLayoutX(400);
-		submitButton.setLayoutY(550);
+		GameButton submitButton = gameEndingScene.getSubmitButton();
 		submitButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -483,15 +330,12 @@ public class GameViewManager {
 					isGameover = true;
 					Leaderboards scoreBoard = Leaderboards.getInstance();
 					scoreBoard.loadScore();
-					scoreBoard.addPlayerScore(textField.getText(), player1Controller.getPlayerPoint(),
-							time.doubleValue());
+					scoreBoard.addPlayerScore(gameEndingScene.getTextField().getText(),
+							player1Controller.getPlayerPoint(), time.doubleValue());
 					scoreBoard.saveScores();
-					player1Controller.setGameEnd(false);
-					player1Controller.setWin(false);
-//					gameStage.close();
-					menuStage.close();
-//					menuStage.show();
-//					removeAll();
+					gameStage.close();
+					menuStage.show();
+					removeAll();
 				} catch (AddLeaderboardScoresFailedException e) {
 					Alert alert = new Alert(AlertType.WARNING, "Add leaderboard failed, " + e.message);
 					alert.setTitle("Error");
@@ -502,26 +346,20 @@ public class GameViewManager {
 
 		});
 
-		GameButton ExitButton = new GameButton("Exit");
-		gamePane.getChildren().add(ExitButton);
-		ExitButton.setLayoutX(650);
-		ExitButton.setLayoutY(550);
+		GameButton ExitButton = gameEndingScene.getExitButton();
 		ExitButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent arg0) {
 				isGameover = true;
-				player1Controller.setGameEnd(false);
-				player1Controller.setWin(false);
 				gameStage.close();
-//				menuStage.close();
 				menuStage.show();
-//				removeAll();
+				removeAll();
 
 			}
 
 		});
-
+//
 		gamePane.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent key) {
 
@@ -530,14 +368,11 @@ public class GameViewManager {
 						isGameover = true;
 						Leaderboards scoreBoard = Leaderboards.getInstance();
 						scoreBoard.loadScore();
-						scoreBoard.addPlayerScore(textField.getText(), player1Controller.getPlayerPoint(),
-								time.doubleValue());
+						scoreBoard.addPlayerScore(gameEndingScene.getTextField().getText(),
+								player1Controller.getPlayerPoint(), time.doubleValue());
 						scoreBoard.saveScores();
-						player1Controller.setGameEnd(false);
-						player1Controller.setWin(false);
+						menuStage.show();
 						gameStage.close();
-						menuStage.close();
-//						menuStage.show();
 						removeAll();
 					} catch (AddLeaderboardScoresFailedException e) {
 						System.out.println("Add leaderboard failed, " + e.message);
@@ -546,86 +381,28 @@ public class GameViewManager {
 
 			}
 		});
-
-		gamePane.getChildren().addAll(nameScores, textField, scoreScores, timeScores);
-
 	}
 
-	private void removeAll() {
+	public void removeAll() {
+		gameRoot = null;
+		player1Controller = null;
+		pauseMenu = null;
+		playerInfoBox = null;
+		playerInventory = null;
+		
+		gameEndingScene = null;
 		gameViewManager = null;
 		gameRoot = null;
 		player1Controller = null;
-		playerInfoBox = null;
-		heathBox = null;
-		inventory = null;
-		weaponImage = null;
-		weapon = null;
-		bulletNumber = null;
-		potionNumber = null;
-		ammoNumber = null;
 
 		gamePane = null;
 		gameScene = null;
 		gameStage = null;
 		gameTimer = null;
 
-		menuButtons = null;
-		menuPane = null;
-		menuBox = null;
+		pauseMenu = null;
 
 		System.gc();
-	}
-
-	private void createBlackDrop() {
-		Rectangle GameoverSubScene = new Rectangle(1280, 720);
-		GameoverSubScene.setFill(Color.BLACK);
-		GameoverSubScene.setOpacity(0.8);
-		gamePane.getChildren().add(GameoverSubScene);
-	}
-
-	private void createLogo() {
-		String image_path;
-		ImageView logo;
-		if (player1Controller.isWin()) {
-			image_path = "win.png";
-			logo = new ImageView(image_path);
-			logo.setLayoutX(350);
-			logo.setLayoutY(50);
-			logo.setFitHeight(300);
-			logo.setFitWidth(600);
-		} else {
-			image_path = "gameover.png";
-			logo = new ImageView(image_path);
-			logo.setLayoutX(1280 / 2 - 300 * 1.5);
-			logo.setLayoutY(50);
-			logo.setFitHeight(300 * 1.5);
-			logo.setFitWidth(600 * 1.5);
-		}
-
-		logo.setOnMouseEntered(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent event) {
-				logo.setEffect(new DropShadow());
-				AudioClip mouse_enter_sound = new AudioClip(
-						ClassLoader.getSystemResource("mouse_enter_sound.wav").toString());
-				mouse_enter_sound.setVolume(0.1);
-				mouse_enter_sound.play();
-
-			}
-		});
-
-		logo.setOnMouseExited(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent event) {
-				// TODO Auto-generated method stub
-				logo.setEffect(null);
-			}
-
-		});
-
-		gamePane.getChildren().add(logo);
 	}
 
 	public Stage getGameStage() {
@@ -638,6 +415,18 @@ public class GameViewManager {
 
 	public Boolean getIsGameover() {
 		return isGameover;
+	}
+
+	public AudioClip getGameThemeSong() {
+		return gameThemeSong;
+	}
+
+	public void continueThemeSond() {
+		if (pauseMenu.isSoundOn()) {
+			gameThemeSong.play();
+		} else {
+			gameThemeSong.stop();
+		}
 	}
 
 }

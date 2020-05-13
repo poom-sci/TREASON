@@ -8,7 +8,12 @@ import javax.swing.text.StyledEditorKit.BoldAction;
 import gui.GameButton;
 import gui.SpriteAnimation;
 import item.Action;
+import item.consumable.Ammo;
 import item.consumable.ConsumableItem;
+import item.consumable.Potion;
+import item.weapon.Gun;
+import item.weapon.RocketGun;
+import item.weapon.Sword;
 import item.weapon.Weapon;
 import javafx.animation.Animation;
 import javafx.geometry.Rectangle2D;
@@ -42,7 +47,38 @@ public class MainCharacter extends GameCharacter {
 		fireTime = Duration.millis(200);
 		dieTime = Duration.millis(2000);
 		jumpTime = Duration.millis(1000);
+		
+		createPotion();
+		createAmmo();
+		createGun();
+		createRocketGun();
+		createSword();
 
+	}
+	
+	private void createPotion() {
+		Potion potion = new Potion(1);
+		this.itemsInventory.add(potion);
+	}
+
+	private void createAmmo() {
+		Ammo ammo = new Ammo(1);
+		this.itemsInventory.add(ammo);
+	}
+
+	private void createGun() {
+		Weapon gun = new Gun(20);
+		this.weaponsInventory.add(gun);
+	}
+
+	private void createRocketGun() {
+		Weapon rocketGun = new RocketGun(10);
+		this.weaponsInventory.add(rocketGun);
+	}
+
+	private void createSword() {
+		Weapon sword = new Sword(1);
+		this.weaponsInventory.add(sword);
 	}
 
 	public void blink() {

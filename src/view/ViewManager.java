@@ -7,6 +7,8 @@ import java.util.HashMap;
 
 import gui.GameButton;
 import gui.GameSubScene;
+import gui.PauseMenu;
+import gui.PlayerInfoBox;
 import gui.SpriteAnimation;
 import item.character.MainCharacter;
 import javafx.animation.Animation;
@@ -151,8 +153,7 @@ public class ViewManager {
 					@Override
 					public void handle(ActionEvent arg0) {
 						if (gameManager != null) {
-							gameManager = null;
-							gameStage = null;
+							gameManager.removeAll();
 							System.gc();
 						}
 
@@ -178,6 +179,7 @@ public class ViewManager {
 								gameStage.show();
 								mainStage.hide();
 								gameManager.getGameTimer().start();
+								gameManager.continueThemeSond();
 							}
 							else {
 								System.out.println("no save");
@@ -254,10 +256,7 @@ public class ViewManager {
 			public void handle(ActionEvent arg0) {
 				ShowSubScene(HelpSubScene);
 
-//				LevelData levelD = LevelData.getInstance();
-//				levelD.loadLevel(1);
-//				System.out.println(levelD.getEnemieList());
-//				mainPane.getChildren().add(levelD.getGameRoot());
+
 
 				Text text = new Text();
 
@@ -283,14 +282,8 @@ public class ViewManager {
 			@Override
 			public void handle(ActionEvent arg0) {
 				ShowSubScene(CreditSubScene);
-
-				ImageView imageView = new ImageView(new Image("removebg.png"));
-				imageView.setViewport(new Rectangle2D(26, 0, 96, 96));
-				Animation poom = new SpriteAnimation(imageView, Duration.millis(8000), 24, 8, 26, 0, 96, 96);
-				poom.setCycleCount(Animation.INDEFINITE);
-				poom.play();
-
-				mainPane.getChildren().add(new Group(imageView));
+				PlayerInfoBox pla=new PlayerInfoBox();
+				mainPane.getChildren().add(pla);
 
 			}
 		});

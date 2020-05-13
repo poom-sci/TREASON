@@ -18,17 +18,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 public abstract class GameCharacter extends Entity {
-//	protected ImageView imageView;
-//	protected Rectangle box;
 
 	protected Rectangle lowBox;
 	protected Rectangle highBox;
-//	protected Animation sprite;
-//
-//	protected int width;
-//	protected int height;
-//	protected int x;
-//	protected int y;
 
 	protected ArrayList<Action> actions;
 	protected boolean pensioner=false;
@@ -243,6 +235,14 @@ public abstract class GameCharacter extends Entity {
 		} else if (this.currentHP <= 50) {
 			this.currentHPBox.setFill(Color.RED);
 		}
+	}
+	
+	public void jump(int velocityY) {
+		if(isOnFloor) {
+			this.velocityY=velocityY;
+			this.isOnFloor=false;
+		}
+
 	}
 
 	public boolean getIsTurnLeft() {

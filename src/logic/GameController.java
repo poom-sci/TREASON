@@ -84,14 +84,11 @@ public class GameController {
 	private int counter = 0;
 
 	private BossEnemy boss;
-	private boolean hasBoss = false;
 	private boolean isWin = false;
 	private ArrayList<GameCharacter> enemieList = new ArrayList<GameCharacter>();
 
 	private int levelWidth;
 	private int levelHeight;
-
-	private boolean canJump;
 
 	private boolean alreadyPressedQ = false;
 	private boolean alreadyPressedE = false;
@@ -130,7 +127,7 @@ public class GameController {
 			enemieList.clear();
 			playerInteractEntity.clear();
 			gameRoot.getChildren().clear();
-			hasBoss = false;
+//			hasBoss = false;
 			isBossStart = false;
 		}
 
@@ -143,9 +140,7 @@ public class GameController {
 		playerInteractEntity.addAll(levelD.getPlayerInteractEntity());
 		if (levelD.getBoss() != null) {
 			boss = levelD.getBoss();
-			hasBoss = true;
 		} else {
-			hasBoss = false;
 		}
 
 		gameRoot = levelD.getGameRoot();
@@ -166,77 +161,8 @@ public class GameController {
 
 		gameRoot.getChildren().addAll(player.getBox(), player.getImageView());
 
-		createRocketGun();
-		createGun();
-		createSword();
-		createPotion();
-		createAmmo();
-
 	}
 
-	private void createPotion() {
-		Potion potion = new Potion(1);
-		player.getItemsInventory().add(potion);
-	}
-
-	private void createAmmo() {
-		Ammo ammo = new Ammo(1);
-		player.getItemsInventory().add(ammo);
-	}
-
-	private void createGun() {
-		Weapon gun = new Gun(20);
-		player.getWeaponsInventory().add(gun);
-	}
-
-	private void createRocketGun() {
-		Weapon rocketGun = new RocketGun(10);
-		player.getWeaponsInventory().add(rocketGun);
-	}
-
-	private void createSword() {
-		Weapon sword = new Sword(1);
-		player.getWeaponsInventory().add(sword);
-	}
-
-	private void gravity() {
-
-		if (player.getVelocityY() < 10) {
-			player.addVelocityY(1);
-		}
-		if (player.getY() <= levelHeight) {
-			movePlayerY(player.getVelocityY());
-		}
-
-		for (int i = 0; i < enemieList.size(); i++) {
-			GameCharacter enemy = enemieList.get(i);
-			if (enemy.getVelocityY() < 10) {
-				enemy.addVelocityY(1);
-			}
-			if (enemy.getY() <= levelHeight) {
-				moveEnemyY(enemy, enemy.getVelocityY());
-			}
-		}
-		for (int i = 0; i < enemyBulletsY.size(); i++) {
-			Bullet bullet = enemyBulletsY.get(i);
-			if (bullet.getY() <= levelHeight) {
-				moveEnemyBulletY(bullet, bullet.getVelocityY());
-			}
-			moveEnemyBulletY(bullet, bullet.getVelocityY());
-			if (bullet.getVelocityY() < 10) {
-				bullet.addVelocityY(1);
-			}
-		}
-
-		if (hasBoss) {
-			if (boss.getVelocityY() < 10) {
-				boss.addVelocityY(1);
-			}
-			if (boss.getY() <= levelHeight) {
-				moveEnemyY(boss, boss.getVelocityY());
-			}
-		}
-	}
 
 	public void getControl() {
 		try {
@@ -269,7 +195,7 @@ public class GameController {
 					isEnemyFire = false;
 				}
 
-				if (hasBoss) {
+				if (boss!=null) {
 					if (isBossStart) {
 
 						if (isBossMove) {
@@ -325,7 +251,7 @@ public class GameController {
 
 				if (isPressed(KeyCode.W) && player.getX() >= 5) {
 					if (!alreadyPressedW) {
-						jumpPlayer();
+						player.jump(-20);
 						alreadyPressedW = true;
 					}
 				} else {
@@ -428,7 +354,7 @@ public class GameController {
 					gameRoot.setLayoutX(-(offsetX - 640));
 				}
 				if (offsetX > levelWidth - 1280) {
-					if (hasBoss) {
+					if (boss!=null) {
 						gameRoot.setLayoutX(-(levelWidth - 1280));
 						isBossStart = true;
 					}
@@ -464,6 +390,45 @@ public class GameController {
 		if (islight) {
 			light.setX(offsetX);
 			light.setY(offsetY);
+		}
+	}
+	
+	private void gravity() {
+
+		if (player.getVelocityY() < 10) {
+			player.addVelocityY(1);
+		}
+		if (player.getY() <= levelHeight) {
+			moveEntityY(player, player.getVelocityY());
+		}
+
+		for (int i = 0; i < enemieList.size(); i++) {
+			GameCharacter enemy = enemieList.get(i);
+			if (enemy.getVelocityY() < 10) {
+				enemy.addVelocityY(1);
+			}
+			if (enemy.getY() <= levelHeight) {
+				moveEntityY(enemy, enemy.getVelocityY());
+			}
+		}
+		for (int i = 0; i < enemyBulletsY.size(); i++) {
+			Bullet bullet = enemyBulletsY.get(i);
+			if (bullet.getY() <= levelHeight) {
+				moveEntityY(bullet, bullet.getVelocityY());
+			}
+			moveEntityY(bullet, bullet.getVelocityY());
+			if (bullet.getVelocityY() < 10) {
+				bullet.addVelocityY(1);
+			}
+		}
+
+		if (boss!=null) {
+			if (boss.getVelocityY() < 10) {
+				boss.addVelocityY(1);
+			}
+			if (boss.getY() <= levelHeight) {
+				moveEntityY(boss, boss.getVelocityY());
+			}
 		}
 	}
 
@@ -767,90 +732,37 @@ public class GameController {
 
 	}
 
-	private void movePlayerY(int value) {
-		boolean movingDown = value > 0;
-
-		for (int i = 0; i < Math.abs(value); i++) {
-			for (Entity platform : platforms) {
-				if (player.getBox().getBoundsInParent().intersects(platform.getBox().getBoundsInParent())) {
-					if (movingDown) {
-						if (player.getY() + player.getHeight() == platform.getY()) {
-							player.setY(player.getY() - 1);
-							canJump = true;
-							return;
-						}
-					} else {
-						if (player.getY() == platform.getY() + 60) {
-							player.setY(player.getY() + 1);
-							return;
-						}
-					}
-				}
-			}
-			player.setY(player.getY() + (movingDown ? 1 : -1));
-		}
-	}
-
-	private void jumpPlayer() {
-		if (canJump) {
-			player.setVelocityY(-20);
-			canJump = false;
-		}
-	}
-
-	private void moveEnemyY(GameCharacter item, int value) {
+	private void moveEntityY(Entity item, int value) {
 		boolean movingDown = value > 0;
 
 		for (int i = 0; i < Math.abs(value); i++) {
 			for (Entity platform : platforms) {
 				if (item.getBox().getBoundsInParent().intersects(platform.getBox().getBoundsInParent())) {
-					if (movingDown) {
-						if (item.getY() + item.getHeight() == platform.getY()) {
-							item.setY(item.getY() - 1);
-							item.setOnFloor(true);
-
+					if(item instanceof Bullet) {
+						gameRoot.getChildren().remove(item.getImageView());
+						enemyBulletsY.remove(item);
+						enemyBulletsX.remove(item);
+						playerInteractEntity.remove(item);
+						if (item instanceof Explodable) {
+							((Explodable) item).explode();
+							checkEnemyCollision(item);
+							timedEntity(item, 1.0);
 							return;
 						}
-					} else {
-						if (item.getY() == platform.getY() + 60) {
-							item.setY(item.getY() + 1);
-							return;
+					}else if(item instanceof GameCharacter) {
+						if (movingDown) {
+							if (item.getY() + item.getHeight() == platform.getY()) {
+								item.setY(item.getY() - 1);
+								((GameCharacter) item).setOnFloor(true);
+								return;
+							}
+						} else {
+							if (item.getY() == platform.getY() + 60) {
+								item.setY(item.getY() + 1);
+								return;
+							}
 						}
 					}
-				}
-			}
-			item.setY(item.getY() + (movingDown ? 1 : -1));
-		}
-
-	}
-
-	private void moveEnemyBulletY(Entity item, int value) {
-		boolean movingDown = value > 0;
-
-		for (int i = 0; i < Math.abs(value); i++) {
-			for (Entity platform : platforms) {
-				if (item.getBox().getBoundsInParent().intersects(platform.getBox().getBoundsInParent())) {
-					gameRoot.getChildren().remove(item.getImageView());
-					enemyBulletsY.remove(item);
-					enemyBulletsX.remove(item);
-					if (item instanceof Explodable) {
-						((Explodable) item).explode();
-						checkEnemyCollision(item);
-						timedEntity(item, 1.0);
-						return;
-					}
-
-//					if (movingDown) {
-//						if (item.getY() + item.getHeight() == platform.getY()) {
-////							item.setY(item.getY() - 1);
-//							return;
-//						}
-//					} else {
-//						if (item.getY() == platform.getY() + 60) {
-////							item.setY(item.getY() + 1);
-//							return;
-//						}
-//					}
 				}
 			}
 			item.setY(item.getY() + (movingDown ? 1 : -1));
@@ -879,7 +791,7 @@ public class GameController {
 
 	private boolean checkBossCollision(Entity item) {
 		boolean isHit = false;
-		if (!hasBoss) {
+		if (boss==null) {
 			return false;
 		}
 
@@ -947,7 +859,7 @@ public class GameController {
 		enemieList.remove(enemy);
 		if (Character instanceof BossEnemy) {
 			isWin = true;
-			hasBoss = false;
+//			hasBoss = false;
 			isBossStart = false;
 			isGameEnd = true;
 		}
@@ -1019,13 +931,11 @@ public class GameController {
 		platforms.clear();
 		portalList.clear();
 		enemieList.clear();
-		treeList.clear();
 		gameRoot.getChildren().clear();
 		platforms = null;
 		portalList = null;
 		enemieList = null;
-		treeList = null;
-		hasBoss = false;
+//		hasBoss = false;
 		isBossStart = false;
 		boss = null;
 		light = null;
@@ -1067,9 +977,6 @@ public class GameController {
 		return player.getPoint();
 	}
 
-	public ArrayList<ConsumableItem> getPlayerInventory() {
-		return player.getItemsInventory();
-	}
 
 	public boolean isGameEnd() {
 		return isGameEnd;
@@ -1078,13 +985,4 @@ public class GameController {
 	public boolean isWin() {
 		return isWin;
 	}
-
-	public void setWin(boolean isWin) {
-		this.isWin = isWin;
-	}
-
-	public void setGameEnd(boolean isGameEnd) {
-		this.isGameEnd = isGameEnd;
-	}
-
 }
