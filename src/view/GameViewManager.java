@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import javax.swing.text.StyledEditorKit.BoldAction;
 
+import element.AudioLoader;
 import exception.AddLeaderboardScoresFailedException;
 import gui.GameButton;
 import gui.GameEndingScene;
@@ -88,6 +89,7 @@ public class GameViewManager {
 
 	private Boolean isGameover;
 	private AudioClip gameThemeSong;
+	private AudioClip menuThemeSong;
 
 	private Pane gameRoot;
 
@@ -109,10 +111,12 @@ public class GameViewManager {
 		gamePane.getChildren().addAll(player1Controller.getBg(), gameRoot);
 		gameScene = new Scene(gamePane, WIDTH, HEIGHT);
 
-		gameThemeSong = new AudioClip(ClassLoader.getSystemResource("Off_limits.wav").toString());
+		gameThemeSong = AudioLoader.Off_Limits;
 		gameThemeSong.setCycleCount(AudioClip.INDEFINITE);
-		gameThemeSong.setVolume(0.5);
 		gameThemeSong.play();
+		
+		menuThemeSong = AudioLoader.Star_Commander;
+		menuThemeSong.setCycleCount(AudioClip.INDEFINITE);
 
 		gameScene.setOnKeyPressed(event -> keys.put(event.getCode(), true));
 		gameScene.setOnKeyReleased(event -> keys.put(event.getCode(), false));
@@ -151,11 +155,7 @@ public class GameViewManager {
 
 	public void createGameLoop() {
 		gameTimer = new AnimationTimer() {
-//			@Override
-//			public void start() {
-//				startTime = System.currentTimeMillis();
-//				super.start();
-//			}
+
 
 			long startTime = System.currentTimeMillis();
 			@Override
@@ -173,7 +173,7 @@ public class GameViewManager {
 	private void update() {
 		if (player1Controller.isGameEnd()) {
 			gameTimer.stop();
-			AudioClip gameover_sound = new AudioClip(ClassLoader.getSystemResource("gameover_sound.wav").toString());
+			AudioClip gameover_sound = AudioLoader.Gameover_Sound;
 			gameover_sound.play();
 			gameThemeSong.stop();
 			createEndSubScene();
@@ -277,6 +277,7 @@ public class GameViewManager {
 				menuStage.show();
 				pauseMenu.setVisible(false);
 				gameThemeSong.stop();
+				menuThemeSong.play();
 
 			}
 
@@ -359,6 +360,7 @@ public class GameViewManager {
 					scoreBoard.saveScores();
 					gameStage.close();
 					menuStage.show();
+					menuThemeSong.play();
 					removeAll();
 				} catch (AddLeaderboardScoresFailedException e) {
 					Alert alert = new Alert(AlertType.WARNING, "Add leaderboard failed, " + e.message);
@@ -378,6 +380,8 @@ public class GameViewManager {
 				isGameover = true;
 				gameStage.close();
 				menuStage.show();
+				menuThemeSong.play();
+//				menuStage.getMenuThemeSon
 				removeAll();
 
 			}
@@ -397,6 +401,7 @@ public class GameViewManager {
 						scoreBoard.saveScores();
 						menuStage.show();
 						gameStage.close();
+						menuThemeSong.play();
 						removeAll();
 					} catch (AddLeaderboardScoresFailedException e) {
 						System.out.println("Add leaderboard failed, " + e.message);

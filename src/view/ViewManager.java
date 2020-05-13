@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import element.AudioLoader;
 import gui.GameButton;
 import gui.GameSubScene;
 import gui.PauseMenu;
@@ -61,8 +62,13 @@ public class ViewManager {
 	private boolean hasGameStage = false;
 	private GameViewManager gameManager;
 	private Stage gameStage;
+	private AudioClip MenuThemeSong;
 
 	public ViewManager() {
+		
+		MenuThemeSong = AudioLoader.Star_Commander;
+		MenuThemeSong.setCycleCount(AudioClip.INDEFINITE);
+		MenuThemeSong.play();
 
 		menuButtons = new ArrayList<GameButton>();
 		mainPane = new AnchorPane();
@@ -156,6 +162,8 @@ public class ViewManager {
 							gameManager.removeAll();
 							System.gc();
 						}
+						AudioClip MenuThemeSong = AudioLoader.Star_Commander;
+						MenuThemeSong.stop();
 
 						gameManager = new GameViewManager();
 						gameManager.createNewGame(mainStage);
@@ -180,6 +188,7 @@ public class ViewManager {
 								mainStage.hide();
 								gameManager.getGameTimer().start();
 								gameManager.continueThemeSond();
+								MenuThemeSong.stop();
 							}
 							else {
 								System.out.println("no save");
@@ -256,18 +265,6 @@ public class ViewManager {
 			public void handle(ActionEvent arg0) {
 				ShowSubScene(HelpSubScene);
 
-
-
-				Text text = new Text();
-
-				// Setting the text to be added.
-				text.setText("Hello how are you");
-
-				// setting the position of the text
-				text.setX(50);
-				text.setY(50);
-				mainPane.getChildren().add(text);
-
 			}
 		});
 
@@ -282,8 +279,7 @@ public class ViewManager {
 			@Override
 			public void handle(ActionEvent arg0) {
 				ShowSubScene(CreditSubScene);
-				PlayerInfoBox pla=new PlayerInfoBox();
-				mainPane.getChildren().add(pla);
+
 
 			}
 		});
@@ -316,9 +312,7 @@ public class ViewManager {
 			@Override
 			public void handle(MouseEvent event) {
 				logo.setEffect(new DropShadow());
-				AudioClip mouse_enter_sound = new AudioClip(
-						ClassLoader.getSystemResource("mouse_enter_sound.wav").toString());
-				mouse_enter_sound.setVolume(0.1);
+				AudioClip mouse_enter_sound = AudioLoader.Mouse_Enter_Sound;
 				mouse_enter_sound.play();
 
 			}
@@ -343,4 +337,12 @@ public class ViewManager {
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
 		mainPane.setBackground(new Background(background));
 	}
+
+	public AudioClip getMenuThemeSong() {
+		return MenuThemeSong;
+	}
+	
+	
 }
+
+

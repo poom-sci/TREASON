@@ -1,7 +1,9 @@
 package item.bullet;
 
+import element.AudioLoader;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 
 public class GunBullet extends Bullet {

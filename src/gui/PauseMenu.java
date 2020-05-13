@@ -2,6 +2,7 @@ package gui;
 
 import com.sun.prism.Image;
 
+import element.AudioLoader;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -99,8 +100,7 @@ public class PauseMenu extends AnchorPane {
 			public void handle(MouseEvent event) {
 				sound.setEffect(new DropShadow());
 				
-				AudioClip mouse_enter_sound = new AudioClip(
-						ClassLoader.getSystemResource("mouse_enter_sound.wav").toString());
+				AudioClip mouse_enter_sound = AudioLoader.Mouse_Enter_Sound;
 				mouse_enter_sound.setVolume(0.1);
 				mouse_enter_sound.play();
 

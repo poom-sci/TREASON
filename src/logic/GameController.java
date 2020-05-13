@@ -115,7 +115,7 @@ public class GameController {
 	private boolean isGameEnd = false;
 
 	public GameController() {
-		createLevel(1);
+		createLevel(3);
 
 	}
 
@@ -441,19 +441,19 @@ public class GameController {
 			playerBullets.add(bullet);
 			gameRoot.getChildren().addAll(bullet.getImageView());
 
-			if (bullet instanceof RocketBullet) {
-				AudioClip granade_sound = new AudioClip(ClassLoader.getSystemResource("granade_sound.wav").toString());
-				granade_sound.setVolume(0.2);
-				granade_sound.play();
-			} else if (bullet instanceof GunBullet) {
-				AudioClip granade_sound = new AudioClip(ClassLoader.getSystemResource("gun_sound.wav").toString());
-				granade_sound.setVolume(0.2);
-				granade_sound.play();
-			} else if (bullet instanceof SwordSlice) {
-				AudioClip granade_sound = new AudioClip(ClassLoader.getSystemResource("sword_sound.wav").toString());
-				granade_sound.setVolume(0.2);
-				granade_sound.play();
-			}
+//			if (bullet instanceof RocketBullet) {
+//				AudioClip granade_sound = new AudioClip(ClassLoader.getSystemResource("granade_sound.wav").toString());
+//				granade_sound.setVolume(0.2);
+//				granade_sound.play();
+//			} else if (bullet instanceof GunBullet) {
+//				AudioClip granade_sound = new AudioClip(ClassLoader.getSystemResource("gun_sound.wav").toString());
+//				granade_sound.setVolume(0.2);
+//				granade_sound.play();
+//			} else if (bullet instanceof SwordSlice) {
+//				AudioClip granade_sound = new AudioClip(ClassLoader.getSystemResource("sword_sound.wav").toString());
+//				granade_sound.setVolume(0.2);
+//				granade_sound.play();
+//			}
 		} catch (FireBulletFailedException e) {
 			System.out.println("Fire bullet failed, " + e.message);
 		}
@@ -825,24 +825,30 @@ public class GameController {
 		for(int i=0;i<playerInteractEntity.size();i++) {
 			Entity item =playerInteractEntity.get(i);
 			if (player.getBox().getBoundsInParent().intersects(item.getBox().getBoundsInParent())) {
+				
 				if(item instanceof Interactable) {
 					((Interactable) item).interact(player);
 					playerInteractEntity.remove(item);
 					removeEntity(item);
 					continue;
 				}
+				
 				if(item instanceof Bullet) {
 					Bullet bullet = (Bullet) item;
 					gameRoot.getChildren().remove(bullet.getImageView());
-					player.decreasedCurrentHP(bullet.getDamage());
+					player.decreasedCurrentHP(bullet.getDamage())
+					;
 					playerInteractEntity.remove(bullet);
 					enemyBulletsX.remove(bullet);
 					enemyBulletsY.remove(bullet);
+					
 					if (bullet instanceof Explodable) {
 						((Explodable) bullet).explode();
-						checkEnemyCollision(bullet);
+//						checkEnemyCollision(bullet);
 						timedEntity(bullet, 1.0);
+						continue;
 					}
+					
 					removeEntity(bullet);
 					continue;
 				}
@@ -883,7 +889,7 @@ public class GameController {
 	}
 
 	private void checkTime() {
-		System.out.println(time);
+
 		for (int i = 0; i < timedEntityList.size();) {
 
 			if (timedEntityList.get(i).getFinalTime() <= time) {

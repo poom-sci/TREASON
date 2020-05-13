@@ -2,9 +2,11 @@ package item.bullet;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
 import javafx.animation.Animation;
 import javafx.geometry.Rectangle2D;
+import element.AudioLoader;
 import gui.SpriteAnimation;
 
 public class SwordSlice extends Bullet {
@@ -21,6 +23,7 @@ public class SwordSlice extends Bullet {
 		this.addOnY=-15;
 		this.boundY=-20;
 		creatAnimation();
+		
 
 	}
 	

@@ -1,5 +1,6 @@
 package item.weapon;
 
+import element.AudioLoader;
 import exception.FireBulletFailedException;
 import implement.Fireable;
 import item.bullet.Bullet;
@@ -9,6 +10,7 @@ import item.character.MainCharacter;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.AudioClip;
 
 public class Gun extends Weapon implements Fireable {
 
@@ -41,7 +43,11 @@ public class Gun extends Weapon implements Fireable {
 		Bullet bullet = bullets.get(0);
 
 		bullet = setPositionBullet(character, isRight, bullet);
-
+		
+		AudioClip gunAudioClip =AudioLoader.Gun_Sound;
+//		granade_sound.setVolume(0.1);
+		gunAudioClip.play();
+		
 		return bullets.remove(0);
 		
 	}
@@ -51,6 +57,11 @@ public class Gun extends Weapon implements Fireable {
 		// TODO Auto-generated method stub
 		Bullet bullet = new GunBullet(isRight, character.getX(), character.getY());
 		bullet = setPositionBullet(character, isRight, bullet);
+		
+		AudioClip gunAudioClip =AudioLoader.Gun_Sound;
+//		granade_sound.setVolume(0.1);
+		gunAudioClip.play();
+		
 		return bullet;
 		
 	}

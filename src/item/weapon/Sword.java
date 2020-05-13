@@ -1,5 +1,6 @@
 package item.weapon;
 
+import element.AudioLoader;
 import exception.FireBulletFailedException;
 import implement.Fireable;
 import item.bullet.Bullet;
@@ -7,6 +8,7 @@ import item.bullet.GunBullet;
 import item.bullet.SwordSlice;
 import item.character.GameCharacter;
 import item.character.MainCharacter;
+import javafx.scene.media.AudioClip;
 
 public class Sword extends Weapon implements Fireable {
 
@@ -38,6 +40,11 @@ public class Sword extends Weapon implements Fireable {
 			bullets.get(0).getImageView().setRotate(bullets.get(0).getImageView().getRotate() + 180);
 		}
 		addBullet(1);
+		
+		AudioClip Sword_Sound =AudioLoader.Sword_Sound;
+//		granade_sound.setVolume(0.1);
+		Sword_Sound.play();
+		
 		return bullets.remove(0);
 	}
 
@@ -89,6 +96,11 @@ public class Sword extends Weapon implements Fireable {
 		// TODO Auto-generated method stub
 		Bullet bullet = new SwordSlice(isRight, character.getX(), character.getY());
 		bullet = setPositionBullet(character, isRight, bullet);
+		
+		AudioClip Sword_Sound =AudioLoader.Sword_Sound;
+//		granade_sound.setVolume(0.1);
+		Sword_Sound.play();
+		
 		return bullet;
 	}
 
