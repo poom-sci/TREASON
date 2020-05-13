@@ -151,13 +151,13 @@ public class GameViewManager {
 
 	public void createGameLoop() {
 		gameTimer = new AnimationTimer() {
+//			@Override
+//			public void start() {
+//				startTime = System.currentTimeMillis();
+//				super.start();
+//			}
 
-			@Override
-			public void start() {
-				startTime = System.currentTimeMillis();
-				super.start();
-			}
-
+			long startTime = System.currentTimeMillis();
 			@Override
 			public void handle(long timestamp) {
 				long now = System.currentTimeMillis();
@@ -180,8 +180,7 @@ public class GameViewManager {
 		}
 
 		player1Controller.setTime(time.doubleValue());
-
-		playerInfoBox.setPlayerHP(player1Controller.getPlayer().getCurrentHPBox());
+		playerInfoBox.setPlayerHP(player1Controller.getPlayer().getCurrentHP());
 		playerInfoBox.getNumber().setText("" + player1Controller.getPlayer().getWeapon().getCurrentBullet());
 		if (playerInfoBox.getWeaponImage() != player1Controller.getPlayer().getWeapon().getImageView()) {
 			playerInfoBox.changeWeaponImage(player1Controller.getPlayer().getWeapon().getImageView());
@@ -258,16 +257,16 @@ public class GameViewManager {
 			}
 		});
 
-		GameButton restart = pauseMenu.getRestart();
-		restart.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent arg0) {
-				restart();
-
-			}
-
-		});
+//		GameButton restart = pauseMenu.getRestart();
+//		restart.setOnAction(new EventHandler<ActionEvent>() {
+//
+//			@Override
+//			public void handle(ActionEvent arg0) {
+//				restart();
+//
+//			}
+//
+//		});
 
 		GameButton exit = pauseMenu.getExit();
 		exit.setOnAction(new EventHandler<ActionEvent>() {
@@ -302,19 +301,44 @@ public class GameViewManager {
 		gamePane.getChildren().addAll(pauseMenu);
 	}
 
-	private void restart() {
-
-		gameRoot.getChildren().clear();
-		this.gamePane.getChildren().remove(pauseMenu);
-		
-		player1Controller = new GameController();
-		this.gameRoot = player1Controller.getGameRoot();
-
-		createPlayerInfo();
-		createMenu();
-		gameTimer.start();
-
-	}
+//	private void restart() {
+//		try {
+//			gamePane.getChildren().remove(gameRoot);
+//			gameRoot.getChildren().clear();
+//			this.gamePane.getChildren().remove(pauseMenu);
+//			this.gamePane.getChildren().remove(playerInfoBox);
+//			this.gamePane.getChildren().remove(playerInventory);
+//			boolean isSoundOn=pauseMenu.isSoundOn();
+//			
+//			System.out.println(isSoundOn);
+////			pauseMenu=null;
+////			playerInfoBox=null;
+////			playerInventory=null;
+////			player1Controller=null;
+//			System.gc();
+//			
+//			player1Controller = new GameController();
+//			this.gameRoot = player1Controller.getGameRoot();
+//			gamePane.getChildren().add(gameRoot);
+//			player1Controller.setKeys(keys);
+//			
+//			createPlayerInfo();
+//			createMenu();
+//			if(isSoundOn) {
+//				pauseMenu.setSoundOn();
+//			}else {
+//				pauseMenu.setSoundOff();
+//			}
+//			continueThemeSond();
+//			createGameLoop();
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//			e.printStackTrace();
+//		}
+//
+//	
+//
+//	}
 
 	private void createEndSubScene() {
 		gameEndingScene = new GameEndingScene(player1Controller.isWin(), player1Controller.getPlayerPoint(),
@@ -420,7 +444,10 @@ public class GameViewManager {
 
 	public void continueThemeSond() {
 		if (pauseMenu.isSoundOn()) {
-			gameThemeSong.play();
+			if(!gameThemeSong.isPlaying()){
+				gameThemeSong.play();
+			}
+
 		} else {
 			gameThemeSong.stop();
 		}

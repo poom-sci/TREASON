@@ -52,7 +52,6 @@ public abstract class GameCharacter extends Entity {
 
 	protected int currentHP;
 	protected int maxHP;
-	protected Rectangle currentHPBox;
 	protected int point;
 	protected int finalPositionX;
 
@@ -74,8 +73,6 @@ public abstract class GameCharacter extends Entity {
 
 		this.currentHP = currentHP;
 		this.maxHP = currentHP;
-		currentHPBox = new Rectangle(currentHP, 20);
-		setCurrentHPColor();
 		this.weaponsInventory = new ArrayList<Weapon>();
 
 
@@ -226,16 +223,6 @@ public abstract class GameCharacter extends Entity {
 		sprite.play();
 		dieRight.setAction(true);
 	}
-
-	protected void setCurrentHPColor() {
-		if (this.currentHP > 150) {
-			currentHPBox.setFill(Color.GREEN);
-		} else if (50 < this.currentHP && this.currentHP <= 150) {
-			this.currentHPBox.setFill(Color.ORANGE);
-		} else if (this.currentHP <= 50) {
-			this.currentHPBox.setFill(Color.RED);
-		}
-	}
 	
 	public void jump(int velocityY) {
 		if(isOnFloor) {
@@ -288,7 +275,6 @@ public abstract class GameCharacter extends Entity {
 
 	public void decreasedCurrentHP(int damage) {
 		setCurrentHP(this.currentHP - damage);
-		setCurrentHPColor();
 	}
 
 	public void increaseCurrentHP(int heal) {
@@ -297,7 +283,6 @@ public abstract class GameCharacter extends Entity {
 			healedHP = this.maxHP;
 		}
 		setCurrentHP(healedHP);
-		setCurrentHPColor();
 	}
 
 	public int getCurrentHP() {
@@ -306,17 +291,7 @@ public abstract class GameCharacter extends Entity {
 
 	public void setCurrentHP(int currentHP) {
 		this.currentHP = currentHP;
-		this.currentHPBox.setWidth(currentHP);
-		setCurrentHPColor();
 
-	}
-
-	public Rectangle getCurrentHPBox() {
-		return currentHPBox;
-	}
-
-	public void setCurrentHPBox(Rectangle currentHPBox) {
-		this.currentHPBox = currentHPBox;
 	}
 
 	public ArrayList<Weapon> getWeaponsInventory() {

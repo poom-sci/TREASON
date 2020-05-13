@@ -833,6 +833,7 @@ public class GameController {
 				}
 				if(item instanceof Bullet) {
 					Bullet bullet = (Bullet) item;
+					gameRoot.getChildren().remove(bullet.getImageView());
 					player.decreasedCurrentHP(bullet.getDamage());
 					playerInteractEntity.remove(bullet);
 					enemyBulletsX.remove(bullet);
@@ -882,6 +883,7 @@ public class GameController {
 	}
 
 	private void checkTime() {
+		System.out.println(time);
 		for (int i = 0; i < timedEntityList.size();) {
 
 			if (timedEntityList.get(i).getFinalTime() <= time) {

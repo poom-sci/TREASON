@@ -35,7 +35,7 @@ public class PauseMenu extends AnchorPane {
 
 		createBackground();
 		createResumeButton();
-		createRestartButton();
+//		createRestartButton();
 		createExitButton();
 		createSoundOn();
 
@@ -72,7 +72,7 @@ public class PauseMenu extends AnchorPane {
 		this.getChildren().add(exit);
 		
 		exit.setTranslateX(50);
-		exit.setTranslateY(300);
+		exit.setTranslateY(200);
 
 	}
 
@@ -90,7 +90,7 @@ public class PauseMenu extends AnchorPane {
 		sound.setFitHeight(64);
 		
 		sound.setTranslateX(50);
-		sound.setTranslateY(400);
+		sound.setTranslateY(300);
 
 
 		sound.setOnMouseEntered(new EventHandler<MouseEvent>() {

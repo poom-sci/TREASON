@@ -98,8 +98,17 @@ public class PlayerInfoBox extends AnchorPane {
 		this.number.setText(text);
 	}
 
-	public void setPlayerHP(Rectangle playerHP) {
-		this.playerHP = playerHP;
+	public void setPlayerHP(int Hp) {
+		playerHP.setWidth(Hp);
+		int currentHp=(int) this.playerHP.getWidth();
+		if (this.playerHP.getWidth() > 150) {
+			playerHP.setFill(Color.GREEN);
+		} else if (50 < currentHp && currentHp <= 150) {
+			this.playerHP.setFill(Color.ORANGE);
+		} else if (currentHp <= 50) {
+			this.playerHP.setFill(Color.RED);
+		}
+		
 	}
 	
 	
