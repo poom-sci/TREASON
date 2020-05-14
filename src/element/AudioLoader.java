@@ -16,4 +16,24 @@ public class AudioLoader {
 	public static AudioClip Off_Limits=new AudioClip(ClassLoader.getSystemResource("audio/Off_limits.wav").toString());
 	public static AudioClip Star_Commander=new AudioClip(ClassLoader.getSystemResource("audio/Star_Commander.wav").toString());
 	
+	public static void setVolume(Double volume) {
+		Explosion_Sound.setVolume(volume);
+		Granade_Sound.setVolume(volume);
+		Gun_Sound.setVolume(volume);
+		Sword_Sound.setVolume(volume);
+		Gameover_Sound.setVolume(volume);
+		Off_Limits.setVolume(volume);
+		Star_Commander.setVolume(volume);
+	}
+//	
+//	public void setStop() {
+//		Explosion_Sound.stop();
+//		Granade_Sound.stop();
+//		Gun_Sound.stop();
+//		Sword_Sound.stop();
+//		Gameover_Sound.stop();
+//		Off_Limits.stop();
+//		Star_Commander.stop();
+//	}
 }
+

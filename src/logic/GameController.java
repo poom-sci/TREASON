@@ -115,7 +115,7 @@ public class GameController {
 	private boolean isGameEnd = false;
 
 	public GameController() {
-		createLevel(3);
+		createLevel(1);
 
 	}
 
@@ -441,19 +441,6 @@ public class GameController {
 			playerBullets.add(bullet);
 			gameRoot.getChildren().addAll(bullet.getImageView());
 
-//			if (bullet instanceof RocketBullet) {
-//				AudioClip granade_sound = new AudioClip(ClassLoader.getSystemResource("granade_sound.wav").toString());
-//				granade_sound.setVolume(0.2);
-//				granade_sound.play();
-//			} else if (bullet instanceof GunBullet) {
-//				AudioClip granade_sound = new AudioClip(ClassLoader.getSystemResource("gun_sound.wav").toString());
-//				granade_sound.setVolume(0.2);
-//				granade_sound.play();
-//			} else if (bullet instanceof SwordSlice) {
-//				AudioClip granade_sound = new AudioClip(ClassLoader.getSystemResource("sword_sound.wav").toString());
-//				granade_sound.setVolume(0.2);
-//				granade_sound.play();
-//			}
 		} catch (FireBulletFailedException e) {
 			System.out.println("Fire bullet failed, " + e.message);
 		}

@@ -66,6 +66,8 @@ public class ViewManager {
 
 	public ViewManager() {
 		
+		AudioLoader.setVolume(0.5);
+		
 		MenuThemeSong = AudioLoader.Star_Commander;
 		MenuThemeSong.setCycleCount(AudioClip.INDEFINITE);
 		MenuThemeSong.play();

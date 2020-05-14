@@ -10,6 +10,12 @@ import java.util.ArrayList;
 import item.Entity;
 import item.box.AmmoBox;
 import item.box.Box;
+import item.box.Grass0;
+import item.box.Grass1;
+import item.box.Grass2;
+import item.box.Grass3;
+import item.box.Grass4;
+import item.box.Grass5;
 import item.box.Oak;
 import item.box.Portal;
 import item.box.PotionBox;
@@ -26,21 +32,23 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
 public class LevelData {
+	
 	private static final String[] LEVEL1 = new String[] {
-			"10000000000000000000000000000000000000000000000000000000000000000000000001",
-			"1000000000000000000000000000000000000000000000000000000000000HC00000000001",
-			"10000000000000000000000000000000000000000000000000000000000011100G00000001",
-			"10000000000000000000000000000000000000000000000000000000000000000111100001",
-			"100000000000000000000000000000000000000000000GH000000000000000000000000001",
-			"10000000000000000000000000000000000000000000111000001000000000000000000P01",
-			"1000AG0000000000000000000000000000000000000000000000100000G0000G0000000111",
-			"100011100G000000000000000000000000G000111100000000001000011100111001110111",
-			"100000000111000G0000001001000000111100000000000000011000000000000000000111",
-			"1000000G0000001110000110011000000000000000000000001111000G00000G0000000111",
-			"1000001110000000000011100111000C000G00C000000G0001111111111111111111111111",
-			"11111111100111100011111001111111111111111111111111111111111111111111111111" };
+			"20000000000000000000000000000000000000000000000000000000000000000000000003",
+			"2000000000000000000000000000000000000000000000000000000000000HC00000000003",
+			"200000000000000000000000000000000000000000000000000000000000a8b00G00000003",
+			"20000000000000000000000000000000000000000000000000000000000000000a88b00003",
+			"200000000000000000000000000000000000000000000GH000000000000000000000000003",
+			"20000000000000000000000000000000000000000000a8b00000c000000000000000000P03",
+			"2000AG0000000000000000000000000000000000000000000000900000G0000G0000000416",
+			"2000a8b00G000000000000000000000000G000a88b000000000090000a8b00a8b00a8b03xx",
+			"200000000a8b000G000000c00c000000a88b000000000000000420000000000000000003xx",
+			"2000000G000000a8b0000420035000000000000000000000004675000G00000G00000003xx",
+			"2000004150000000000046200375000C000G00C000000G00046xx7111111111111111116xx",
+			"7111116x2004115000416x2003x71111111111111111111116xxxxxxxxxxxxxxxxxxxxxxxx" };
 
-	private static final String[] LEVEL2 = new String[] { "100000000000000000000000000000000000000000000000000001",
+	private static final String[] LEVEL2 = new String[] { 
+			"100000000000000000000000000000000000000000000000000001",
 			"100000000000000000000000000000000000000000000000000001",
 			"10000000000000C0000GC000HA0000000000000000000000000001",
 			"100000000000011000111100110000000000000000000000000001",
@@ -53,12 +61,18 @@ public class LevelData {
 			"101111111000000000000000011111111111111111111111111111",
 			"111111111001111000111110011111111111111111111111111111" };
 
-	private static final String[] LEVEL3 = new String[] { "1000000000000000000000000000000000001",
-			"1000000000000000000000000000000000001", "1000000000000000000000000000000000001",
-			"1000000000000010000000000000000000B01", "1000000000000010000000000000000000001",
-			"1000000000000011000000000000000000001", "1000000000011111000000000000000000111",
-			"1000000000100011000000000000000000111", "1000000001000011000111001110011100111",
-			"1000000010000011000000000000000000111", "1000000100000011100000000000000000111",
+	private static final String[] LEVEL3 = new String[] { 
+			"1000000000000000000000000000000000001",
+			"1000000000000000000000000000000000001", 
+			"1000000000000000000000000000000000001",
+			"1000000000000010000000000000000000B01", 
+			"1000000000000010000000000000000000001",
+			"1000000000000011000000000000000000001", 
+			"1000000000011111000000000000000000111",
+			"1000000000100011000000000000000000111", 
+			"1000000001000011000111001110011100111",
+			"1000000010000011000000000000000000111", 
+			"1000000100000011100000000000000000111",
 			"1111111111111111111111111111111111111" };
 
 	public static final String[][] ALLLEVELMAP = new String[][] { LEVEL1, LEVEL2, LEVEL3 };
@@ -71,7 +85,7 @@ public class LevelData {
 	private ArrayList<Portal> portalList;
 	private BossEnemy boss;
 	private ArrayList<GameCharacter> enemieList;
-	private ArrayList<Entity> playerInteractEntity ;
+	private ArrayList<Entity> playerInteractEntity;
 	private Rectangle bg;
 
 	private int levelWidth;
@@ -104,10 +118,10 @@ public class LevelData {
 		enemieList.clear();
 		playerInteractEntity.clear();
 		gameRoot.getChildren().clear();
-		boss=null;
+		boss = null;
 
 		bg = new Rectangle(1280, 720);
-		bg.setFill(new ImagePattern(new Image("game_background.jpg", 1280, 720, false, true)));
+		bg.setFill(new ImagePattern(new Image("game_background.jpg", 1920, 1080, false, true)));
 
 		this.levelWidth = LevelData.ALLLEVELMAP[level][0].length() * 60;
 		this.levelHeight = LevelData.ALLLEVELMAP[level].length * 60;
@@ -118,10 +132,77 @@ public class LevelData {
 				switch (line.charAt(j)) {
 				case '0':
 					break;
+				case 'x':
+					Grass0 grass0 = new Grass0(j * 60, i * 60, 60, 60);
+					platforms.add(grass0);
+					gameRoot.getChildren().add(grass0.getImageView());
+					break;
 				case '1':
-					Box platform = new Box(j * 60, i * 60, 60, 60);
-					platforms.add(platform);
-					gameRoot.getChildren().add(platform.getImageView());
+					Grass1 grass1 = new Grass1(j * 60, i * 60, 60, 60);
+					platforms.add(grass1);
+					gameRoot.getChildren().add(grass1.getImageView());
+					break;
+				case '2':
+					Grass1 grass12 = new Grass1(j * 60, i * 60, 60, 60);
+					grass12.getImageView().setRotate(grass12.getImageView().getRotate() + 90);
+					platforms.add(grass12);
+					gameRoot.getChildren().add(grass12.getImageView());
+					break;
+				case '3':
+					Grass1 grass13 = new Grass1(j * 60, i * 60, 60, 60);
+					grass13.getImageView().setRotate(grass13.getImageView().getRotate() + 270);
+					platforms.add(grass13);
+					gameRoot.getChildren().add(grass13.getImageView());
+					break;
+				case '4':
+					Grass2 grass2 = new Grass2(j * 60, i * 60, 60, 60);
+					platforms.add(grass2);
+					gameRoot.getChildren().add(grass2.getImageView());
+					break;
+				case '5':
+					Grass2 grass21 = new Grass2(j * 60, i * 60, 60, 60);
+					grass21.getImageView().setScaleX(-1);
+					platforms.add(grass21);
+					gameRoot.getChildren().add(grass21.getImageView());
+					break;
+				case '6':
+					Grass3 grass3 = new Grass3(j * 60, i * 60, 60, 60);
+					platforms.add(grass3);
+					gameRoot.getChildren().add(grass3.getImageView());
+					break;
+				case '7':
+					Grass3 grass31 = new Grass3(j * 60, i * 60, 60, 60);
+					grass31.getImageView().setScaleX(-1);
+					platforms.add(grass31);
+					gameRoot.getChildren().add(grass31.getImageView());
+					break;
+				case '8':
+					Grass4 grass4 = new Grass4(j * 60, i * 60, 60, 60);
+					platforms.add(grass4);
+					gameRoot.getChildren().add(grass4.getImageView());
+					break;
+				case '9':
+					Grass4 grass41 = new Grass4(j * 60, i * 60, 60, 60);
+					grass41.getImageView().setRotate(grass41.getImageView().getRotate() + 90);
+					platforms.add(grass41);
+					gameRoot.getChildren().add(grass41.getImageView());
+					break;
+				case 'b':
+					Grass5 grass5 = new Grass5(j * 60, i * 60, 60, 60);
+					platforms.add(grass5);
+					gameRoot.getChildren().add(grass5.getImageView());
+					break;
+				case 'a':
+					Grass5 grass51 = new Grass5(j * 60, i * 60, 60, 60);
+					grass51.getImageView().setScaleX(-1);
+					platforms.add(grass51);
+					gameRoot.getChildren().add(grass51.getImageView());
+					break;
+				case 'c':
+					Grass5 grass52 = new Grass5(j * 60, i * 60, 60, 60);
+					grass52.getImageView().setRotate(grass52.getImageView().getRotate() + 270);
+					platforms.add(grass52);
+					gameRoot.getChildren().add(grass52.getImageView());
 					break;
 				case 'G':
 					GameCharacter gunEnemy = new GunEnemy(j * 60, i * 60);
@@ -230,7 +311,5 @@ public class LevelData {
 	public ArrayList<Entity> getPlayerInteractEntity() {
 		return playerInteractEntity;
 	}
-	
-	
 
 }
