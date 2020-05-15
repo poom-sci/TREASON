@@ -3,11 +3,18 @@ package gui;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+
 import element.AudioLoader;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.media.AudioClip;
 import javafx.scene.text.Font;
 
@@ -22,6 +29,9 @@ public class GameButton extends Button {
 		setButtonFont();
 		setPrefHeight(83);
 		setPrefWidth(210);
+		//BackgroundImage backgroundImage = new BackgroundImage( new Image( ("Sign_0000.png")), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        //Background background = new Background(backgroundImage);
+		//this.setBackground(background);
 		setStyle(BUTTON_FREE_STYLE);
 		initializeButtonListeners();
 	}

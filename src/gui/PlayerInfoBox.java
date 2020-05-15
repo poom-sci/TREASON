@@ -15,7 +15,7 @@ public class PlayerInfoBox extends AnchorPane {
 	private Rectangle background;
 	private ImageView weaponImage;
 	private Label number;
-	private Rectangle playerHP;
+	private Rectangle playerHp;
 	
 //	private final String FONT_PATH = "PixelTakhisis-ZajJ.ttf";
 //	private final String BACKGROUND_IMAGE = "board.png";
@@ -65,12 +65,12 @@ public class PlayerInfoBox extends AnchorPane {
 	}
 	
 	private void createPlayerHp() {
-		this.playerHP=new Rectangle(200,25);
-		this.playerHP.setTranslateX(20);
-		this.playerHP.setTranslateY(15);
+		this.playerHp=new Rectangle(200,25);
+		this.playerHp.setTranslateX(20);
+		this.playerHp.setTranslateY(15);
 		
-		this.getChildren().add(playerHP);
-		playerHP.setFill(Color.GREEN);
+		this.getChildren().add(playerHp);
+		playerHp.setFill(Color.GREEN);
 	
 	}
 	
@@ -91,7 +91,7 @@ public class PlayerInfoBox extends AnchorPane {
 	}
 
 	public Rectangle getPlayerHP() {
-		return playerHP;
+		return playerHp;
 	}
 	
 	public void setNumber(String text) {
@@ -99,14 +99,14 @@ public class PlayerInfoBox extends AnchorPane {
 	}
 
 	public void setPlayerHP(int Hp) {
-		playerHP.setWidth(Hp);
-		int currentHp=(int) this.playerHP.getWidth();
-		if (this.playerHP.getWidth() > 150) {
-			playerHP.setFill(Color.GREEN);
+		playerHp.setWidth(Hp);
+		int currentHp=(int) this.playerHp.getWidth();
+		if (this.playerHp.getWidth() > 150) {
+			playerHp.setFill(Color.GREEN);
 		} else if (50 < currentHp && currentHp <= 150) {
-			this.playerHP.setFill(Color.ORANGE);
+			this.playerHp.setFill(Color.ORANGE);
 		} else if (currentHp <= 50) {
-			this.playerHP.setFill(Color.RED);
+			this.playerHp.setFill(Color.RED);
 		}
 		
 	}

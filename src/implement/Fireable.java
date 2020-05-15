@@ -1,10 +1,10 @@
 package implement;
 
+import components.Entity;
+import components.bullet.Bullet;
+import components.character.GameCharacter;
+import components.character.MainCharacter;
 import exception.FireBulletFailedException;
-import item.Entity;
-import item.bullet.Bullet;
-import item.character.GameCharacter;
-import item.character.MainCharacter;
 
 public interface Fireable {
 

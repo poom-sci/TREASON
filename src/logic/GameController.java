@@ -10,42 +10,41 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.text.StyledEditorKit.BoldAction;
 
-
+import components.Entity;
+import components.box.AmmoBox;
+import components.box.Box;
+import components.box.Oak;
+import components.box.Portal;
+import components.box.PotionBox;
+import components.bullet.Bomb;
+import components.bullet.Bullet;
+import components.bullet.GunBullet;
+import components.bullet.RocketBullet;
+import components.bullet.SwordSlice;
+import components.character.GameCharacter;
+import components.character.MainCharacter;
+import components.consumable.Ammo;
+import components.consumable.ConsumableItem;
+import components.consumable.Potion;
+import components.effect.Barrier;
+import components.effect.Light;
+import components.effect.Warning;
+import components.effect.recoveryLight;
+import components.enemy.BossEnemy;
+import components.enemy.ColliderEnemy;
+import components.enemy.GunEnemy;
+import components.weapon.BombGun;
+import components.weapon.Gun;
+import components.weapon.RocketGun;
+import components.weapon.Sword;
+import components.weapon.Weapon;
 import exception.ConsumeItemFailedException;
 import exception.FireBulletFailedException;
 import gui.SpriteAnimation;
-import implement.Consumeable;
+import implement.Consumable;
 import implement.Explodable;
 import implement.Fireable;
 import implement.Interactable;
-import item.bullet.Bomb;
-import item.bullet.Bullet;
-import item.bullet.GunBullet;
-import item.bullet.RocketBullet;
-import item.bullet.SwordSlice;
-import item.character.GameCharacter;
-import item.character.MainCharacter;
-import item.consumable.Potion;
-import item.consumable.Ammo;
-import item.consumable.ConsumableItem;
-import item.enemy.BossEnemy;
-import item.enemy.ColliderEnemy;
-import item.enemy.GunEnemy;
-import item.weapon.BombGun;
-import item.weapon.Gun;
-import item.weapon.RocketGun;
-import item.weapon.Sword;
-import item.weapon.Weapon;
-import item.Entity;
-import item.Effect.Barrier;
-import item.Effect.Light;
-import item.Effect.Warning;
-import item.Effect.recoveryLight;
-import item.box.AmmoBox;
-import item.box.Box;
-import item.box.Oak;
-import item.box.Portal;
-import item.box.PotionBox;
 import javafx.animation.Animation;
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
@@ -314,7 +313,7 @@ public class GameController {
 
 						try {
 							ConsumableItem item = player.getItemsInventory().get(0);
-							((Consumeable) item).consumed(player);
+							((Consumable) item).consumed(player);
 							recoverylight = new recoveryLight(offsetX, offsetY);
 							timedEntity(recoverylight, 1.5);
 							isRecoverylightOpen = true;
@@ -333,7 +332,7 @@ public class GameController {
 
 						try {
 							ConsumableItem item = player.getItemsInventory().get(1);
-							((Consumeable) item).consumed(player);
+							((Consumable) item).consumed(player);
 							light = new Light(offsetX, offsetY);
 							timedEntity(light, 1.5);
 							islight = true;

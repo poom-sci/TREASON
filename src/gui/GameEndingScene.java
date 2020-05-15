@@ -19,13 +19,13 @@ public class GameEndingScene extends AnchorPane {
 	
 	
 	private Rectangle background;
-	private ImageView LogoImage;
+	private ImageView statusImage;
 	private boolean isWin;
 	private int point;
 	private double time;
 	private TextField textField;
 	private GameButton submitButton;
-	private GameButton ExitButton;
+	private GameButton exitButton;
 	
 //	private final String FONT_PATH = "PixelTakhisis-ZajJ.ttf";
 //	private final String BACKGROUND_IMAGE = "board.png";
@@ -37,7 +37,7 @@ public class GameEndingScene extends AnchorPane {
 		this.time=time;
 
 		createBackground();
-		createLogoImage();
+		createStatusImage();
 		createTextBox();
 		createSubmitButton();
 		createExitButton();
@@ -50,26 +50,26 @@ public class GameEndingScene extends AnchorPane {
 		this.getChildren().add(background);
 	}
 	
-	private void createLogoImage() {
+	private void createStatusImage() {
 		if(isWin) {
-			LogoImage = new ImageView("win.png");
-			LogoImage.setLayoutX(350);
-			LogoImage.setLayoutY(50);
-			LogoImage.setFitHeight(300);
-			LogoImage.setFitWidth(600);
+			statusImage = new ImageView("win.png");
+			statusImage.setLayoutX(350);
+			statusImage.setLayoutY(50);
+			statusImage.setFitHeight(300);
+			statusImage.setFitWidth(600);
 		}else {
-			LogoImage = new ImageView("gameover.png");
-			LogoImage.setLayoutX(1280 / 2 - 300 * 1.5);
-			LogoImage.setLayoutY(50);
-			LogoImage.setFitHeight(300 * 1.5);
-			LogoImage.setFitWidth(600 * 1.5);
+			statusImage = new ImageView("gameover.png");
+			statusImage.setLayoutX(1280 / 2 - 300 * 1.5);
+			statusImage.setLayoutY(50);
+			statusImage.setFitHeight(300 * 1.5);
+			statusImage.setFitWidth(600 * 1.5);
 		}
 		
-		LogoImage.setOnMouseEntered(new EventHandler<MouseEvent>() {
+		statusImage.setOnMouseEntered(new EventHandler<MouseEvent>() {
 
 			@Override
 			public void handle(MouseEvent event) {
-				LogoImage.setEffect(new DropShadow());
+				statusImage.setEffect(new DropShadow());
 				AudioClip mouse_enter_sound = new AudioClip(
 						ClassLoader.getSystemResource("mouse_enter_sound.wav").toString());
 				mouse_enter_sound.setVolume(0.1);
@@ -78,17 +78,17 @@ public class GameEndingScene extends AnchorPane {
 			}
 		});
 
-		LogoImage.setOnMouseExited(new EventHandler<MouseEvent>() {
+		statusImage.setOnMouseExited(new EventHandler<MouseEvent>() {
 
 			@Override
 			public void handle(MouseEvent event) {
 				// TODO Auto-generated method stub
-				LogoImage.setEffect(null);
+				statusImage.setEffect(null);
 			}
 
 		});
 		
-		this.getChildren().add(LogoImage);
+		this.getChildren().add(statusImage);
 		
 	}
 	
@@ -138,10 +138,10 @@ public class GameEndingScene extends AnchorPane {
 	
 	private void createExitButton() {
 		
-		ExitButton = new GameButton("Exit");
-		this.getChildren().add(ExitButton);
-		ExitButton.setLayoutX(650);
-		ExitButton.setLayoutY(550);
+		exitButton = new GameButton("Exit");
+		this.getChildren().add(exitButton);
+		exitButton.setLayoutX(650);
+		exitButton.setLayoutY(550);
 		
 	}
 
@@ -154,7 +154,7 @@ public class GameEndingScene extends AnchorPane {
 	}
 
 	public GameButton getExitButton() {
-		return ExitButton;
+		return exitButton;
 	}
 	
 	
