@@ -1,8 +1,8 @@
 package gui;
 
 import application.Main;
-import item.character.MainCharacter;
-import item.consumable.ConsumableItem;
+import components.character.MainCharacter;
+import components.consumable.ConsumableItem;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,7 +20,7 @@ public class PlayerInventoryBox extends AnchorPane {
 //	private final String FONT_PATH = "PixelTakhisis-ZajJ.ttf";
 //	private final String BACKGROUND_IMAGE = "board.png";
 
-	public PlayerInventoryBox( MainCharacter player) {
+	public PlayerInventoryBox(MainCharacter player) {
 		super();
 
 		this.player=player;

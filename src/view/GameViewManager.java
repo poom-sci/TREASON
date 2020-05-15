@@ -7,6 +7,12 @@ import java.util.HashMap;
 
 import javax.swing.text.StyledEditorKit.BoldAction;
 
+import components.Entity;
+import components.box.Box;
+import components.bullet.GunBullet;
+import components.character.MainCharacter;
+import components.consumable.ConsumableItem;
+import components.weapon.Weapon;
 import element.AudioLoader;
 import exception.AddLeaderboardScoresFailedException;
 import gui.GameButton;
@@ -16,12 +22,6 @@ import gui.PauseMenu;
 import gui.PlayerInfoBox;
 import gui.PlayerInventoryBox;
 import gui.SpriteAnimation;
-import item.box.Box;
-import item.bullet.GunBullet;
-import item.character.MainCharacter;
-import item.consumable.ConsumableItem;
-import item.weapon.Weapon;
-import item.Entity;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;

@@ -5,13 +5,13 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import components.character.MainCharacter;
 import element.AudioLoader;
 import gui.GameButton;
 import gui.GameSubScene;
 import gui.PauseMenu;
 import gui.PlayerInfoBox;
 import gui.SpriteAnimation;
-import item.character.MainCharacter;
 import javafx.animation.Animation;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
