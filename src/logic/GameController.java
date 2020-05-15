@@ -10,7 +10,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.text.StyledEditorKit.BoldAction;
 
-import com.sun.javafx.geom.Shape;
 
 import exception.ConsumeItemFailedException;
 import exception.FireBulletFailedException;
@@ -115,7 +114,7 @@ public class GameController {
 	private boolean isGameEnd = false;
 
 	public GameController() {
-		createLevel(1);
+		createLevel(3);
 
 	}
 

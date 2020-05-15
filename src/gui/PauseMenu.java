@@ -1,6 +1,5 @@
 package gui;
 
-import com.sun.prism.Image;
 
 import element.AudioLoader;
 import javafx.event.EventHandler;
