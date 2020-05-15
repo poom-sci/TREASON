@@ -79,7 +79,7 @@ public class LevelData {
 
 	public static LevelData levelD;
 
-	private int Level;
+//	private int Level;
 	private Pane gameRoot;
 	private ArrayList<Entity> platforms;
 	private ArrayList<Portal> portalList;
@@ -92,7 +92,6 @@ public class LevelData {
 	private int levelHeight;
 
 	private LevelData() {
-		Level = 1;
 
 		platforms = new ArrayList<Entity>();
 		portalList = new ArrayList<Portal>();
@@ -111,7 +110,6 @@ public class LevelData {
 	public void loadLevel(int level) {
 
 		level -= 1;
-		Level = level;
 
 		platforms.clear();
 		portalList.clear();
@@ -274,10 +272,6 @@ public class LevelData {
 
 	public Rectangle getBg() {
 		return bg;
-	}
-
-	public int getLevel() {
-		return Level;
 	}
 
 	public Pane getGameRoot() {

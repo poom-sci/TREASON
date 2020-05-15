@@ -51,7 +51,7 @@ public class ViewManager {
 	private int MENU_BUTTONS_START_X = 100;
 	private int MENU_BUTTONS_START_Y = 150;
 
-	ArrayList<GameButton> menuButtons;
+	private ArrayList<GameButton> menuButtons;
 
 	private GameSubScene HelpSubScene;
 	private GameSubScene CreditSubScene;
@@ -76,7 +76,7 @@ public class ViewManager {
 		mainPane = new AnchorPane();
 		mainScene = new Scene(mainPane, WIDTH, HEIGHT);
 
-		CreateLogo();
+		createLogo();
 		createButtons();
 		createBackground();
 		CreateSubScenes();
@@ -189,7 +189,7 @@ public class ViewManager {
 								gameStage.show();
 								mainStage.hide();
 								gameManager.getGameTimer().start();
-								gameManager.continueThemeSond();
+								gameManager.continueThemeSong();
 								MenuThemeSong.stop();
 							}
 							else {
@@ -302,7 +302,7 @@ public class ViewManager {
 
 	}
 
-	private void CreateLogo() {
+	private void createLogo() {
 		ImageView logo = new ImageView("treason_logo.png");
 		logo.setLayoutX(420);
 		logo.setLayoutY(0);
@@ -338,10 +338,6 @@ public class ViewManager {
 		BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT,
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
 		mainPane.setBackground(new Background(background));
-	}
-
-	public AudioClip getMenuThemeSong() {
-		return MenuThemeSong;
 	}
 	
 	

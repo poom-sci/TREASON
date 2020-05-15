@@ -10,7 +10,7 @@ import javax.swing.text.StyledEditorKit.BoldAction;
 import element.AudioLoader;
 import exception.AddLeaderboardScoresFailedException;
 import gui.GameButton;
-import gui.GameEndingScene;
+import gui.GameEnding;
 import gui.GameSubScene;
 import gui.PauseMenu;
 import gui.PlayerInfoBox;
@@ -97,7 +97,7 @@ public class GameViewManager {
 	private PauseMenu pauseMenu;
 	private PlayerInfoBox playerInfoBox;
 	private PlayerInventoryBox playerInventory;
-	private GameEndingScene gameEndingScene;
+	private GameEnding gameEnding;
 
 	public GameViewManager() {
 		inititializeStage();
@@ -137,14 +137,6 @@ public class GameViewManager {
 		createMenu();
 		createGameLoop();
 
-	}
-
-	public DoubleProperty getTime() {
-		return time;
-	}
-
-	public void setTime(DoubleProperty time) {
-		this.time = time;
 	}
 
 	public void createNewGame(Stage menuStage) {
@@ -342,11 +334,11 @@ public class GameViewManager {
 //	}
 
 	private void createEndSubScene() {
-		gameEndingScene = new GameEndingScene(player1Controller.isWin(), player1Controller.getPlayerPoint(),
+		gameEnding = new GameEnding(player1Controller.isWin(), player1Controller.getPlayerPoint(),
 				time.doubleValue());
-		gamePane.getChildren().add(gameEndingScene);
+		gamePane.getChildren().add(gameEnding);
 
-		GameButton submitButton = gameEndingScene.getSubmitButton();
+		GameButton submitButton = gameEnding.getSubmitButton();
 		submitButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -355,7 +347,7 @@ public class GameViewManager {
 					isGameover = true;
 					Leaderboards scoreBoard = Leaderboards.getInstance();
 					scoreBoard.loadScore();
-					scoreBoard.addPlayerScore(gameEndingScene.getTextField().getText(),
+					scoreBoard.addPlayerScore(gameEnding.getTextField().getText(),
 							player1Controller.getPlayerPoint(), time.doubleValue());
 					scoreBoard.saveScores();
 					gameStage.close();
@@ -372,7 +364,7 @@ public class GameViewManager {
 
 		});
 
-		GameButton ExitButton = gameEndingScene.getExitButton();
+		GameButton ExitButton = gameEnding.getExitButton();
 		ExitButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -396,7 +388,7 @@ public class GameViewManager {
 						isGameover = true;
 						Leaderboards scoreBoard = Leaderboards.getInstance();
 						scoreBoard.loadScore();
-						scoreBoard.addPlayerScore(gameEndingScene.getTextField().getText(),
+						scoreBoard.addPlayerScore(gameEnding.getTextField().getText(),
 								player1Controller.getPlayerPoint(), time.doubleValue());
 						scoreBoard.saveScores();
 						menuStage.show();
@@ -418,7 +410,7 @@ public class GameViewManager {
 		pauseMenu = null;
 		playerInfoBox = null;
 		playerInventory = null;
-		gameEndingScene = null;
+		gameEnding = null;
 		gameViewManager = null;
 		gameRoot = null;
 		player1Controller = null;
@@ -447,7 +439,7 @@ public class GameViewManager {
 		return gameThemeSong;
 	}
 
-	public void continueThemeSond() {
+	public void continueThemeSong() {
 		if (pauseMenu.isSoundOn()) {
 			if(!gameThemeSong.isPlaying()){
 				gameThemeSong.play();

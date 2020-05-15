@@ -15,7 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
-public class GameEndingScene extends AnchorPane {
+public class GameEnding extends AnchorPane {
 	
 	
 	private Rectangle background;
@@ -30,7 +30,7 @@ public class GameEndingScene extends AnchorPane {
 //	private final String FONT_PATH = "PixelTakhisis-ZajJ.ttf";
 //	private final String BACKGROUND_IMAGE = "board.png";
 
-	public GameEndingScene(boolean isWin,int point,double time) {
+	public GameEnding(boolean isWin,int point,double time) {
 		super();
 		this.isWin=isWin;
 		this.point=point;
