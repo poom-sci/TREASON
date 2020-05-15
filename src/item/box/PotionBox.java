@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
-public class PotionBox extends Entity implements Interactable {
+public class PotionBox extends Box implements Interactable {
 	
 	
 	public PotionBox(int initX,int initY, int width, int height) {

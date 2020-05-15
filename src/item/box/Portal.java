@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
-public class Portal extends Entity {
+public class Portal extends Box {
 	
 	private int level;
 	

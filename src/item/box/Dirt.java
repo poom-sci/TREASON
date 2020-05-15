@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
-public class Dirt extends Entity {
+public class Dirt extends Box {
 	
 	
 	

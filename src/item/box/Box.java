@@ -13,8 +13,8 @@ public class Box extends Entity {
 	
 	
 	
-	public Box(int initX,int initY, int width, int height) {
-		super( "box.jpg",initX, initY,width,height);
+	public Box(String image_path,int initX,int initY, int width, int height) {
+		super( image_path,initX, initY,width,height);
 
 	}
 	
