@@ -9,7 +9,7 @@ public class Oak extends Box {
 	
 	
 	public Oak(int initX,int initY, int width, int height) {
-		super("tree.png",initX, initY,width,height);
+		super("tree1.png",initX, initY,width,height);
 		
 	}
 	
