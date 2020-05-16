@@ -47,7 +47,7 @@ public class Leaderboards {
 		}
 		for (char c : name.toCharArray()) {
             if (!Character.isLetter(c) && !Character.isDigit(c)) {
-            	throw new AddLeaderboardScoresFailedException("Name cannot be marks.");
+            	throw new AddLeaderboardScoresFailedException("Name cannot be marks or spaces.");
             }
         }
 			

@@ -89,7 +89,7 @@ public class Gun extends Weapon implements Fireable {
 		}
 
 			if (!isRight) {
-				bullet.getImageView().setScaleX(-1);
+				bullet.getImageView().setScaleX(-1*bullet.getImageView().getScaleX());
 			}
 		
 		

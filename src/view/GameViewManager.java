@@ -166,8 +166,10 @@ public class GameViewManager {
 		if (player1Controller.isGameEnd()) {
 			gameTimer.stop();
 			AudioClip gameover_sound = AudioLoader.Gameover_Sound;
-			gameover_sound.play();
+			gamePane.getChildren().remove(playerInfoBox);
+			gamePane.getChildren().remove(playerInventory);
 			gameThemeSong.stop();
+			gameover_sound.play();
 			createEndSubScene();
 		}
 
@@ -249,17 +251,6 @@ public class GameViewManager {
 			}
 		});
 
-//		GameButton restart = pauseMenu.getRestart();
-//		restart.setOnAction(new EventHandler<ActionEvent>() {
-//
-//			@Override
-//			public void handle(ActionEvent arg0) {
-//				restart();
-//
-//			}
-//
-//		});
-
 		GameButton exit = pauseMenu.getExit();
 		exit.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -294,44 +285,6 @@ public class GameViewManager {
 		gamePane.getChildren().addAll(pauseMenu);
 	}
 
-//	private void restart() {
-//		try {
-//			gamePane.getChildren().remove(gameRoot);
-//			gameRoot.getChildren().clear();
-//			this.gamePane.getChildren().remove(pauseMenu);
-//			this.gamePane.getChildren().remove(playerInfoBox);
-//			this.gamePane.getChildren().remove(playerInventory);
-//			boolean isSoundOn=pauseMenu.isSoundOn();
-//			
-//			System.out.println(isSoundOn);
-////			pauseMenu=null;
-////			playerInfoBox=null;
-////			playerInventory=null;
-////			player1Controller=null;
-//			System.gc();
-//			
-//			player1Controller = new GameController();
-//			this.gameRoot = player1Controller.getGameRoot();
-//			gamePane.getChildren().add(gameRoot);
-//			player1Controller.setKeys(keys);
-//			
-//			createPlayerInfo();
-//			createMenu();
-//			if(isSoundOn) {
-//				pauseMenu.setSoundOn();
-//			}else {
-//				pauseMenu.setSoundOff();
-//			}
-//			continueThemeSond();
-//			createGameLoop();
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//			e.printStackTrace();
-//		}
-//
-//	
-//
-//	}
 
 	private void createEndSubScene() {
 		gameEnding = new GameEnding(player1Controller.isWin(), player1Controller.getPlayerPoint(),

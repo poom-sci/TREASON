@@ -64,9 +64,7 @@ public class RocketGun extends Weapon implements Fireable {
 		}
 
 		if (isRight) {
-			bullet.getImageView().setScaleX(-3);
-		}else {
-			
+			bullet.getImageView().setScaleX(-1*bullet.getImageView().getScaleX());
 		}
 
 		return bullet;
