@@ -15,7 +15,7 @@ import javafx.scene.media.AudioClip;
 public class Gun extends Weapon implements Fireable {
 
 	public Gun( int bullet) {
-		super("gun.jpg",60,60);
+		super("gun.png",60,60);
 		this.maxBullet = 15;
 		this.bulletType='G';
 		addBullet(bullet);

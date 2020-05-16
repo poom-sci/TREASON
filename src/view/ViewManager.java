@@ -65,9 +65,9 @@ public class ViewManager {
 	private AudioClip MenuThemeSong;
 
 	public ViewManager() {
-		
+
 		AudioLoader.setVolume(0.5);
-		
+
 		MenuThemeSong = AudioLoader.Star_Commander;
 		MenuThemeSong.setCycleCount(AudioClip.INDEFINITE);
 		MenuThemeSong.play();
@@ -191,11 +191,10 @@ public class ViewManager {
 								gameManager.getGameTimer().start();
 								gameManager.continueThemeSong();
 								MenuThemeSong.stop();
-							}
-							else {
+							} else {
 								System.out.println("no save");
 							}
-						}else {
+						} else {
 							System.out.println("no save");
 						}
 					}
@@ -223,13 +222,8 @@ public class ViewManager {
 
 				Label header = new Label("Player   : Score   : time");
 				header.setTextFill(Color.DARKRED);
-				try {
-					header.setFont(Font.loadFont(new FileInputStream("res/PixelTakhisis-ZajJ.ttf"), 23));
-				} catch (FileNotFoundException e) {
-//					 TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-//				 setting the position of the text
+				header.setFont(Font.loadFont(
+						getClass().getClassLoader().getResource("PixelTakhisis-ZajJ.ttf").toExternalForm(), 23));
 				header.setLayoutX(100);
 				header.setLayoutY(100);
 
@@ -237,16 +231,11 @@ public class ViewManager {
 
 				for (int i = 0; i < scoreBoard.getTopPlayer().size(); i++) {
 					Label text = new Label();
-					// Setting the text to be added.
 					text.setText((i + 1) + ". " + scoreBoard.getTopPlayer(i));
 					text.setTextFill(Color.LIGHTCYAN);
-					try {
-						text.setFont(Font.loadFont(new FileInputStream("res/PixelTakhisis-ZajJ.ttf"), 23));
-					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-//					 setting the position of the text
+
+					text.setFont(Font.loadFont(
+							getClass().getClassLoader().getResource("PixelTakhisis-ZajJ.ttf").toExternalForm(), 23));
 					text.setLayoutX(70);
 					text.setLayoutY(130 + i * 20);
 					ScoreSubScene.getPane().getChildren().add(text);
@@ -281,7 +270,6 @@ public class ViewManager {
 			@Override
 			public void handle(ActionEvent arg0) {
 				ShowSubScene(CreditSubScene);
-
 
 			}
 		});
@@ -339,8 +327,5 @@ public class ViewManager {
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
 		mainPane.setBackground(new Background(background));
 	}
-	
-	
+
 }
-
-
