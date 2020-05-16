@@ -29,12 +29,11 @@ public class Sword extends Weapon implements Fireable {
 
 		bullets.get(0).setInitX(character.getX());
 		bullets.get(0).setInitY(character.getY());
+		bullets.get(0).setY(character.getY());
 		if (isRight) {
 			bullets.get(0).setX(character.getX() + 40);
-			bullets.get(0).setY(character.getY() + 20);
 		} else {
 			bullets.get(0).setX(character.getX() - 60);
-			bullets.get(0).setY(character.getY() + 20);
 		}
 		if (!isRight) {
 			bullets.get(0).getImageView().setRotate(bullets.get(0).getImageView().getRotate() + 180);

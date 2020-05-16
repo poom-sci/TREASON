@@ -6,8 +6,8 @@ import javafx.animation.Animation;
 import javafx.geometry.Rectangle2D;
 import javafx.util.Duration;
 
-public class recoveryLight extends Effect {
-	public recoveryLight(int initX, int initY) {
+public class RecoveryLight extends Effect {
+	public RecoveryLight(int initX, int initY) {
 
 		super("recovery.png",initX, initY, 80, 80);
 

@@ -20,7 +20,7 @@ public class SwordSlice extends Bullet {
 		damage=20;
 		this.velocityX=2;
 
-		this.addOnY=-15;
+//		this.addOnY=-15;
 		this.boundY=-20;
 		creatAnimation();
 		

@@ -32,8 +32,8 @@ public abstract class Entity {
 	
 	protected int boundX;
 	protected int boundY;
-	protected int addOnX;
-	protected int addOnY;
+//	protected int addOnX;
+//	protected int addOnY;
 	
 	protected double finalTime;
 
@@ -103,9 +103,9 @@ public abstract class Entity {
 
 
 	public void setX(int x) {
-		this.x = x+addOnX;
-		this.box.setTranslateX(x+addOnX);
-		this.imageView.setTranslateX(this.x-boundX+addOnX);
+		this.x = x;
+		this.box.setTranslateX(x);
+		this.imageView.setTranslateX(this.x-boundX);
 	}
 
 
@@ -115,9 +115,9 @@ public abstract class Entity {
 
 
 	public void setY(int y) {
-		this.y = y+addOnY;
-		this.box.setTranslateY(y+addOnY);
-		this.imageView.setTranslateY(this.y-boundY+addOnY);
+		this.y = y;
+		this.box.setTranslateY(y);
+		this.imageView.setTranslateY(this.y-boundY);
 		
 	}
 

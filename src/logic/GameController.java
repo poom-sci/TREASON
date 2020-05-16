@@ -29,7 +29,7 @@ import components.consumable.Potion;
 import components.effect.Barrier;
 import components.effect.Light;
 import components.effect.Warning;
-import components.effect.recoveryLight;
+import components.effect.RecoveryLight;
 import components.enemy.BossEnemy;
 import components.enemy.ColliderEnemy;
 import components.enemy.GunEnemy;
@@ -104,7 +104,7 @@ public class GameController {
 	private boolean islight = false;
 	private boolean isRecoverylightOpen = false;
 	private Light light;
-	private recoveryLight recoverylight;
+	private RecoveryLight recoverylight;
 	private Barrier barrier;
 
 	private boolean isBossStart = false;
@@ -314,7 +314,7 @@ public class GameController {
 						try {
 							ConsumableItem item = player.getItemsInventory().get(0);
 							((Consumable) item).consumed(player);
-							recoverylight = new recoveryLight(offsetX, offsetY);
+							recoverylight = new RecoveryLight(offsetX, offsetY);
 							timedEntity(recoverylight, 1.5);
 							isRecoverylightOpen = true;
 						} catch (ConsumeItemFailedException e) {
@@ -884,7 +884,7 @@ public class GameController {
 					isBarrierOpen = false;
 					player.setOpacityNormal();
 				}
-				if (item instanceof recoveryLight) {
+				if (item instanceof RecoveryLight) {
 					isRecoverylightOpen = false;
 				}
 
