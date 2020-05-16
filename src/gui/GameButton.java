@@ -3,7 +3,6 @@ package gui;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-
 import element.AudioLoader;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -37,13 +36,9 @@ public class GameButton extends Button {
 	}
 	
 	private void setButtonFont() {
-		try {
-		
-			setFont(Font.loadFont(new FileInputStream(FONT_PATH), 23));
-		}
-		catch (FileNotFoundException e) {
-			setFont(Font.font("Codia", 23));
-		}
+		setFont( Font.loadFont(getClass().getClassLoader().getResource
+		        ("PixelTakhisis-ZajJ.ttf").toExternalForm(), 23));
+//		setFont(element.FontLoader.);
 	}
 	
 	private void setButtonPressedStyle() {
