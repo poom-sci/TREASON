@@ -277,7 +277,7 @@ public abstract class GameCharacter extends Entity {
 		return actions;
 	}
 
-	public void decreasedCurrentHP(int damage) {
+	public void decreaseCurrentHP(int damage) {
 		setCurrentHP(this.currentHP - damage);
 	}
 

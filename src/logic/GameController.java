@@ -778,7 +778,7 @@ public class GameController {
 			if (item.getBox().getBoundsInParent().intersects(enemy.getBox().getBoundsInParent())) {
 
 				if (item instanceof Bullet) {
-					enemy.decreasedCurrentHP(((Bullet) item).getDamage());
+					enemy.decreaseCurrentHP(((Bullet) item).getDamage());
 				}
 				if (enemy.isDie()) {
 					characterDie(enemy);
@@ -800,7 +800,7 @@ public class GameController {
 		if (item.getBox().getBoundsInParent().intersects(boss.getBox().getBoundsInParent())) {
 
 			if (item instanceof Bullet) {
-				boss.decreasedCurrentHP(((Bullet) item).getDamage());
+				boss.decreaseCurrentHP(((Bullet) item).getDamage());
 			}
 			if (boss.isDie()) {
 				characterDie(boss);
@@ -817,11 +817,11 @@ public class GameController {
 			return;
 		}
 		if (checkEnemyCollision(player)) {
-			player.decreasedCurrentHP(30);
+			player.decreaseCurrentHP(30);
 			createBarrier();
 		}
 		if (checkBossCollision(player)) {
-			player.decreasedCurrentHP(50);
+			player.decreaseCurrentHP(50);
 			createBarrier();
 		}
 		
@@ -839,7 +839,7 @@ public class GameController {
 				if(item instanceof Bullet) {
 					Bullet bullet = (Bullet) item;
 					gameRoot.getChildren().remove(bullet.getImageView());
-					player.decreasedCurrentHP(bullet.getDamage())
+					player.decreaseCurrentHP(bullet.getDamage())
 					;
 					playerInteractEntity.remove(bullet);
 					enemyBulletsX.remove(bullet);
