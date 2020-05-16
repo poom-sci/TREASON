@@ -16,7 +16,7 @@ import javafx.util.Duration;
 public class ColliderEnemy extends GameCharacter {
 
 	public ColliderEnemy(int initX, int initY) {
-		super("main_character.png",initX, initY, 30, 60, 30);
+		super("enemy_character.png",initX, initY, 30, 60, 30);
 		
 		point=100;
 		this.disX = 60 * 5;

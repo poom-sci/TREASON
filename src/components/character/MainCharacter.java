@@ -33,19 +33,22 @@ public class MainCharacter extends GameCharacter {
 
 	public MainCharacter(int initX, int initY) {
 		super("main_character.png", initX, initY, 30, 60, 200);
+		
+		this.boundY=50;
+		this.boundX=50;
 
 		
 		itemsInventory=new ArrayList<ConsumableItem>();
-		pictureWidth = 96;
-		pictureHeight = 96;
-		pictureOffsetX = 30;
+		pictureWidth = 128;
+		pictureHeight = 128;
+		pictureOffsetX = 0;
 		pictureOffsetY = 0;
 
 		point = 0;
 		turnTime = Duration.millis(1000);
-		walkTime = Duration.millis(1000);
-		fireTime = Duration.millis(200);
-		dieTime = Duration.millis(2000);
+		walkTime = Duration.millis(500);
+		fireTime = Duration.millis(300);
+		dieTime = Duration.millis(200);
 		jumpTime = Duration.millis(1000);
 		
 		createPotion();

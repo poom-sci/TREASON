@@ -53,10 +53,10 @@ public class GameEnding extends AnchorPane {
 	private void createStatusImage() {
 		if(isWin) {
 			statusImage = new ImageView("win.png");
-			statusImage.setLayoutX(350);
-			statusImage.setLayoutY(50);
-			statusImage.setFitHeight(300);
-			statusImage.setFitWidth(600);
+			statusImage.setLayoutX(280);
+			statusImage.setLayoutY(-100);
+			statusImage.setFitHeight(800);
+			statusImage.setFitWidth(800);
 		}else {
 			statusImage = new ImageView("gameover.png");
 			statusImage.setLayoutX(1280 / 2 - 300 * 1.5);
@@ -65,31 +65,31 @@ public class GameEnding extends AnchorPane {
 			statusImage.setFitWidth(600 * 1.5);
 		}
 		
-		statusImage.setOnMouseEntered(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent event) {
-				statusImage.setEffect(new DropShadow());
-				AudioClip mouse_enter_sound = new AudioClip(
-						ClassLoader.getSystemResource("mouse_enter_sound.wav").toString());
-				mouse_enter_sound.setVolume(0.1);
-				mouse_enter_sound.play();
-
-			}
-		});
-
-		statusImage.setOnMouseExited(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent event) {
-				// TODO Auto-generated method stub
-				statusImage.setEffect(null);
-			}
-
-		});
-		
+//		statusImage.setOnMouseEntered(new EventHandler<MouseEvent>() {
+//
+//			@Override
+//			public void handle(MouseEvent event) {
+//				statusImage.setEffect(new DropShadow());
+//				AudioClip mouse_enter_sound = new AudioClip(
+//						ClassLoader.getSystemResource("mouse_enter_sound.wav").toString());
+//				mouse_enter_sound.setVolume(0.1);
+//				mouse_enter_sound.play();
+//
+//			}
+//		});
+//
+//		statusImage.setOnMouseExited(new EventHandler<MouseEvent>() {
+//
+//			@Override
+//			public void handle(MouseEvent event) {
+//				// TODO Auto-generated method stub
+//				statusImage.setEffect(null);
+//			}
+//
+//		});
+//		
 		this.getChildren().add(statusImage);
-		
+//		
 	}
 	
 	private void createTextBox() {

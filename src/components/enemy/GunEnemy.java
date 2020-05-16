@@ -19,7 +19,7 @@ import javafx.util.Duration;
 public class GunEnemy extends GameCharacter {
 
 	public GunEnemy(int initX, int initY) {
-		super("main_character.png", initX, initY, 30, 60, 20);
+		super("enemy_character.png", initX, initY, 30, 60, 20);
 		Weapon gun = new Gun(1);
 		this.weaponsInventory.add(gun);
 		

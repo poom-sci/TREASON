@@ -408,7 +408,7 @@
   </class>  
   <class id="46" language="java" name="components.Item" project="TREASON" file="/TREASON/src/components/Item.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2476" y="894"/>    
+    <position height="-1" width="-1" x="2642" y="852"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      

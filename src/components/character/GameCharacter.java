@@ -63,7 +63,7 @@ public abstract class GameCharacter extends Entity {
 		super(image_path,initX, initY, width, height);
 
 		this.image_Path = image_path;
-		box.setFill(Color.TRANSPARENT);
+//		box.setFill(Color.BLACK);
 
 		this.lowBox = new Rectangle(10, 10);
 		this.lowBox.setFill(Color.ALICEBLUE);
@@ -168,7 +168,7 @@ public abstract class GameCharacter extends Entity {
 	public void doWalkLeft() {
 		resetAction();
 //		boundX = 30;
-		sprite = new SpriteAnimation(imageView, walkTime, 8, 8, pictureOffsetX, pictureOffsetY + pictureHeight * 2,
+		sprite = new SpriteAnimation(imageView, walkTime, 5, 8, pictureOffsetX, pictureOffsetY + pictureHeight * 2,
 				pictureWidth, pictureHeight);
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
@@ -178,7 +178,7 @@ public abstract class GameCharacter extends Entity {
 	public void doWalkRight() {
 		resetAction();
 //		boundX = 30;
-		sprite = new SpriteAnimation(imageView, walkTime, 8, 8, pictureOffsetX, pictureOffsetY + pictureHeight * 3,
+		sprite = new SpriteAnimation(imageView, walkTime, 5, 8, pictureOffsetX, pictureOffsetY + pictureHeight * 3,
 				pictureWidth, pictureHeight);
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
@@ -189,7 +189,7 @@ public abstract class GameCharacter extends Entity {
 		resetAction();
 		sprite = new SpriteAnimation(imageView, fireTime, 5, 8, pictureOffsetX, pictureOffsetY + pictureHeight * 4,
 				pictureWidth, pictureHeight);
-		sprite.setCycleCount(Animation.INDEFINITE);
+		sprite.setCycleCount(1);
 		sprite.play();
 		fireLeft.setAction(true);
 	}
@@ -198,7 +198,7 @@ public abstract class GameCharacter extends Entity {
 		resetAction();
 		sprite = new SpriteAnimation(imageView, fireTime, 5, 8, pictureOffsetX, pictureOffsetY + pictureHeight * 5,
 				pictureWidth, pictureHeight);
-		sprite.setCycleCount(Animation.INDEFINITE);
+		sprite.setCycleCount(1);
 		sprite.play();
 		fireRight.setAction(true);
 
@@ -207,8 +207,10 @@ public abstract class GameCharacter extends Entity {
 	public void doDieLeft() {
 		resetAction();
 //		boundX = 30;
-		sprite = new SpriteAnimation(imageView, dieTime, 8, 8, pictureOffsetX, pictureOffsetY + pictureHeight * 6,
+//		imageView.setScaleX(-1);
+		sprite = new SpriteAnimation(imageView, dieTime, 5, 8, pictureOffsetX, pictureOffsetY + pictureHeight * 6,
 				pictureWidth, pictureHeight);
+//		sprite.setAutoReverse(true);
 		sprite.setCycleCount(1);
 		sprite.play();
 		dieLeft.setAction(true);
@@ -217,8 +219,10 @@ public abstract class GameCharacter extends Entity {
 	public void doDieRight() {
 		resetAction();
 //		boundX = 30;
-		sprite = new SpriteAnimation(imageView, dieTime, 8, 8, pictureOffsetX, pictureOffsetY + pictureHeight * 7,
+
+		sprite = new SpriteAnimation(imageView, dieTime, 5, 8, pictureOffsetX, pictureOffsetY + pictureHeight * 7,
 				pictureWidth, pictureHeight);
+//		sprite.setAutoReverse(true);
 		sprite.setCycleCount(1);
 		sprite.play();
 		dieRight.setAction(true);
@@ -257,7 +261,7 @@ public abstract class GameCharacter extends Entity {
 	}
 
 	public boolean isRight() {
-		return turnRight.isAction() || walkRight.isAction() || fireRight.isAction();
+		return turnRight.isAction() || walkRight.isAction() || fireRight.isAction()||dieRight.isAction();
 	}
 
 	public Action getAction() {

@@ -174,11 +174,11 @@ public class GameController {
 
 			if (player.getCurrentHP() <= 0 || player.getY() >= levelHeight) {
 
-				if (player.isRight()) {
-					player.doDieLeft();
-				} else {
-					player.doDieRight();
-				}
+//				if (player.isRight()) {
+//					player.doDieLeft();
+//				} else {
+//					player.doDieRight();
+//				}
 				isGameEnd = true;
 				return;
 //				}
@@ -239,66 +239,25 @@ public class GameController {
 				check();
 
 				if (!isKeyboardPressed()) {
-					if (player.getIsWalkLeft() || player.getIsFireLeft()) {
+					if (player.getIsWalkLeft() || player.getIsFireLeft()||player.getIsDieLeft()) {
 						player.doTurnLeft();
 					}
-					if (player.getIsWalkRight() || player.getIsFireRight()) {
+					if (player.getIsWalkRight() || player.getIsFireRight()||player.getIsDieRight()) {
 						player.doTurnRight();
 					}
 				}
-
-				if (isPressed(KeyCode.W) && player.getX() >= 5) {
-					if (!alreadyPressedW) {
-						player.jump(-20);
-						alreadyPressedW = true;
-					}
-				} else {
-					alreadyPressedW = false;
-				}
-
-				if (isPressed(KeyCode.A) && player.getX() >= 5) {
-					movePlayerX(-4);
-					if (!player.getIsWalkLeft()) {
-						player.doWalkLeft();
-					}
-				}
-
-				if (isPressed(KeyCode.D) && player.getX() + player.getWidth() <= levelWidth - 5) {
-					movePlayerX(4);
-					if (!player.getIsWalkRight()) {
-						player.doWalkRight();
-					}
-				}
-
-				if (isPressed(KeyCode.Q)) {
-					if (!alreadyPressedQ) {
-						player.changeWeaponLeft();
-						alreadyPressedQ = true;
-					}
-				} else {
-					alreadyPressedQ = false;
-				}
-
-				if (isPressed(KeyCode.E)) {
-					if (!alreadyPressedE) {
-						player.changeWeaponRight();
-						alreadyPressedE = true;
-					}
-				} else {
-					alreadyPressedE = false;
-				}
-
+				
 				if (isPressed(KeyCode.SPACE)) {
 					if (!alreadyPressedSPACE) {
-						if (player.getIsWalkRight() || player.getIsTurnRight()) {
+						if (player.isRight()) {
 							if (!player.getIsFireRight()) {
-								player.doFireRight();
+//								player.doFireRight();
 								fireBullet(true);
 							}
 						}
-						if (player.getIsWalkLeft() || player.getIsTurnLeft()) {
+						else {
 							if (!player.getIsFireLeft()) {
-								player.doFireLeft();
+//								player.doFireLeft();
 								fireBullet(false);
 							}
 						}
@@ -306,7 +265,50 @@ public class GameController {
 					}
 				} else {
 					alreadyPressedSPACE = false;
+					if (isPressed(KeyCode.W) && player.getX() >= 5) {
+						if (!alreadyPressedW) {
+							player.jump(-20);
+							alreadyPressedW = true;
+						}
+					} else {
+						alreadyPressedW = false;
+					}
+
+					if (isPressed(KeyCode.A) && player.getX() >= 5) {
+						movePlayerX(-4);
+						if (!player.getIsWalkLeft()) {
+							player.doWalkLeft();
+						}
+					}
+
+					if (isPressed(KeyCode.D) && player.getX() + player.getWidth() <= levelWidth - 5) {
+						movePlayerX(4);
+						if (!player.getIsWalkRight()) {
+							player.doWalkRight();
+						}
+					}
+
+					if (isPressed(KeyCode.Q)) {
+						if (!alreadyPressedQ) {
+							player.changeWeaponLeft();
+							alreadyPressedQ = true;
+						}
+					} else {
+						alreadyPressedQ = false;
+					}
+
+					if (isPressed(KeyCode.E)) {
+						if (!alreadyPressedE) {
+							player.changeWeaponRight();
+							alreadyPressedE = true;
+						}
+					} else {
+						alreadyPressedE = false;
+					}
 				}
+
+			
+
 
 				if (isPressed(KeyCode.H)) {
 					if (!alreadyPressedH) {
@@ -435,6 +437,22 @@ public class GameController {
 
 			Weapon weapon = player.getWeapon();
 			Bullet bullet = ((Fireable) weapon).fireBullet(player, isRight);
+			
+			if (player.isRight()) {
+				if(bullet instanceof SwordSlice) {
+					player.doDieRight();
+				}
+				else {
+					player.doFireRight();
+				}
+			} else {
+				if(bullet instanceof SwordSlice) {
+					player.doDieLeft();
+				}
+				else {
+					player.doFireLeft();
+				}
+			}
 
 			playerBullets.add(bullet);
 			gameRoot.getChildren().addAll(bullet.getImageView());
