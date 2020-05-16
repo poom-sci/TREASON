@@ -16,6 +16,8 @@ public class Gun extends Weapon implements Fireable {
 
 	public Gun( int bullet) {
 		super("gun.png",60,60);
+		this.imageView.setScaleX(2);
+		this.imageView.setScaleY(2);
 		this.maxBullet = 15;
 		this.bulletType='G';
 		addBullet(bullet);
@@ -87,7 +89,7 @@ public class Gun extends Weapon implements Fireable {
 		}
 
 			if (!isRight) {
-				bullet.getImageView().setRotate(bullet.getImageView().getRotate() + 180);
+				bullet.getImageView().setScaleX(-1);
 			}
 		
 		

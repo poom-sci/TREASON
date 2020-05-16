@@ -18,6 +18,7 @@ public class RocketGun extends Weapon implements Fireable {
 
 	public RocketGun(int bullet) {
 		super("rocketGun.png", 120, 40);
+		this.imageView.setScaleY(3);
 		this.maxBullet = 10;
 		bulletType = 'R';
 		addBullet(bullet);
@@ -45,23 +46,27 @@ public class RocketGun extends Weapon implements Fireable {
 
 		bullet.setRight(isRight);
 		if (isRight) {
-			int x = character.getX() + 40;
-			int y = character.getY() + 20;
+			int x = character.getX() + 0;
+			int y = character.getY()+30;
+			bullet.setBoundX(30);
 			bullet.setInitX(x);
 			bullet.setInitY(y);
 			bullet.setX(x);
 			bullet.setY(y);
 		} else {
-			int x = character.getX() - 40;
-			int y = character.getY() + 20;
+			int x = character.getX() +0;
+			int y = character.getY()+30;
+			bullet.setBoundX(-30);
 			bullet.setInitX(x);
 			bullet.setInitY(y);
 			bullet.setX(x);
 			bullet.setY(y);
 		}
 
-		if (!isRight) {
-			bullet.getImageView().setRotate(bullet.getImageView().getRotate() + 180);
+		if (isRight) {
+			bullet.getImageView().setScaleX(-3);
+		}else {
+			
 		}
 
 		return bullet;

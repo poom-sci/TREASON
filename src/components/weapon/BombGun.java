@@ -13,6 +13,7 @@ public class BombGun extends Weapon implements Fireable {
 	public BombGun( int bullet) {
 		
 		super("rocketGun.png",120,40);
+		this.imageView.setScaleY(3);
 		this.maxBullet = 10;
 		bulletType='B';
 		addBullet(bullet);

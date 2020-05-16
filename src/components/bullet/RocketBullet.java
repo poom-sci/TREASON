@@ -16,8 +16,8 @@ public class RocketBullet extends Bullet implements Explodable {
 		super("rocket.png",isRight,initX,initY,60,30);
 		// TODO Auto-generated constructor stub
 		this.imageView.setScaleX(3);
-		this.imageView.setScaleY(3);
-		this.boundY=-100;
+		this.imageView.setScaleY(5);
+		this.boundY=-45;
 		this.disX=800;
 		this.disY=800;
 		this.velocityX=2;
