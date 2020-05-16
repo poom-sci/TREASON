@@ -78,7 +78,7 @@ public abstract class GameCharacter extends Entity {
 
 		this.pictureWidth = 96;
 		this.pictureHeight = 96;
-		this.pictureOffsetX = 30;
+		this.pictureOffsetX = 0;
 		this.pictureOffsetY = 0;
 //
 //		turnTime = Duration.millis(1000);
@@ -94,11 +94,11 @@ public abstract class GameCharacter extends Entity {
 	public void createAnimation() {
 		createAction();
 		imageView = new ImageView(new Image(image_Path));
-		imageView.setViewport(new Rectangle2D(pictureOffsetX, pictureOffsetY, pictureWidth, pictureHeight));
+		imageView.setViewport(new Rectangle2D(pictureOffsetX, pictureOffsetY, 128, 128));
 //		imageView.setFitWidth(width);
 //		imageView.setFitHeight(height);
 		sprite = new SpriteAnimation(imageView, Duration.millis(1000), 5, 5, pictureOffsetX, pictureOffsetY,
-				pictureWidth, pictureHeight);
+				128, 128);
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
 	
