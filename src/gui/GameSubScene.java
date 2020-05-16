@@ -14,7 +14,6 @@ public class GameSubScene extends SubScene {
 
 	private static final int HEIGHT=400;
 	private static final int WIDTH=600;
-	private final String FONT_PATH = "PixelTakhisis-ZajJ.ttf";
 	private final String BACKGROUND_IMAGE = "board_0001.png";
 	
 	private boolean isHidden;

@@ -173,17 +173,9 @@ public class GameController {
 			gravity();
 
 			if (player.getCurrentHP() <= 0 || player.getY() >= levelHeight) {
-
-//				if (player.isRight()) {
-//					player.doDieLeft();
-//				} else {
-//					player.doDieRight();
-//				}
 				isGameEnd = true;
 				return;
-//				}
 			} else {
-
 				if ((Math.round(time) % 3) == 0) {
 					if (!isEnemyFire) {
 						allEnemyFireBullet();
@@ -380,7 +372,6 @@ public class GameController {
 			barrier.setY(offsetY);
 			if (counter % 5 == 0) {
 				player.blink();
-
 			}
 		}
 		if (isRecoverylightOpen) {

@@ -29,7 +29,7 @@ public class MainCharacter extends GameCharacter {
 
 	private int point;
 	private boolean isBlink = false;
-	protected ArrayList<ConsumableItem> itemsInventory;
+	private ArrayList<ConsumableItem> itemsInventory;
 
 	public MainCharacter(int initX, int initY) {
 		super("main_character.png", initX, initY, 30, 60, 200);

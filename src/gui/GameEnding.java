@@ -26,8 +26,7 @@ public class GameEnding extends AnchorPane {
 	private GameButton submitButton;
 	private GameButton exitButton;
 
-//	private final String FONT_PATH = "PixelTakhisis-ZajJ.ttf";
-//	private final String BACKGROUND_IMAGE = "board.png";
+	private final String FONT_PATH = "PixelTakhisis-ZajJ.ttf";
 
 	public GameEnding(boolean isWin, int point, double time) {
 		super();
@@ -64,31 +63,7 @@ public class GameEnding extends AnchorPane {
 			statusImage.setFitWidth(600 * 1.5);
 		}
 
-//		statusImage.setOnMouseEntered(new EventHandler<MouseEvent>() {
-//
-//			@Override
-//			public void handle(MouseEvent event) {
-//				statusImage.setEffect(new DropShadow());
-//				AudioClip mouse_enter_sound = new AudioClip(
-//						ClassLoader.getSystemResource("mouse_enter_sound.wav").toString());
-//				mouse_enter_sound.setVolume(0.1);
-//				mouse_enter_sound.play();
-//
-//			}
-//		});
-//
-//		statusImage.setOnMouseExited(new EventHandler<MouseEvent>() {
-//
-//			@Override
-//			public void handle(MouseEvent event) {
-//				// TODO Auto-generated method stub
-//				statusImage.setEffect(null);
-//			}
-//
-//		});
-//		
 		this.getChildren().add(statusImage);
-//		
 	}
 
 	private void createTextBox() {
@@ -99,13 +74,13 @@ public class GameEnding extends AnchorPane {
 		textField = new TextField();
 
 		nameScores.setFont(
-				Font.loadFont(getClass().getClassLoader().getResource("PixelTakhisis-ZajJ.ttf").toExternalForm(), 23));
+				Font.loadFont(getClass().getClassLoader().getResource(FONT_PATH).toExternalForm(), 23));
 		scoreScores.setFont(
-				Font.loadFont(getClass().getClassLoader().getResource("PixelTakhisis-ZajJ.ttf").toExternalForm(), 23));
+				Font.loadFont(getClass().getClassLoader().getResource(FONT_PATH).toExternalForm(), 23));
 		timeScores.setFont(
-				Font.loadFont(getClass().getClassLoader().getResource("PixelTakhisis-ZajJ.ttf").toExternalForm(), 23));
+				Font.loadFont(getClass().getClassLoader().getResource(FONT_PATH).toExternalForm(), 23));
 		textField.setFont(
-				Font.loadFont(getClass().getClassLoader().getResource("PixelTakhisis-ZajJ.ttf").toExternalForm(), 23));
+				Font.loadFont(getClass().getClassLoader().getResource(FONT_PATH).toExternalForm(), 23));
 
 		nameScores.setLayoutX(500);
 		nameScores.setLayoutY(408);

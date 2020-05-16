@@ -57,13 +57,13 @@ public abstract class GameCharacter extends Entity {
 
 	protected ArrayList<Weapon> weaponsInventory;
 
+
 	protected int weaponKey = 0;
 
 	public GameCharacter(String image_path, int initX, int initY, int width, int height, int currentHP) {
 		super(image_path,initX, initY, width, height);
 
 		this.image_Path = image_path;
-//		box.setFill(Color.BLACK);
 
 		this.lowBox = new Rectangle(10, 10);
 		this.lowBox.setFill(Color.ALICEBLUE);
