@@ -2,18 +2,10 @@ package components.enemy;
 
 import java.util.ArrayList;
 
-import components.Action;
 import components.Entity;
 import components.character.GameCharacter;
 import components.weapon.Gun;
 import components.weapon.Weapon;
-import gui.SpriteAnimation;
-import javafx.animation.Animation;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 public class GunEnemy extends GameCharacter {
@@ -36,7 +28,6 @@ public class GunEnemy extends GameCharacter {
 		walkTime = Duration.millis(1000);
 		fireTime = Duration.millis(200);
 		dieTime = Duration.millis(2000);
-		jumpTime = Duration.millis(1000);
 	}
 
 }

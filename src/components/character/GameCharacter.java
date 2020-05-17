@@ -1,12 +1,9 @@
 package components.character;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
-import components.Action;
 import components.Entity;
-import components.bullet.RocketBullet;
-import components.bullet.SwordSlice;
-import components.consumable.ConsumableItem;
 import components.weapon.Weapon;
 import gui.SpriteAnimation;
 import javafx.animation.Animation;
@@ -22,25 +19,14 @@ public abstract class GameCharacter extends Entity {
 	protected Rectangle lowBox;
 	protected Rectangle highBox;
 
-	protected ArrayList<Action> actions;
 	protected boolean pensioner=false;
 
-	protected Action turnLeft;
-	protected Action turnRight;
-	protected Action walkRight;
-	protected Action walkLeft;
-	protected Action fireRight;
-	protected Action fireLeft;
-	protected Action dieRight;
-	protected Action dieLeft;
-	protected Action jumpLeft;
-	protected Action jumpRight;
+	protected ArrayList<Boolean> action;
 
 	protected Duration turnTime;
 	protected Duration walkTime;
 	protected Duration fireTime;
 	protected Duration dieTime;
-	protected Duration jumpTime;
 
 	protected int pictureWidth;
 	protected int pictureHeight;
@@ -76,16 +62,10 @@ public abstract class GameCharacter extends Entity {
 		this.weaponsInventory = new ArrayList<Weapon>();
 
 
-		this.pictureWidth = 96;
-		this.pictureHeight = 96;
+		this.pictureWidth = 128;
+		this.pictureHeight = 128;
 		this.pictureOffsetX = 0;
 		this.pictureOffsetY = 0;
-//
-//		turnTime = Duration.millis(1000);
-//		walkTime = Duration.millis(1000);
-//		fireTime = Duration.millis(200);
-//		dieTime = Duration.millis(2000);
-//		jumpTime = Duration.millis(1000);
 
 		createAnimation();
 
@@ -94,11 +74,10 @@ public abstract class GameCharacter extends Entity {
 	public void createAnimation() {
 		createAction();
 		imageView = new ImageView(new Image(image_Path));
-		imageView.setViewport(new Rectangle2D(pictureOffsetX, pictureOffsetY, 128, 128));
-//		imageView.setFitWidth(width);
-//		imageView.setFitHeight(height);
+		imageView.setViewport(new Rectangle2D(pictureOffsetX, pictureOffsetY, pictureWidth, pictureHeight));
+
 		sprite = new SpriteAnimation(imageView, Duration.millis(1000), 5, 5, pictureOffsetX, pictureOffsetY,
-				128, 128);
+				pictureWidth, pictureHeight);
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
 	
@@ -108,81 +87,71 @@ public abstract class GameCharacter extends Entity {
 		setX(initX);
 		setY(initY);
 
-//		turnLeft.setAction(true);
-//		doTurnRight();
-	
 
 	}
 
 	protected void createAction() {
-		actions = new ArrayList<Action>();
-
-		turnRight = new Action("isTurnRight", false);
-		turnLeft = new Action("isTurnLeft", false);
-		walkRight = new Action("isWalkRight", false);
-		walkLeft = new Action("isWalkLeft", false);
-		fireRight = new Action("fireRight", false);
-		fireLeft = new Action("fireLeft", false);
-		dieLeft = new Action("dieLeft", false);
-		dieRight = new Action("dieRight", false);
-
-		actions.add(turnLeft);
-		actions.add(turnRight);
-		actions.add(walkRight);
-		actions.add(walkLeft);
-		actions.add(fireRight);
-		actions.add(fireLeft);
-		actions.add(dieLeft);
-		actions.add(dieRight);
+		
+		action=new ArrayList<>(Collections.nCopies(8, false));
+		
+//		�ӡѺ action
+//		action.add(turnLeft);
+//		action.add(turnRight);
+//		action.add(walkLeft);
+//		action.add(walkRight);
+//		action.add(fireLeft);
+//		action.add(fireRight);
+//		action.add(dieLeft);
+//		action.add(dieRight);
 	}
 
 	public void resetAction() {
-		for (Action e : actions) {
-			e.setAction(false);
+		for (int i=0;i<action.size();i++) {
+			action.set(i, false);
 		}
 		if(sprite!=null) {
 			sprite.stop();
 		}
 	}
-
-	public void doTurnRight() {
-		resetAction();
-//		boundX = 30;
-		sprite = new SpriteAnimation(imageView, turnTime, 5, 5, pictureOffsetX, pictureOffsetY + pictureHeight * 0,
-				pictureWidth, pictureHeight);
-		sprite.setCycleCount(Animation.INDEFINITE);
-		sprite.play();
-		turnRight.setAction(true);
-	}
-
+	
 	public void doTurnLeft() {
 		resetAction();
-//		boundX = 30;
 		sprite = new SpriteAnimation(imageView, turnTime, 5, 5, pictureOffsetX, pictureOffsetY + pictureHeight * 1,
 				pictureWidth, pictureHeight);
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
-		turnLeft.setAction(true);
+		action.set(0, true);
+//		turnLeft.setAction(true);
+	}
+
+	public void doTurnRight() {
+		resetAction();
+		sprite = new SpriteAnimation(imageView, turnTime, 5, 5, pictureOffsetX, pictureOffsetY + pictureHeight * 0,
+				pictureWidth, pictureHeight);
+		sprite.setCycleCount(Animation.INDEFINITE);
+		sprite.play();
+		action.set(1, true);
+//		turnRight.setAction(true);
 	}
 
 	public void doWalkLeft() {
 		resetAction();
-//		boundX = 30;
 		sprite = new SpriteAnimation(imageView, walkTime, 5, 8, pictureOffsetX, pictureOffsetY + pictureHeight * 2,
 				pictureWidth, pictureHeight);
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
-		walkLeft.setAction(true);
+		action.set(2, true);
+//		walkLeft.setAction(true);
 	}
 
 	public void doWalkRight() {
 		resetAction();
-//		boundX = 30;
 		sprite = new SpriteAnimation(imageView, walkTime, 5, 8, pictureOffsetX, pictureOffsetY + pictureHeight * 3,
 				pictureWidth, pictureHeight);
 		sprite.setCycleCount(Animation.INDEFINITE);
 		sprite.play();
-		walkRight.setAction(true);
+		action.set(3, true);
+//		walkRight.setAction(true);
 	}
 
 	public void doFireLeft() {
@@ -191,7 +160,8 @@ public abstract class GameCharacter extends Entity {
 				pictureWidth, pictureHeight);
 		sprite.setCycleCount(1);
 		sprite.play();
-		fireLeft.setAction(true);
+		action.set(4, true);
+//		fireLeft.setAction(true);
 	}
 
 	public void doFireRight() {
@@ -200,32 +170,29 @@ public abstract class GameCharacter extends Entity {
 				pictureWidth, pictureHeight);
 		sprite.setCycleCount(1);
 		sprite.play();
-		fireRight.setAction(true);
+		action.set(5, true);
+//		fireRight.setAction(true);
 
 	}
 
 	public void doDieLeft() {
 		resetAction();
-//		boundX = 30;
-//		imageView.setScaleX(-1);
 		sprite = new SpriteAnimation(imageView, dieTime, 5, 8, pictureOffsetX, pictureOffsetY + pictureHeight * 6,
 				pictureWidth, pictureHeight);
-//		sprite.setAutoReverse(true);
 		sprite.setCycleCount(1);
 		sprite.play();
-		dieLeft.setAction(true);
+		action.set(6, true);
+//		dieLeft.setAction(true);
 	}
 
 	public void doDieRight() {
 		resetAction();
-//		boundX = 30;
-
 		sprite = new SpriteAnimation(imageView, dieTime, 5, 8, pictureOffsetX, pictureOffsetY + pictureHeight * 7,
 				pictureWidth, pictureHeight);
-//		sprite.setAutoReverse(true);
 		sprite.setCycleCount(1);
 		sprite.play();
-		dieRight.setAction(true);
+		action.set(7, true);
+//		dieRight.setAction(true);
 	}
 	
 	public void jump(int velocityY) {
@@ -237,44 +204,40 @@ public abstract class GameCharacter extends Entity {
 	}
 
 	public boolean getIsTurnLeft() {
-		return turnLeft.isAction();
+		return action.get(0);
 	}
 
 	public boolean getIsTurnRight() {
-		return turnRight.isAction();
+		return action.get(1);
+	}
+	
+	public boolean getIsWalkLeft() {
+		return action.get(2);
 	}
 
 	public boolean getIsWalkRight() {
-		return walkRight.isAction();
-	}
-
-	public boolean getIsWalkLeft() {
-		return walkLeft.isAction();
-	}
-
-	public boolean getIsFireRight() {
-		return fireRight.isAction();
+		return action.get(3);
 	}
 
 	public boolean getIsFireLeft() {
-		return fireLeft.isAction();
+		return action.get(4);
 	}
+	
+	public boolean getIsFireRight() {
+		return action.get(5);
+	}
+	
+	public boolean getIsDieLeft() {
+		return action.get(6);
+	}
+	
+	public boolean getIsDieRight() {
+		return action.get(7);
+	}
+
 
 	public boolean isRight() {
-		return turnRight.isAction() || walkRight.isAction() || fireRight.isAction()||dieRight.isAction();
-	}
-
-	public Action getAction() {
-		for (Action e : actions) {
-			if (e.isAction()) {
-				return e;
-			}
-		}
-		return null;
-	}
-
-	public ArrayList<Action> getActions() {
-		return actions;
+		return getIsTurnRight() || getIsWalkRight() || getIsFireRight()||getIsDieRight();
 	}
 
 	public void decreaseCurrentHP(int damage) {
@@ -300,14 +263,6 @@ public abstract class GameCharacter extends Entity {
 
 	public ArrayList<Weapon> getWeaponsInventory() {
 		return weaponsInventory;
-	}
-
-	public boolean getIsDieRight() {
-		return dieRight.isAction();
-	}
-
-	public boolean getIsDieLeft() {
-		return dieLeft.isAction();
 	}
 
 	public boolean isDie() {

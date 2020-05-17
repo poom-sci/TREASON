@@ -1,11 +1,7 @@
 package components.character;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
-import javax.swing.text.StyledEditorKit.BoldAction;
-
-import components.Action;
 import components.consumable.Ammo;
 import components.consumable.ConsumableItem;
 import components.consumable.Potion;
@@ -13,16 +9,6 @@ import components.weapon.Gun;
 import components.weapon.RocketGun;
 import components.weapon.Sword;
 import components.weapon.Weapon;
-import gui.GameButton;
-import gui.SpriteAnimation;
-import javafx.animation.Animation;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Group;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 public class MainCharacter extends GameCharacter {
@@ -49,7 +35,6 @@ public class MainCharacter extends GameCharacter {
 		walkTime = Duration.millis(500);
 		fireTime = Duration.millis(300);
 		dieTime = Duration.millis(200);
-		jumpTime = Duration.millis(1000);
 		
 		createPotion();
 		createAmmo();

@@ -2,7 +2,6 @@ package components.enemy;
 
 import java.util.ArrayList;
 
-import components.Action;
 import components.character.GameCharacter;
 import components.weapon.BombGun;
 import components.weapon.Gun;
@@ -35,7 +34,6 @@ public class BossEnemy extends GameCharacter {
 		walkTime = Duration.millis(1000);
 		fireTime = Duration.millis(200);
 		dieTime = Duration.millis(2000);
-		jumpTime = Duration.millis(1000);
 
 		setX(initX);
 		setY(initY);
