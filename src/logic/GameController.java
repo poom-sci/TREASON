@@ -219,9 +219,8 @@ public class GameController {
 				}
 
 				if (isPressed(KeyCode.ENTER)) {
-					if (enemieList.size() == 0) {
 						checkPortal();
-					}
+					
 
 				}
 
@@ -243,13 +242,11 @@ public class GameController {
 					if (!alreadyPressedSPACE) {
 						if (player.isRight()) {
 							if (!player.getIsFireRight()) {
-//								player.doFireRight();
 								fireBullet(true);
 							}
 						}
 						else {
 							if (!player.getIsFireLeft()) {
-//								player.doFireLeft();
 								fireBullet(false);
 							}
 						}

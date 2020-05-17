@@ -115,6 +115,7 @@ public class ViewManager {
 
 		CreditSubScene = new GameSubScene();
 		mainPane.getChildren().add(CreditSubScene);
+
 	}
 
 	private void ShowSubScene(GameSubScene scene) {
@@ -152,7 +153,7 @@ public class ViewManager {
 				ShowSubScene(StartSubScene);
 
 				GameButton startNew = new GameButton("new");
-				startNew.setLayoutX(50);
+				startNew.setLayoutX(110);
 				startNew.setLayoutY(200);
 				StartSubScene.getPane().getChildren().add(startNew);
 
@@ -176,7 +177,7 @@ public class ViewManager {
 				});
 
 				GameButton startContinue = new GameButton("Continue");
-				startContinue.setLayoutX(300);
+				startContinue.setLayoutX(360);
 				startContinue.setLayoutY(200);
 				StartSubScene.getPane().getChildren().add(startContinue);
 
@@ -220,25 +221,41 @@ public class ViewManager {
 				Leaderboards scoreBoard = Leaderboards.getInstance();
 				scoreBoard.loadScore();
 
-				Label header = new Label("Player   : Score   : time");
+				Label header = new Label("Player     : Score    :  time");
 				header.setTextFill(Color.DARKRED);
 				header.setFont(Font.loadFont(
 						getClass().getClassLoader().getResource("PixelTakhisis-ZajJ.ttf").toExternalForm(), 23));
-				header.setLayoutX(100);
+				header.setLayoutX(150);
 				header.setLayoutY(100);
 
 				ScoreSubScene.getPane().getChildren().add(header);
 
 				for (int i = 0; i < scoreBoard.getTopPlayer().size(); i++) {
-					Label text = new Label();
-					text.setText((i + 1) + ". " + scoreBoard.getTopPlayer(i));
-					text.setTextFill(Color.LIGHTCYAN);
-
-					text.setFont(Font.loadFont(
+					Label name = new Label();
+					name.setText((i + 1) + ". " + scoreBoard.getTopPlayerName(i));
+					name.setTextFill(Color.LIGHTCYAN);
+					name.setFont(Font.loadFont(
 							getClass().getClassLoader().getResource("PixelTakhisis-ZajJ.ttf").toExternalForm(), 23));
-					text.setLayoutX(70);
-					text.setLayoutY(130 + i * 20);
-					ScoreSubScene.getPane().getChildren().add(text);
+					name.setLayoutX(150);
+
+					Label score = new Label();
+					score.setText("" + scoreBoard.getTopPlayerScore(i));
+					score.setTextFill(Color.LIGHTCYAN);
+					score.setFont(Font.loadFont(
+							getClass().getClassLoader().getResource("PixelTakhisis-ZajJ.ttf").toExternalForm(), 23));
+					score.setLayoutX(355);
+
+					Label time = new Label();
+					time.setText("" + scoreBoard.getTopPlayerTime(i));
+					time.setTextFill(Color.LIGHTCYAN);
+					time.setFont(Font.loadFont(
+							getClass().getClassLoader().getResource("PixelTakhisis-ZajJ.ttf").toExternalForm(), 23));
+					time.setLayoutX(510);
+
+					name.setLayoutY(130 + i * 30);
+					score.setLayoutY(130 + i * 30);
+					time.setLayoutY(130 + i * 30);
+					ScoreSubScene.getPane().getChildren().addAll(name, score, time);
 					scoreBoard.saveScores();
 				}
 
@@ -256,6 +273,26 @@ public class ViewManager {
 			public void handle(ActionEvent arg0) {
 				ShowSubScene(HelpSubScene);
 
+				HelpSubScene.getPane().getChildren().clear();
+
+				Label credit = new Label(
+						"pressed \"A\" to move left \n"
+						+ "pressed \"D\" to move right \n"
+						+ "pressed \"W\" to jump \n"
+						+ "pressed \"SPACEBAR\" to fired bullet \n"
+						+ "pressed \"H\" to use healing potion \n"
+						+ "pressed \"J\" to use ammo pack \n"
+						+ "to win the game, \n"
+						+ "you must kill the boss"
+						+ "at the level 3");
+				credit.setTranslateX(100);
+				credit.setTranslateY(150);
+				credit.setTextFill(Color.DARKRED);
+				credit.setFont(Font.loadFont(
+						getClass().getClassLoader().getResource("PixelTakhisis-ZajJ.ttf").toExternalForm(), 16));
+
+				HelpSubScene.getPane().getChildren().addAll(credit);
+
 			}
 		});
 
@@ -270,6 +307,19 @@ public class ViewManager {
 			@Override
 			public void handle(ActionEvent arg0) {
 				ShowSubScene(CreditSubScene);
+				CreditSubScene.getPane().getChildren().clear();
+
+				Label credit = new Label(
+						"           Game Editor\n"
+						+ "    Poom Suchao-in 6231349621\n"
+						+ "Napat Maneeratpongsuk 6231318121");
+				credit.setTranslateX(100);
+				credit.setTranslateY(150);
+				credit.setTextFill(Color.FLORALWHITE);
+				credit.setFont(Font.loadFont(
+						getClass().getClassLoader().getResource("PixelTakhisis-ZajJ.ttf").toExternalForm(), 23));
+
+				CreditSubScene.getPane().getChildren().addAll(credit);
 
 			}
 		});

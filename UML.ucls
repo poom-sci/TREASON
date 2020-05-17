@@ -156,7 +156,7 @@
   </class>  
   <class id="18" language="java" name="components.Entity" project="TREASON" file="/TREASON/src/components/Entity.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1021" y="1519"/>    
+    <position height="-1" width="-1" x="1788" y="1774"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -165,539 +165,530 @@
   </class>  
   <class id="19" language="java" name="components.effect.Effect" project="TREASON" 
     file="/TREASON/src/components/effect/Effect.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1629" y="994"/>    
+    <position height="-1" width="-1" x="2081" y="1363"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="20" language="java" name="components.character.GameCharacter" project="TREASON" 
-    file="/TREASON/src/components/character/GameCharacter.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1279" y="2729"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="21" language="java" name="components.bullet.Bullet" project="TREASON" 
+  <class id="20" language="java" name="components.bullet.Bullet" project="TREASON" 
     file="/TREASON/src/components/bullet/Bullet.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1596" y="1706"/>    
+    <position height="-1" width="-1" x="2107" y="1973"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="22" language="java" name="components.box.Box" project="TREASON" file="/TREASON/src/components/box/Box.java" 
+  <class id="21" language="java" name="components.box.Box" project="TREASON" file="/TREASON/src/components/box/Box.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1761" y="1333"/>    
+    <position height="-1" width="-1" x="2086" y="1594"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="23" language="java" name="components.bullet.Bomb" project="TREASON" 
+  <class id="22" language="java" name="components.bullet.Bomb" project="TREASON" 
     file="/TREASON/src/components/bullet/Bomb.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1285" y="1882"/>    
+    <position height="-1" width="-1" x="2034" y="2162"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="24" language="java" name="components.bullet.GunBullet" project="TREASON" 
+  <class id="23" language="java" name="components.bullet.GunBullet" project="TREASON" 
     file="/TREASON/src/components/bullet/GunBullet.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1462" y="1873"/>    
+    <position height="-1" width="-1" x="2189" y="2155"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="25" language="java" name="components.bullet.SwordSlice" project="TREASON" 
+  <class id="24" language="java" name="components.bullet.SwordSlice" project="TREASON" 
     file="/TREASON/src/components/bullet/SwordSlice.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1653" y="1882"/>    
+    <position height="-1" width="-1" x="2358" y="2163"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="26" language="java" name="components.bullet.RocketBullet" project="TREASON" 
+  <class id="25" language="java" name="components.bullet.RocketBullet" project="TREASON" 
     file="/TREASON/src/components/bullet/RocketBullet.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1850" y="1882"/>    
+    <position height="-1" width="-1" x="2531" y="2164"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="27" language="java" name="components.box.AmmoBox" project="TREASON" 
+  <class id="26" language="java" name="components.box.AmmoBox" project="TREASON" 
     file="/TREASON/src/components/box/AmmoBox.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2432" y="1545"/>    
+    <position height="-1" width="-1" x="2268" y="1822"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="28" language="java" name="components.box.Grass2" project="TREASON" 
+  <class id="27" language="java" name="components.box.Grass2" project="TREASON" 
     file="/TREASON/src/components/box/Grass2.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1444" y="1538"/>    
+    <position height="-1" width="-1" x="2078" y="1714"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="29" language="java" name="components.box.Grass3" project="TREASON" 
+  <class id="28" language="java" name="components.box.Grass3" project="TREASON" 
     file="/TREASON/src/components/box/Grass3.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1607" y="1538"/>    
+    <position height="-1" width="-1" x="2241" y="1714"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="30" language="java" name="components.box.Grass4" project="TREASON" 
+  <class id="29" language="java" name="components.box.Grass4" project="TREASON" 
     file="/TREASON/src/components/box/Grass4.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1770" y="1538"/>    
+    <position height="-1" width="-1" x="2404" y="1714"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="31" language="java" name="components.box.Oak" project="TREASON" file="/TREASON/src/components/box/Oak.java" 
+  <class id="30" language="java" name="components.box.Oak" project="TREASON" file="/TREASON/src/components/box/Oak.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1925" y="1538"/>    
+    <position height="-1" width="-1" x="2559" y="1714"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="32" language="java" name="components.box.Grass5" project="TREASON" 
+  <class id="31" language="java" name="components.box.Grass5" project="TREASON" 
     file="/TREASON/src/components/box/Grass5.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2079" y="1538"/>    
+    <position height="-1" width="-1" x="2713" y="1714"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="33" language="java" name="components.box.Grass0" project="TREASON" 
+  <class id="32" language="java" name="components.box.Grass0" project="TREASON" 
     file="/TREASON/src/components/box/Grass0.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2242" y="1538"/>    
+    <position height="-1" width="-1" x="2078" y="1815"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="34" language="java" name="components.box.PotionBox" project="TREASON" 
+  <class id="33" language="java" name="components.box.PotionBox" project="TREASON" 
     file="/TREASON/src/components/box/PotionBox.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2631" y="1547"/>    
+    <position height="-1" width="-1" x="2467" y="1824"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="35" language="java" name="components.box.Grass1" project="TREASON" 
+  <class id="34" language="java" name="components.box.Grass1" project="TREASON" 
     file="/TREASON/src/components/box/Grass1.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2814" y="1538"/>    
+    <position height="-1" width="-1" x="2650" y="1815"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="36" language="java" name="components.box.Portal" project="TREASON" 
+  <class id="35" language="java" name="components.box.Portal" project="TREASON" 
     file="/TREASON/src/components/box/Portal.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2973" y="1565"/>    
+    <position height="-1" width="-1" x="2809" y="1842"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="37" language="java" name="components.effect.Barrier" project="TREASON" 
+  <class id="36" language="java" name="components.effect.Barrier" project="TREASON" 
     file="/TREASON/src/components/effect/Barrier.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1491" y="1216"/>    
+    <position height="-1" width="-1" x="2070" y="1496"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="38" language="java" name="components.effect.Light" project="TREASON" 
+  <class id="37" language="java" name="components.effect.Light" project="TREASON" 
     file="/TREASON/src/components/effect/Light.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1622" y="1216"/>    
+    <position height="-1" width="-1" x="2201" y="1496"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="39" language="java" name="components.effect.Warning" project="TREASON" 
+  <class id="38" language="java" name="components.effect.Warning" project="TREASON" 
     file="/TREASON/src/components/effect/Warning.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1756" y="1216"/>    
+    <position height="-1" width="-1" x="2335" y="1496"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="40" language="java" name="components.effect.RecoveryLight" project="TREASON" 
+  <class id="39" language="java" name="components.effect.RecoveryLight" project="TREASON" 
     file="/TREASON/src/components/effect/RecoveryLight.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1910" y="1216"/>    
+    <position height="-1" width="-1" x="2489" y="1496"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="41" language="java" name="components.enemy.BossEnemy" project="TREASON" 
+  <class id="40" language="java" name="components.enemy.BossEnemy" project="TREASON" 
     file="/TREASON/src/components/enemy/BossEnemy.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1578" y="3011"/>    
+    <position height="-1" width="-1" x="1190" y="1839"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="42" language="java" name="components.character.MainCharacter" project="TREASON" 
+  <class id="41" language="java" name="components.character.MainCharacter" project="TREASON" 
     file="/TREASON/src/components/character/MainCharacter.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1644" y="2675"/>    
+    <position height="-1" width="-1" x="1125" y="1501"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="43" language="java" name="components.enemy.ColliderEnemy" project="TREASON" 
+  <class id="42" language="java" name="components.enemy.ColliderEnemy" project="TREASON" 
     file="/TREASON/src/components/enemy/ColliderEnemy.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1580" y="2914"/>    
+    <position height="-1" width="-1" x="1186" y="1741"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="44" language="java" name="components.enemy.GunEnemy" project="TREASON" 
+  <class id="43" language="java" name="components.enemy.GunEnemy" project="TREASON" 
     file="/TREASON/src/components/enemy/GunEnemy.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1578" y="3115"/>    
+    <position height="-1" width="-1" x="1192" y="1933"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="45" language="java" name="components.Item" project="TREASON" file="/TREASON/src/components/Item.java" 
+  <class id="44" language="java" name="components.Item" project="TREASON" file="/TREASON/src/components/Item.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2642" y="852"/>    
+    <position height="-1" width="-1" x="2423" y="918"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="46" language="java" name="components.consumable.ConsumableItem" project="TREASON" 
+  <class id="45" language="java" name="components.consumable.ConsumableItem" project="TREASON" 
     file="/TREASON/src/components/consumable/ConsumableItem.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2228" y="1039"/>    
+    <position height="-1" width="-1" x="2067" y="919"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="47" language="java" name="components.weapon.Weapon" project="TREASON" 
+  <class id="46" language="java" name="components.weapon.Weapon" project="TREASON" 
     file="/TREASON/src/components/weapon/Weapon.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="3124" y="1030"/>    
+    <position height="-1" width="-1" x="3029" y="936"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="48" language="java" name="components.consumable.Potion" project="TREASON" 
+  <class id="47" language="java" name="components.consumable.Potion" project="TREASON" 
     file="/TREASON/src/components/consumable/Potion.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2109" y="1222"/>    
+    <position height="-1" width="-1" x="1942" y="1092"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="49" language="java" name="components.consumable.Ammo" project="TREASON" 
+  <class id="48" language="java" name="components.consumable.Ammo" project="TREASON" 
     file="/TREASON/src/components/consumable/Ammo.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2349" y="1222"/>    
+    <position height="-1" width="-1" x="2200" y="1093"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="50" language="java" name="components.weapon.Sword" project="TREASON" 
+  <class id="49" language="java" name="components.weapon.Sword" project="TREASON" 
     file="/TREASON/src/components/weapon/Sword.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2609" y="1278"/>    
+    <position height="-1" width="-1" x="2514" y="1192"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="51" language="java" name="components.weapon.BombGun" project="TREASON" 
+  <class id="50" language="java" name="components.weapon.BombGun" project="TREASON" 
     file="/TREASON/src/components/weapon/BombGun.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2935" y="1278"/>    
+    <position height="-1" width="-1" x="2840" y="1192"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="52" language="java" name="components.weapon.RocketGun" project="TREASON" 
+  <class id="51" language="java" name="components.weapon.RocketGun" project="TREASON" 
     file="/TREASON/src/components/weapon/RocketGun.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="3261" y="1278"/>    
+    <position height="-1" width="-1" x="3166" y="1192"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="53" language="java" name="components.weapon.Gun" project="TREASON" 
+  <class id="52" language="java" name="components.weapon.Gun" project="TREASON" 
     file="/TREASON/src/components/weapon/Gun.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="3587" y="1278"/>    
+    <position height="-1" width="-1" x="3492" y="1192"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="54" language="java" name="components.Action" project="TREASON" file="/TREASON/src/components/Action.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2346" y="472"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <interface id="55" language="java" name="implement.Fireable" project="TREASON" 
+  <interface id="53" language="java" name="implement.Fireable" project="TREASON" 
     file="/TREASON/src/implement/Fireable.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="3205" y="1496"/>    
+    <position height="-1" width="-1" x="3008" y="1409"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <interface id="56" language="java" name="implement.Explodable" project="TREASON" 
+  <interface id="54" language="java" name="implement.Explodable" project="TREASON" 
     file="/TREASON/src/implement/Explodable.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1628" y="2024"/>    
+    <position height="-1" width="-1" x="2196" y="2333"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <interface id="57" language="java" name="implement.Consumable" project="TREASON" 
+  <interface id="55" language="java" name="implement.Consumable" project="TREASON" 
     file="/TREASON/src/implement/Consumable.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2232" y="1352"/>    
+    <position height="-1" width="-1" x="2079" y="1218"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <interface id="58" language="java" name="implement.Interactable" project="TREASON" 
+  <interface id="56" language="java" name="implement.Interactable" project="TREASON" 
     file="/TREASON/src/implement/Interactable.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2409" y="1780"/>    
+    <position height="-1" width="-1" x="2515" y="1969"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <generalization id="59">    
-    <end type="SOURCE" refId="40"/>    
-    <end type="TARGET" refId="19"/>  
-  </generalization>  
-  <generalization id="60">    
-    <end type="SOURCE" refId="44"/>    
-    <end type="TARGET" refId="20"/>  
-  </generalization>  
-  <realization id="61">    
-    <end type="SOURCE" refId="48"/>    
-    <end type="TARGET" refId="57"/>  
-  </realization>  
-  <realization id="62">    
-    <end type="SOURCE" refId="49"/>    
-    <end type="TARGET" refId="57"/>  
-  </realization>  
-  <generalization id="63">    
-    <end type="SOURCE" refId="43"/>    
-    <end type="TARGET" refId="20"/>  
-  </generalization>  
-  <generalization id="64">    
-    <end type="SOURCE" refId="41"/>    
-    <end type="TARGET" refId="20"/>  
-  </generalization>  
-  <generalization id="65">    
-    <end type="SOURCE" refId="36"/>    
-    <end type="TARGET" refId="22"/>  
-  </generalization>  
-  <generalization id="66">    
-    <end type="SOURCE" refId="53"/>    
-    <end type="TARGET" refId="47"/>  
-  </generalization>  
-  <generalization id="67">    
-    <end type="SOURCE" refId="51"/>    
-    <end type="TARGET" refId="47"/>  
-  </generalization>  
-  <generalization id="68">    
-    <end type="SOURCE" refId="24"/>    
+  <class id="57" language="java" name="components.character.GameCharacter" project="TREASON" 
+    file="/TREASON/src/components/character/GameCharacter.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1451" y="1796"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <generalization id="58">    
+    <end type="SOURCE" refId="33"/>    
     <end type="TARGET" refId="21"/>  
   </generalization>  
-  <generalization id="69">    
+  <realization id="59">    
     <end type="SOURCE" refId="50"/>    
-    <end type="TARGET" refId="47"/>  
-  </generalization>  
-  <generalization id="70">    
-    <end type="SOURCE" refId="52"/>    
-    <end type="TARGET" refId="47"/>  
-  </generalization>  
-  <generalization id="71">    
-    <end type="SOURCE" refId="32"/>    
-    <end type="TARGET" refId="22"/>  
-  </generalization>  
-  <generalization id="72">    
-    <end type="SOURCE" refId="30"/>    
-    <end type="TARGET" refId="22"/>  
-  </generalization>  
-  <generalization id="73">    
-    <end type="SOURCE" refId="42"/>    
-    <end type="TARGET" refId="20"/>  
-  </generalization>  
-  <generalization id="74">    
-    <end type="SOURCE" refId="49"/>    
+    <end type="TARGET" refId="53"/>  
+  </realization>  
+  <generalization id="60">    
+    <end type="SOURCE" refId="51"/>    
     <end type="TARGET" refId="46"/>  
   </generalization>  
-  <generalization id="75">    
-    <end type="SOURCE" refId="31"/>    
-    <end type="TARGET" refId="22"/>  
+  <generalization id="61">    
+    <end type="SOURCE" refId="26"/>    
+    <end type="TARGET" refId="21"/>  
   </generalization>  
-  <generalization id="76">    
+  <generalization id="62">    
+    <end type="SOURCE" refId="40"/>    
+    <end type="TARGET" refId="57"/>  
+  </generalization>  
+  <realization id="63">    
+    <end type="SOURCE" refId="25"/>    
+    <end type="TARGET" refId="54"/>  
+  </realization>  
+  <generalization id="64">    
     <end type="SOURCE" refId="19"/>    
     <end type="TARGET" refId="18"/>  
   </generalization>  
-  <generalization id="77">    
-    <end type="SOURCE" refId="46"/>    
-    <end type="TARGET" refId="45"/>  
-  </generalization>  
-  <realization id="78">    
-    <end type="SOURCE" refId="53"/>    
-    <end type="TARGET" refId="55"/>  
-  </realization>  
-  <generalization id="79">    
-    <end type="SOURCE" refId="26"/>    
+  <generalization id="65">    
+    <end type="SOURCE" refId="35"/>    
     <end type="TARGET" refId="21"/>  
   </generalization>  
-  <generalization id="80">    
-    <end type="SOURCE" refId="28"/>    
-    <end type="TARGET" refId="22"/>  
-  </generalization>  
-  <generalization id="81">    
-    <end type="SOURCE" refId="34"/>    
-    <end type="TARGET" refId="22"/>  
-  </generalization>  
-  <realization id="82">    
+  <realization id="66">    
     <end type="SOURCE" refId="51"/>    
+    <end type="TARGET" refId="53"/>  
+  </realization>  
+  <realization id="67">    
+    <end type="SOURCE" refId="47"/>    
     <end type="TARGET" refId="55"/>  
   </realization>  
-  <generalization id="83">    
-    <end type="SOURCE" refId="37"/>    
-    <end type="TARGET" refId="19"/>  
+  <generalization id="68">    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="21"/>  
   </generalization>  
-  <generalization id="84">    
-    <end type="SOURCE" refId="22"/>    
+  <generalization id="69">    
+    <end type="SOURCE" refId="43"/>    
+    <end type="TARGET" refId="57"/>  
+  </generalization>  
+  <generalization id="70">    
+    <end type="SOURCE" refId="46"/>    
+    <end type="TARGET" refId="44"/>  
+  </generalization>  
+  <generalization id="71">    
+    <end type="SOURCE" refId="52"/>    
+    <end type="TARGET" refId="46"/>  
+  </generalization>  
+  <generalization id="72">    
+    <end type="SOURCE" refId="25"/>    
+    <end type="TARGET" refId="20"/>  
+  </generalization>  
+  <generalization id="73">    
+    <end type="SOURCE" refId="57"/>    
     <end type="TARGET" refId="18"/>  
   </generalization>  
-  <realization id="85">    
+  <generalization id="74">    
     <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="20"/>  
+  </generalization>  
+  <realization id="75">    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="54"/>  
+  </realization>  
+  <generalization id="76">    
+    <end type="SOURCE" refId="48"/>    
+    <end type="TARGET" refId="45"/>  
+  </generalization>  
+  <generalization id="77">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="18"/>  
+  </generalization>  
+  <realization id="78">    
+    <end type="SOURCE" refId="52"/>    
+    <end type="TARGET" refId="53"/>  
+  </realization>  
+  <generalization id="79">    
+    <end type="SOURCE" refId="45"/>    
+    <end type="TARGET" refId="44"/>  
+  </generalization>  
+  <generalization id="80">    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="20"/>  
+  </generalization>  
+  <realization id="81">    
+    <end type="SOURCE" refId="26"/>    
     <end type="TARGET" refId="56"/>  
   </realization>  
-  <generalization id="86">    
-    <end type="SOURCE" refId="39"/>    
-    <end type="TARGET" refId="19"/>  
-  </generalization>  
-  <generalization id="87">    
-    <end type="SOURCE" refId="35"/>    
-    <end type="TARGET" refId="22"/>  
-  </generalization>  
-  <generalization id="88">    
-    <end type="SOURCE" refId="29"/>    
-    <end type="TARGET" refId="22"/>  
-  </generalization>  
-  <realization id="89">    
-    <end type="SOURCE" refId="27"/>    
-    <end type="TARGET" refId="58"/>  
-  </realization>  
-  <realization id="90">    
-    <end type="SOURCE" refId="52"/>    
-    <end type="TARGET" refId="55"/>  
-  </realization>  
-  <realization id="91">    
+  <generalization id="82">    
     <end type="SOURCE" refId="50"/>    
-    <end type="TARGET" refId="55"/>  
-  </realization>  
-  <generalization id="92">    
-    <end type="SOURCE" refId="33"/>    
-    <end type="TARGET" refId="22"/>  
+    <end type="TARGET" refId="46"/>  
   </generalization>  
-  <realization id="93">    
-    <end type="SOURCE" refId="34"/>    
-    <end type="TARGET" refId="58"/>  
-  </realization>  
-  <generalization id="94">    
-    <end type="SOURCE" refId="23"/>    
+  <generalization id="83">    
+    <end type="SOURCE" refId="31"/>    
     <end type="TARGET" refId="21"/>  
   </generalization>  
-  <generalization id="95">    
+  <realization id="84">    
+    <end type="SOURCE" refId="49"/>    
+    <end type="TARGET" refId="53"/>  
+  </realization>  
+  <realization id="85">    
+    <end type="SOURCE" refId="48"/>    
+    <end type="TARGET" refId="55"/>  
+  </realization>  
+  <generalization id="86">    
     <end type="SOURCE" refId="47"/>    
     <end type="TARGET" refId="45"/>  
   </generalization>  
+  <generalization id="87">    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="21"/>  
+  </generalization>  
+  <generalization id="88">    
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="21"/>  
+  </generalization>  
+  <generalization id="89">    
+    <end type="SOURCE" refId="42"/>    
+    <end type="TARGET" refId="57"/>  
+  </generalization>  
+  <generalization id="90">    
+    <end type="SOURCE" refId="49"/>    
+    <end type="TARGET" refId="46"/>  
+  </generalization>  
+  <realization id="91">    
+    <end type="SOURCE" refId="33"/>    
+    <end type="TARGET" refId="56"/>  
+  </realization>  
+  <generalization id="92">    
+    <end type="SOURCE" refId="41"/>    
+    <end type="TARGET" refId="57"/>  
+  </generalization>  
+  <generalization id="93">    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="20"/>  
+  </generalization>  
+  <generalization id="94">    
+    <end type="SOURCE" refId="36"/>    
+    <end type="TARGET" refId="19"/>  
+  </generalization>  
+  <generalization id="95">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="21"/>  
+  </generalization>  
   <generalization id="96">    
+    <end type="SOURCE" refId="32"/>    
+    <end type="TARGET" refId="21"/>  
+  </generalization>  
+  <generalization id="97">    
     <end type="SOURCE" refId="21"/>    
     <end type="TARGET" refId="18"/>  
   </generalization>  
-  <generalization id="97">    
-    <end type="SOURCE" refId="25"/>    
+  <generalization id="98">    
+    <end type="SOURCE" refId="39"/>    
+    <end type="TARGET" refId="19"/>  
+  </generalization>  
+  <generalization id="99">    
+    <end type="SOURCE" refId="28"/>    
     <end type="TARGET" refId="21"/>  
   </generalization>  
-  <generalization id="98">    
-    <end type="SOURCE" refId="27"/>    
-    <end type="TARGET" refId="22"/>  
-  </generalization>  
-  <realization id="99">    
-    <end type="SOURCE" refId="26"/>    
-    <end type="TARGET" refId="56"/>  
-  </realization>  
   <generalization id="100">    
-    <end type="SOURCE" refId="20"/>    
-    <end type="TARGET" refId="18"/>  
+    <end type="SOURCE" refId="37"/>    
+    <end type="TARGET" refId="19"/>  
   </generalization>  
   <generalization id="101">    
     <end type="SOURCE" refId="38"/>    
     <end type="TARGET" refId="19"/>  
-  </generalization>  
-  <generalization id="102">    
-    <end type="SOURCE" refId="48"/>    
-    <end type="TARGET" refId="46"/>  
   </generalization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    

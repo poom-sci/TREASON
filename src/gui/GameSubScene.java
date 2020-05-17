@@ -12,8 +12,8 @@ import javafx.util.Duration;
 
 public class GameSubScene extends SubScene {
 
-	private static final int HEIGHT=400;
-	private static final int WIDTH=600;
+	private static final int HEIGHT=600;
+	private static final int WIDTH=800;
 	private final String BACKGROUND_IMAGE = "board_0001.png";
 	
 	private boolean isHidden;
@@ -23,12 +23,12 @@ public class GameSubScene extends SubScene {
 		prefHeight(HEIGHT);
 		prefWidth(WIDTH);
 		
-		BackgroundImage image =new BackgroundImage(new Image(BACKGROUND_IMAGE,600,400,false,true), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
+		BackgroundImage image =new BackgroundImage(new Image(BACKGROUND_IMAGE,700,500,false,true), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
 		AnchorPane root2=(AnchorPane) this.getRoot();
 		
 		root2.setBackground(new Background(image));
 		setLayoutX(1024);
-		setLayoutY(250);
+		setLayoutY(200);
 		isHidden=true;
 	}
 	
@@ -38,7 +38,7 @@ public class GameSubScene extends SubScene {
 		transition.setDuration(Duration.millis(1500));
 		transition.setNode(this);
 		if(isHidden) {
-			transition.setToX(-676);
+			transition.setToX(-720);
 			isHidden=false;
 		}else {
 			transition.setToX(0);
