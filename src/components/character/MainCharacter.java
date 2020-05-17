@@ -9,6 +9,11 @@ import components.weapon.Gun;
 import components.weapon.RocketGun;
 import components.weapon.Sword;
 import components.weapon.Weapon;
+import gui.SpriteAnimation;
+import javafx.animation.Animation;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 public class MainCharacter extends GameCharacter {
@@ -41,6 +46,8 @@ public class MainCharacter extends GameCharacter {
 		createGun();
 		createRocketGun();
 		createSword();
+		
+		super.createAnimation();
 
 	}
 	

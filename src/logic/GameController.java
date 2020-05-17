@@ -113,7 +113,7 @@ public class GameController {
 	private boolean isGameEnd = false;
 
 	public GameController() {
-		createLevel(1);
+		createLevel(3);
 
 	}
 

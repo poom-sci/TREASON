@@ -62,17 +62,14 @@ public abstract class GameCharacter extends Entity {
 		this.weaponsInventory = new ArrayList<Weapon>();
 
 
-		this.pictureWidth = 128;
-		this.pictureHeight = 128;
-		this.pictureOffsetX = 0;
-		this.pictureOffsetY = 0;
-
-		createAnimation();
+		this.pictureWidth = 100;
+		this.pictureHeight = 100;
+		createAction();
 
 	}
 
 	public void createAnimation() {
-		createAction();
+		
 		imageView = new ImageView(new Image(image_Path));
 		imageView.setViewport(new Rectangle2D(pictureOffsetX, pictureOffsetY, pictureWidth, pictureHeight));
 
@@ -82,8 +79,6 @@ public abstract class GameCharacter extends Entity {
 		sprite.play();
 	
 
-		boundX = 32;
-		boundY = 18;
 		setX(initX);
 		setY(initY);
 
@@ -95,14 +90,14 @@ public abstract class GameCharacter extends Entity {
 		action=new ArrayList<>(Collections.nCopies(8, false));
 		
 //		�ӡѺ action
-//		action.add(turnLeft);
-//		action.add(turnRight);
-//		action.add(walkLeft);
-//		action.add(walkRight);
-//		action.add(fireLeft);
-//		action.add(fireRight);
-//		action.add(dieLeft);
-//		action.add(dieRight);
+//		turnLeft
+//		turnRight
+//		walkLeft
+//		walkRight
+//		fireLeft
+//		fireRight
+//		dieLeft
+//		dieRight
 	}
 
 	public void resetAction() {

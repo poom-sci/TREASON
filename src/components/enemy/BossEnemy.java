@@ -35,6 +35,8 @@ public class BossEnemy extends GameCharacter {
 		fireTime = Duration.millis(200);
 		dieTime = Duration.millis(2000);
 
+		super.createAnimation();
+		
 		setX(initX);
 		setY(initY);
 

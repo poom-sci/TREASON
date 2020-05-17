@@ -32,7 +32,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
 public class LevelData {
-	
+
 	private static final String[] LEVEL1 = new String[] {
 			"20000000000000000000000000000000000000000000000000000000000000000000000003",
 			"2000000000000000000000000000000000000000000000000000000000000HC00000000003",
@@ -47,8 +47,7 @@ public class LevelData {
 			"2000004150000000000046200375000C000G00C000000G00046xx7111111111111111116xx",
 			"7111116x2004115000416x2003x71111111111111111111116xxxxxxxxxxxxxxxxxxxxxxxx" };
 
-	private static final String[] LEVEL2 = new String[] { 
-			"200000000000000000000000000000000000000000000000000003",
+	private static final String[] LEVEL2 = new String[] { "200000000000000000000000000000000000000000000000000003",
 			"200000000000000000000000000000000000000000000000000003",
 			"20000000000000C0000GC000HA0000000000000000000000000003",
 			"2000000000000ab000a88b00ab0000000000000000000000000003",
@@ -61,18 +60,12 @@ public class LevelData {
 			"2046xxxx20000000000000000371116x71111111111111111116xx",
 			"716xxxxx200411500041115003xxxxxxxxxxxxxxxxxxxxxxxxxxxx" };
 
-	private static final String[] LEVEL3 = new String[] { 
-			"2000000000000000000000000000000000003",
-			"2000000000000000000000000000000000003", 
-			"2000000000000000000000000000000000003",
-			"20000000000000c0000000000000000000B03", 
-			"2000000000000090000000000000000000003",
-			"2000000000000035000000000000000000003", 
-			"2000000000041162000000000000000000416",
-			"200000000046xxx20000000000000000003xx", 
-			"20000000046xxxx2000a8b00a8b00a8b003xx",
-			"2000000046xxxxx20000000000000000003xx", 
-			"200000046xxxxxx75000000000000000003xx",
+	private static final String[] LEVEL3 = new String[] { "2000000000000000000000000000000000003",
+			"2000000000000000000000000000000000003", "2000000000000000000000000000000000003",
+			"20000000000000c0000000000000000000B03", "2000000000000090000000000000000000003",
+			"2000000000000035000000000000000000003", "2000000000041162000000000000000000416",
+			"200000000046xxx20000000000000000003xx", "20000000046xxxx2000a8b00a8b00a8b003xx",
+			"2000000046xxxxx20000000000000000003xx", "200000046xxxxxx75000000000000000003xx",
 			"71111116xxxxxxxx7111111111111111116xx" };
 
 	public static final String[][] ALLLEVELMAP = new String[][] { LEVEL1, LEVEL2, LEVEL3 };
@@ -229,7 +222,6 @@ public class LevelData {
 					break;
 				case 'B':
 					boss = new BossEnemy(j * 60, i * 60);
-//					gameRoot.getChildren().addAll(boss.getBox());
 					gameRoot.getChildren().add(boss.getImageView());
 
 					Rectangle box = new Rectangle(j * 60 - 1550, 180, 280, 70);
@@ -237,16 +229,10 @@ public class LevelData {
 					box.setFill(Color.ANTIQUEWHITE);
 					Label bossStage = new Label("boss Stage");
 
-					try {
-//						bulletLeft.setTextFill(Color.web("EA8F3C"));
-						bossStage.setFont(Font.loadFont(new FileInputStream("res/PixelTakhisis-ZajJ.ttf"), 23));
-						bossStage.setTranslateX(j * 60 - 1500);
-						bossStage.setTranslateY(200);
-
-					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					bossStage.setFont(Font.loadFont(
+							getClass().getClassLoader().getResource("PixelTakhisis-ZajJ.ttf").toExternalForm(), 23));
+					bossStage.setTranslateX(j * 60 - 1500);
+					bossStage.setTranslateY(200);
 					gameRoot.getChildren().addAll(box, bossStage);
 
 					break;

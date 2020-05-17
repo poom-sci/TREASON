@@ -20,6 +20,9 @@ public class ColliderEnemy extends GameCharacter {
 		point=100;
 		this.disX = 60 * 5;
 		velocityX=1;
+		
+		boundX = 32;
+		boundY = 18;
 
 		this.pictureWidth=96;
 		this.pictureHeight=96;
@@ -30,6 +33,8 @@ public class ColliderEnemy extends GameCharacter {
 		walkTime = Duration.millis(1000);
 		fireTime = Duration.millis(200);
 		dieTime = Duration.millis(2000);
+		
+		super.createAnimation();
 
 	}
 
