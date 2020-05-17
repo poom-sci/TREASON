@@ -160,22 +160,6 @@ public class Leaderboards {
 		}
 	}
 
-	public ArrayList<String> getTopPlayer() {
-		return topPlayer;
-	}
-	
-//	public String getTopPlayer(int i) {
-//		String score=topPlayer.get(i);
-//		for(int j=0;j<(10-topPlayer.get(i).length());j++) {
-//			score+=" ";
-//		}
-//		score+=": "+topScores.get(i);
-//		for(int j=0;j<(10-(""+topScores.get(i)).length());j++) {
-//			score+=" ";
-//		}
-//		score+=": "+topTimes.get(i);
-//		return score;
-//	}
 	
 	public String getTopPlayerName(int i) {
 		return topPlayer.get(i);
