@@ -17,9 +17,6 @@ public class PlayerInfoBox extends AnchorPane {
 	private Label number;
 	private Rectangle playerHp;
 
-//	private final String FONT_PATH = "PixelTakhisis-ZajJ.ttf";
-//	private final String BACKGROUND_IMAGE = "board.png";
-
 	public PlayerInfoBox() {
 		super();
 

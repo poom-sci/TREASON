@@ -22,20 +22,16 @@ public class PauseMenu extends AnchorPane {
 
 	private Rectangle background;
 	private GameButton resume;
-	private GameButton restart;
 	private GameButton exit;
 	private ImageView sound;
 	private boolean isSoundOn;
-//	private AudioClip gameThemeSong;
-//	private final String FONT_PATH = "PixelTakhisis-ZajJ.ttf";
-//	private final String BACKGROUND_IMAGE = "board.png";
+
 
 	public PauseMenu() {
 		super();
 
 		createBackground();
 		createResumeButton();
-//		createRestartButton();
 		createExitButton();
 		createSoundOn();
 
@@ -58,15 +54,6 @@ public class PauseMenu extends AnchorPane {
 
 	}
 
-	private void createRestartButton() {
-		restart = new GameButton("restart");
-		this.getChildren().add(restart);
-		
-		restart.setTranslateX(50);
-		restart.setTranslateY(200);
-
-	}
-
 	private void createExitButton() {
 		exit = new GameButton("exit");
 		this.getChildren().add(exit);
@@ -79,11 +66,6 @@ public class PauseMenu extends AnchorPane {
 	private void createSoundOn() {
 		sound = new ImageView("speaker_on.png");
 		this.getChildren().add(sound);
-//		gameThemeSong=new AudioClip(
-//				ClassLoader.getSystemResource("Off_limits.wav").toString());
-//		gameThemeSong.setCycleCount(AudioClip.INDEFINITE);
-//		gameThemeSong.setVolume(0.5);
-//		gameThemeSong.play();
 		
 		isSoundOn=true;
 		sound.setFitWidth(100);
@@ -138,17 +120,11 @@ public class PauseMenu extends AnchorPane {
 		isSoundOn=true;
 		AudioLoader.setVolume(0.5);
 		sound.setImage(new javafx.scene.image.Image("speaker_on.png"));
-//		gameThemeSong.setVolume(0.5);
-//		gameThemeSong.play();
 	}
 	
 
 	public GameButton getResume() {
 		return resume;
-	}
-
-	public GameButton getRestart() {
-		return restart;
 	}
 
 	public GameButton getExit() {

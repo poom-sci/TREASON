@@ -17,8 +17,6 @@ public class PlayerInventoryBox extends AnchorPane {
 	private Label numberItem1;
 	private Label numberItem2;
 	
-//	private final String FONT_PATH = "PixelTakhisis-ZajJ.ttf";
-//	private final String BACKGROUND_IMAGE = "board.png";
 
 	public PlayerInventoryBox(MainCharacter player) {
 		super();
@@ -37,14 +35,11 @@ public class PlayerInventoryBox extends AnchorPane {
 		inventory.setFitHeight(70);
 		inventory.setFitWidth(300);
 		inventory.setOpacity(0.6);
-//		inventory.setTranslateX(750);
-//		inventory.setTranslateY(625);
 
 		this.getChildren().add(inventory);
 	}
 
 	private void createItemImage() {
-//		System.out.println(player.getItemsInventory());
 
 		for (int i = 0; i < player.getItemsInventory().size(); i++) {
 			ConsumableItem item = player.getItemsInventory().get(i);

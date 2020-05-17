@@ -47,7 +47,7 @@ public class RocketGun extends Weapon implements Fireable {
 		bullet.setRight(isRight);
 		if (isRight) {
 			int x = character.getX() + 0;
-			int y = character.getY()+30;
+			int y = character.getY()+25;
 			bullet.setBoundX(30);
 			bullet.setInitX(x);
 			bullet.setInitY(y);
@@ -55,7 +55,7 @@ public class RocketGun extends Weapon implements Fireable {
 			bullet.setY(y);
 		} else {
 			int x = character.getX() +0;
-			int y = character.getY()+30;
+			int y = character.getY()+25;
 			bullet.setBoundX(-30);
 			bullet.setInitX(x);
 			bullet.setInitY(y);

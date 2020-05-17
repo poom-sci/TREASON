@@ -15,13 +15,13 @@ public class SwordSlice extends Bullet {
 		super("sword_slice.png",isRight,initX,initY, 50, 50);
 		// TODO Auto-generated constructor stub
 		this.disX = 30;
-		this.disY = 20;
+		this.disY = 5;
 		
 		damage=20;
 		this.velocityX=2;
 
 //		this.addOnY=-15;
-		this.boundY=-20;
+		this.boundY=0;
 		creatAnimation();
 		
 

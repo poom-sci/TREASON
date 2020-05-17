@@ -20,30 +20,19 @@ public class Sword extends Weapon implements Fireable {
 
 	}
 
-	public Bullet fireBullet(components.character.GameCharacter character, boolean isRight) throws FireBulletFailedException {
+	public Bullet fireBullet(components.character.GameCharacter character, boolean isRight)
+			throws FireBulletFailedException {
 		if (currentBullet == 0) {
 			throw new FireBulletFailedException("There is no bullet left.");
 		}
 		currentBullet -= 1;
-		bullets.get(0).setRight(isRight);
-
-		bullets.get(0).setInitX(character.getX());
-		bullets.get(0).setInitY(character.getY());
-		bullets.get(0).setY(character.getY());
-		if (isRight) {
-			bullets.get(0).setX(character.getX() + 40);
-		} else {
-			bullets.get(0).setX(character.getX() - 60);
-		}
-		if (!isRight) {
-			bullets.get(0).getImageView().setRotate(bullets.get(0).getImageView().getRotate() + 180);
-		}
+		Bullet bullet=bullets.get(0);
+		bullet = setPositionBullet(character, isRight, bullet);
 		addBullet(1);
-		
-		AudioClip Sword_Sound =AudioLoader.Sword_Sound;
-//		granade_sound.setVolume(0.1);
+
+		AudioClip Sword_Sound = AudioLoader.Sword_Sound;
 		Sword_Sound.play();
-		
+
 		return bullets.remove(0);
 	}
 
@@ -58,36 +47,34 @@ public class Sword extends Weapon implements Fireable {
 				return;
 			}
 		}
-		
+
 	}
 
 	@Override
 	public Bullet setPositionBullet(GameCharacter character, boolean isRight, Bullet bullet) {
 		// TODO Auto-generated method stub
+		
 		bullet.setRight(isRight);
+		bullet.setInitX(character.getX());
+		bullet.setInitY(character.getY());
 		if (isRight) {
 			int x = character.getX() + 40;
-			int y = character.getY() + 20;
-			bullet.setInitX(x);
-			bullet.setInitY(y);
+			int y = character.getY() + 7;
 			bullet.setX(x);
 			bullet.setY(y);
 		} else {
 			int x = character.getX() - 40;
-			int y = character.getY() + 20;
-			bullet.setInitX(x);
-			bullet.setInitY(y);
+			int y = character.getY() +7;
 			bullet.setX(x);
 			bullet.setY(y);
 		}
 
-			if (!isRight) {
-				bullet.getImageView().setRotate(bullet.getImageView().getRotate() + 180);
-			}
-		
-		
+		if (!isRight) {
+			bullets.get(0).getImageView().setScaleX(-1);
+		}
+
 		return bullet;
-		
+
 	}
 
 	@Override
@@ -95,11 +82,11 @@ public class Sword extends Weapon implements Fireable {
 		// TODO Auto-generated method stub
 		Bullet bullet = new SwordSlice(isRight, character.getX(), character.getY());
 		bullet = setPositionBullet(character, isRight, bullet);
-		
-		AudioClip Sword_Sound =AudioLoader.Sword_Sound;
+
+		AudioClip Sword_Sound = AudioLoader.Sword_Sound;
 //		granade_sound.setVolume(0.1);
 		Sword_Sound.play();
-		
+
 		return bullet;
 	}
 

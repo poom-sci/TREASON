@@ -69,13 +69,11 @@ import logic.LevelData;
 
 public class GameViewManager {
 
-	private GameViewManager gameViewManager;
-
-	private long startTime;
 	DoubleProperty time = new SimpleDoubleProperty(0.0);
 
 	private static final int HEIGHT = 720;
 	private static final int WIDTH = 1280;
+	
 	private AnchorPane gamePane;
 	private Scene gameScene;
 	private Stage gameStage;
@@ -131,7 +129,7 @@ public class GameViewManager {
 
 		gameStage = new Stage();
 		gameStage.setScene(gameScene);
-		gameStage.setTitle("Game Scene2");
+		gameStage.setTitle("Treason");
 		gameStage.setResizable(false);
 
 		isGameover = false;
@@ -366,7 +364,6 @@ public class GameViewManager {
 		playerInfoBox = null;
 		playerInventory = null;
 		gameEnding = null;
-		gameViewManager = null;
 		gameRoot = null;
 		player1Controller = null;
 		gamePane = null;

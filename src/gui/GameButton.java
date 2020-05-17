@@ -9,6 +9,7 @@ import javafx.scene.media.AudioClip;
 import javafx.scene.text.Font;
 
 public class GameButton extends Button {
+	
 	private final String FONT_PATH = "PixelTakhisis-ZajJ.ttf";
 	private final String BUTTON_PRESSED_STYLE = "-fx-background-color: transparent; -fx-background-image: url('blue_button_pressed.png');";
 	private final String BUTTON_FREE_STYLE = "-fx-background-color: transparent; -fx-background-image: url('blue_button.png');";
