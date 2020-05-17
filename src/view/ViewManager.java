@@ -283,7 +283,7 @@ public class ViewManager {
 						+ "pressed \"H\" to use healing potion \n"
 						+ "pressed \"J\" to use ammo pack \n"
 						+ "to win the game, \n"
-						+ "you must kill the boss"
+						+ "you must kill the boss "
 						+ "at the level 3");
 				credit.setTranslateX(100);
 				credit.setTranslateY(150);
