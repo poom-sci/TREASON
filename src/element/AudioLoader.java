@@ -25,15 +25,6 @@ public class AudioLoader {
 		Off_Limits.setVolume(volume);
 		Star_Commander.setVolume(volume);
 	}
-//	
-//	public void setStop() {
-//		Explosion_Sound.stop();
-//		Granade_Sound.stop();
-//		Gun_Sound.stop();
-//		Sword_Sound.stop();
-//		Gameover_Sound.stop();
-//		Off_Limits.stop();
-//		Star_Commander.stop();
-//	}
+
 }
 

@@ -296,9 +296,6 @@ public class GameController {
 					}
 				}
 
-			
-
-
 				if (isPressed(KeyCode.H)) {
 					if (!alreadyPressedH) {
 
@@ -626,7 +623,6 @@ public class GameController {
 		boolean movingRight = value > 0;
 		value = Math.abs(value);
 
-		for (int i = 0; i < Math.abs(value); i++) {
 			boolean isOutOfRange = Math.abs(item.getX() - item.getInitX()) > item.getDisX();
 			for (Entity platform : platforms) {
 
@@ -642,12 +638,11 @@ public class GameController {
 
 					if (item instanceof Explodable) {
 						((Explodable) item).explode();
-						checkEnemyCollision(item);
 						timedEntity(item, 1.0);
 						return;
 					}
 					if (item instanceof SwordSlice) {
-						checkEnemyCollision(item);
+
 						timedEntity(item, 0.2);
 						playerBullets.remove(item);
 						return;
@@ -656,8 +651,6 @@ public class GameController {
 					return;
 				}
 			}
-
-		}
 		item.setX(item.getX() + (movingRight ? 5 * value : -5 * value));
 	}
 
@@ -681,7 +674,6 @@ public class GameController {
 
 		boolean movingRight = boss.getFinalPositionX() - boss.getX() > 0;
 		int value = boss.getVelocityX();
-//		boss.setVelocityY(-40);
 
 		for (int i = 0; i < Math.abs(value); i++) {
 
@@ -709,14 +701,6 @@ public class GameController {
 		boss.setVelocityY(-30);
 
 		for (int i = 0; i < Math.abs(value); i++) {
-
-//			if (enemy.checkTurn(platforms)) {
-//				if (enemy.isRight()) {
-//					enemy.doWalkLeft();
-//				} else {
-//					enemy.doWalkRight();
-//				}
-//			}
 			boss.setX(boss.getX() + (movingRight ? value : -value));
 		}
 
@@ -849,26 +833,26 @@ public class GameController {
 	}
 
 	private void characterDie(GameCharacter Character) {
-		GameCharacter enemy = (GameCharacter) Character;
-		gameRoot.getChildren().remove(enemy.getImageView());
-		timedEntity(enemy, 1.5);
+		
+		gameRoot.getChildren().remove(Character.getImageView());
+		timedEntity(Character, 1.5);
 
-		enemieList.remove(enemy);
+		enemieList.remove(Character);
+		
 		if (Character instanceof BossEnemy) {
 			isWin = true;
-//			hasBoss = false;
 			isBossStart = false;
 			isGameEnd = true;
 		}
 
-		player.addPoint(enemy.getPoint());
+		player.addPoint(Character.getPoint());
 
-		if (enemy.isRight()) {
-			enemy.doDieRight();
+		if (Character.isRight()) {
+			Character.doDieRight();
 		} else {
-			enemy.doDieLeft();
+			Character.doDieLeft();
 		}
-		if (enemy.isPensioner()) {
+		if (Character.isPensioner()) {
 			pensioner -= 1;
 		}
 	}
@@ -890,6 +874,7 @@ public class GameController {
 					isBarrierOpen = false;
 					player.setOpacityNormal();
 				}
+				
 				if (item instanceof RecoveryLight) {
 					isRecoverylightOpen = false;
 				}
@@ -901,6 +886,8 @@ public class GameController {
 					enemieList.add(enemy);
 					gameRoot.getChildren().add(enemy.getImageView());
 				}
+				
+				
 				timedEntityList.remove(item);
 				removeEntity(item);
 				continue;
@@ -933,13 +920,11 @@ public class GameController {
 		platforms = null;
 		portalList = null;
 		enemieList = null;
-//		hasBoss = false;
 		isBossStart = false;
 		boss = null;
 		light = null;
 		recoverylight = null;
 		barrier = null;
-
 		levelWidth = 0;
 		levelHeight = 0;
 		System.gc();

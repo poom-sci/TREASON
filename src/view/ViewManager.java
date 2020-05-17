@@ -85,7 +85,7 @@ public class ViewManager {
 
 		mainStage = new Stage();
 		mainStage.setScene(mainScene);
-		mainStage.setTitle("Game Project");
+		mainStage.setTitle("Treason");
 
 	}
 

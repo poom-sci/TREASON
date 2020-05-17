@@ -2,7 +2,7 @@ package components.effect;
 
 import components.Entity;
 
-public class Effect extends Entity {
+public abstract class Effect extends Entity {
 	protected boolean isInUsed;
 
 	public Effect(String image_Path, int initX, int initY, int width, int height) {
