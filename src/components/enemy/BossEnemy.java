@@ -36,9 +36,6 @@ public class BossEnemy extends GameCharacter {
 		dieTime = Duration.millis(2000);
 
 		super.createAnimation();
-		
-		setX(initX);
-		setY(initY);
 
 		sprite.stop();
 		imageView.setViewport(new Rectangle2D(pictureOffsetX, pictureOffsetY, pictureWidth, pictureHeight));
