@@ -81,7 +81,6 @@ public class RocketGun extends Weapon implements Fireable {
 		bullet = setPositionBullet(character, isRight, bullet);
 		
 		AudioClip granade_sound = AudioLoader.Granade_Sound;
-//		granade_sound.setVolume(0.2);
 		granade_sound.play();
 
 		return bullets.remove(0);

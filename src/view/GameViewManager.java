@@ -110,7 +110,9 @@ public class GameViewManager {
 		gameRoot = player1Controller.getGameRoot();
 		gamePane.getChildren().addAll(player1Controller.getBg(), gameRoot);
 		gameScene = new Scene(gamePane, WIDTH, HEIGHT);
-
+		
+		AudioLoader.setVolume(0.5);
+		
 		gameThemeSong = AudioLoader.Off_Limits;
 		gameThemeSong.setCycleCount(AudioClip.INDEFINITE);
 		gameThemeSong.play();

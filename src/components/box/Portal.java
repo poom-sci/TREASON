@@ -14,7 +14,7 @@ public class Portal extends Box {
 	private int level;
 	
 	public Portal( int initX,int initY,int width, int height) {
-		super("portal-white.png", initX, initY,width,height);
+		super("portal_white.png", initX, initY,width,height);
 	}
 
 	public int getLevel() {

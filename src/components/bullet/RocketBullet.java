@@ -29,7 +29,7 @@ public class RocketBullet extends Bullet implements Explodable {
 	public void explode() {
 		// TODO Auto-generated method stub
 		AudioClip Explosion_Sound =AudioLoader.Explosion_Sound;
-		Explosion_Sound.setVolume(0.5);
+//		Explosion_Sound.setVolume(0.5d);
 		Explosion_Sound.play();
 		
 		this.imageView = new ImageView(new Image("bomb-sprite.png"));

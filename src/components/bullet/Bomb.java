@@ -31,7 +31,7 @@ public class Bomb extends Bullet implements Explodable {
 	@Override
 	public void explode() {
 		AudioClip Explosion_Sound =AudioLoader.Explosion_Sound;
-		Explosion_Sound.setVolume(0.5);
+//		Explosion_Sound.setVolume(0.5);
 		Explosion_Sound.play();
 
 		this.imageView = new ImageView(new Image("bomb-sprite.png"));

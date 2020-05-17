@@ -129,15 +129,15 @@ public class PauseMenu extends AnchorPane {
 	
 	public void setSoundOff() {
 		isSoundOn=false;
-//		AudioLoader.setVolume(0.0);
+		AudioLoader.setVolume(0.0);
 		sound.setImage(new javafx.scene.image.Image("speaker_off.png"));
 //		gameThemeSong.stop();
 	}
 	
 	public void setSoundOn() {
 		isSoundOn=true;
-//		AudioLoader.setVolume(0.5);
-		sound.setImage(new javafx.scene.image.Image("speaker_On.png"));
+		AudioLoader.setVolume(0.5);
+		sound.setImage(new javafx.scene.image.Image("speaker_on.png"));
 //		gameThemeSong.setVolume(0.5);
 //		gameThemeSong.play();
 	}
