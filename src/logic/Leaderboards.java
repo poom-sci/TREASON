@@ -160,6 +160,10 @@ public class Leaderboards {
 		}
 	}
 
+	public ArrayList<String> getTopPlayer() {
+		return topPlayer;
+	}
+
 	
 	public String getTopPlayerName(int i) {
 		return topPlayer.get(i);
