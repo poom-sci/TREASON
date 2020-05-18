@@ -39,8 +39,8 @@ public class Leaderboards {
 		if(name.length()==0) {
 			throw new AddLeaderboardScoresFailedException("Name cannot left blank.");
 		}
-		if(name.length()>10) {
-			throw new AddLeaderboardScoresFailedException("Name cannot be more than 10 characters.");
+		if(name.length()>9) {
+			throw new AddLeaderboardScoresFailedException("Name cannot be more than 9 characters.");
 		}
 		if(topPlayer.contains(name)) {
 			throw new AddLeaderboardScoresFailedException("Name cannot be same.");
